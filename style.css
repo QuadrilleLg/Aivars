@@ -1,0 +1,325 @@
+/* Pamata stili */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a2724; /* Tumši zaļgans fons */
+    color: #e6ff00; /* Dzeltenzaļa pamatkrāsa */
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Galvenais konteiners */
+.main-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+/* Dziesmu saraksta konteiners */
+.song-list-container {
+    flex: 1;
+    background: #121a18;
+    border-right: 1px solid #e6ff00;
+    padding: 10px;
+    overflow-y: auto;
+    max-width: 250px;
+}
+
+.song-list-container h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px #e6ff00;
+}
+
+.song-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.song-list li {
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.song-list li:hover {
+    background: rgba(230, 255, 0, 0.1);
+}
+
+.song-list li.active {
+    background: rgba(230, 255, 0, 0.2);
+    font-weight: bold;
+}
+
+.song-list li::before {
+    content: "-";
+    margin-right: 8px;
+}
+
+/* Audio atskaņotāja konteiners */
+.audio-player-container {
+    flex: 2;
+    background: #121a18;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    position: relative;
+    min-width: 300px;
+}
+
+.active-song-panel {
+    background: rgba(18, 26, 24, 0.8);
+    border: 1px solid #e6ff00;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.active-song-panel h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px #e6ff00;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.control-btn {
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+}
+
+.progress-container {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #e6ff00;
+    width: 0;
+    transition: width 0.3s;
+}
+
+.song-timer {
+    font-size: 14px;
+    color: #ffffff;
+}
+
+/* Fragmentu konteiners */
+.fragments-container {
+    background: rgba(18, 26, 24, 0.8);
+    border: 1px solid #e6ff00;
+    padding: 15px;
+    border-radius: 5px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.fragments-container h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 0 0 5px #e6ff00;
+}
+
+.fragments-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.fragment-btn {
+    background: rgba(230, 255, 0, 0.1);
+    border: 1px solid #e6ff00;
+    color: #e6ff00;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.fragment-btn:hover, .fragment-btn.active {
+    background: rgba(230, 255, 0, 0.3);
+}
+
+/* SAGLABĀTI ESOŠIE STILI LABAJAI MALAI */
+
+/* Pārējie stili tādi paši kā iepriekš, bet pielāgoti krāsām */
+.control-panel {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #1a2724;
+    min-width: 300px;
+    max-width: 350px;
+    overflow-y: auto;
+    border-left: 1px solid #e6ff00;
+}
+
+/* Pulksteņa stili */
+.clock {
+    width: 120px;
+    height: 120px;
+    border: 4px solid #e6ff00;
+    border-radius: 50%;
+    position: relative;
+    background-color: #233024;
+    margin: 10px auto;
+}
+
+.clock-center {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #e6ff00;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+/* Pulksteņa rādītāji */
+.hour-hand, .minute-hand, .second-hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: 50% 100%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+}
+
+.hour-hand {
+    width: 4px;
+    height: 30px;
+    background: #e6ff00;
+}
+
+.minute-hand {
+    width: 3px;
+    height: 40px;
+    background: #e6ff00;
+}
+
+.second-hand {
+    width: 2px;
+    height: 45px;
+    background: #ffffff;
+}
+
+/* Statusa teksts */
+.status {
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    text-shadow: 0 0 5px #e6ff00;
+    transition: all 0.3s;
+}
+
+/* Logu sadaļa */
+.logs {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 150px;
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.tab-container {
+    display: flex;
+    border-bottom: 1px solid #e6ff00;
+}
+
+.tab {
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid #e6ff00;
+    border-bottom: none;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.tab.active {
+    background: #233024;
+}
+
+.log {
+    height: 150px;
+    overflow-y: auto;
+    border: 1px solid #e6ff00;
+    padding: 10px;
+    background: rgba(18, 26, 24, 0.7);
+    font-size: 12px;
+}
+
+/* Audio ierīču izvēlne */
+.audio-device-select {
+    background: #233024;
+    border: 1px solid #e6ff00;
+    color: #e6ff00;
+    padding: 6px;
+    margin-right: 10px;
+    outline: none;
+    cursor: pointer;
+    max-width: 100%;
+}
+
+.audio-device-select option {
+    background: #233024;
+    color: #e6ff00;
+    padding: 4px;
+}
+
+/* Mikrofona poga */
+.mic-btn {
+    min-width: 30px;
+    text-align: center;
+    animation: none;
+    position: relative;
+    border: 1px solid #e6ff00;
+    background: #233024;
+}
+
+.mic-btn.active {
+    background: #304824;
+    border-color: #ffffff;
+    animation: pulse 1.5s infinite;
+}
+
+/* Pulsējošs efekts aktīvai mic pogai */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(230, 255, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(230, 255, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(230, 255, 0, 0);
+    }
+}
