@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 80" width="480" height="80">
+  <defs>
+    <style>
+      .line { fill: none; stroke: #FFD700; stroke-width: 1.5; }
+      .ornament { fill: none; stroke: #FFD700; stroke-width: 1.5; }
+      .fleur { fill: #FFD700; }
+    </style>
+  </defs>
+  
+  <!-- Left line -->
+  <line x1="30" y1="40" x2="170" y2="40" class="line"/>
+  
+  <!-- Right line -->
+  <line x1="310" y1="40" x2="450" y2="40" class="line"/>
+  
+  <!-- Left spiral ornament -->
+  <path d="M 180,40 Q 185,32 190,28 Q 195,25 200,28 Q 205,32 205,40" class="ornament"/>
+  <circle cx="195" cy="40" r="6" class="ornament"/>
+  <circle cx="195" cy="40" r="3" class="ornament"/>
+  
+  <!-- Right spiral ornament (mirrored) -->
+  <path d="M 300,40 Q 295,32 290,28 Q 285,25 280,28 Q 275,32 275,40" class="ornament"/>
+  <circle cx="285" cy="40" r="6" class="ornament"/>
+  <circle cx="285" cy="40" r="3" class="ornament"/>
+  
+  <!-- Center fleur-de-lis -->
+  <path d="M 240,28 L 240,46 M 236,36 Q 236,32 240,28 Q 244,32 244,36" class="fleur"/>
+  <circle cx="240" cy="48" r="2.5" class="fleur"/>
+  
+  <!-- Bottom circles -->
+  <circle cx="225" cy="40" r="6" class="ornament"/>
+  <circle cx="225" cy="40" r="3" class="ornament"/>
+  
+  <circle cx="212" cy="40" r="6" class="ornament"/>
+  <circle cx="212" cy="40" r="3" class="ornament"/>
+  
+  <circle cx="255" cy="40" r="6" class="ornament"/>
+  <circle cx="255" cy="40" r="3" class="ornament"/>
+  
+  <circle cx="268" cy="40" r="6" class="ornament"/>
+  <circle cx="268" cy="40" r="3" class="ornament"/>
+</svg>

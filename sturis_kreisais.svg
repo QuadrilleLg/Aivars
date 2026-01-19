@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 500" width="300" height="500">
+  <defs>
+    <style>
+      .line { fill: none; stroke: #FFD700; stroke-width: 3; }
+      .ornament { fill: none; stroke: #FFD700; stroke-width: 2; }
+      .thin { stroke-width: 1.5; }
+    </style>
+  </defs>
+  
+  <!-- Top horizontal lines -->
+  <line x1="50" y1="40" x2="220" y2="40" class="line"/>
+  <line x1="230" y1="40" x2="290" y2="40" class="line"/>
+  
+  <!-- Vertical line (left side) -->
+  <line x1="50" y1="40" x2="50" y2="490" class="line"/>
+  
+  <!-- Top left corner ornament -->
+  <!-- Large circle -->
+  <circle cx="70" cy="20" r="15" class="ornament"/>
+  <path d="M 55,20 Q 50,10 45,20" class="ornament thin"/>
+  
+  <!-- Decorative swirls top -->
+  <path d="M 40,30 Q 30,35 25,45" class="ornament thin"/>
+  <circle cx="28" cy="50" r="4" class="ornament thin"/>
+  
+  <path d="M 35,50 Q 30,60 25,70" class="ornament thin"/>
+  <circle cx="22" cy="75" r="5" class="ornament thin"/>
+  
+  <path d="M 30,85 Q 25,95 20,105" class="ornament thin"/>
+  <circle cx="18" cy="110" r="4" class="ornament thin"/>
+  
+  <!-- Middle section ornaments -->
+  <path d="M 50,150 Q 40,160 35,175" class="ornament"/>
+  <circle cx="32" cy="185" r="6" class="ornament"/>
+  <path d="M 38,192 Q 45,200 50,210" class="ornament"/>
+  
+  <!-- Wave in the middle -->
+  <path d="M 50,210 Q 35,240 50,270" class="ornament"/>
+  
+  <!-- Bottom ornament -->
+  <circle cx="65" cy="320" r="8" class="ornament"/>
+  <circle cx="65" cy="320" r="4" class="ornament thin"/>
+  <path d="M 73,315 Q 80,310 85,305" class="ornament thin"/>
+  <path d="M 73,325 Q 80,330 85,335" class="ornament thin"/>
+  
+  <!-- Small decorative circle at bottom -->
+  <circle cx="50" cy="360" r="5" class="ornament thin"/>
+</svg>
