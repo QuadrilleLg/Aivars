@@ -23,33 +23,31 @@ class AudioManager {
         // Definējam deju struktūru ar atsevišķu VIDEO objektu
         this.kadrils = {
             'rusiņš': {
-                name: 'Kadriļa RUSIŅŠ',
+                name: 'Kadriļa Rusiņš',
                 fragments: {
                     'sākums': 'MUSIC/kadrilas/ada/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/ada/parts/vidus.mp3',
-                    'beigas': 'MUSIC/kadrilas/ada/parts/beigas.mp3',
+                    'grieziens': 'MUSIC/kadrilas/ada/parts/grieziens.mp3',
                     'pilnā': 'MUSIC/kadrilas/rusins/rusinsfull.mp3'
                 },
                 video: {
                     'pilnā': 'VIDEO/kadrilas/rusins/rusins.mp4',
                     'sākums': 'VIDEO/kadrilas/rusins/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/rusins/vidus.mp4',
-                    'beigas': 'VIDEO/kadrilas/rusins/beigas.mp4'
+                    'grieziens': 'VIDEO/kadrilas/rusins/grieziens.mp4'
                 },
                 timemarks: {
-                    'sākums': [
+                    'pilnā': [
                         { time: 0, text: "Sākuma nostāšanās - četri pāri kvadrātā" },
                         { time: 8, text: "Visi soļo uz priekšu, tad atpakaļ" },
                         { time: 16, text: "Dāmas paiet uz vidū, plaukšķina" },
                         { time: 24, text: "Kungi paiet uz vidū, plaukšķina" }
                     ],
-                    'vidus': [
+                    'sākums': [
                         { time: 0, text: "Partneru maiņa - dāmas rotē pa labi" },
                         { time: 12, text: "Grieziens ar jauno partneri" },
                         { time: 24, text: "Atgriešanās pie sava partnera" },
                         { time: 36, text: "Visi kopā ķēdē - zvaigzne" }
                     ],
-                    'beigas': [
+                    'grieziens': [
                         { time: 0, text: "Noslēguma rītis - promenāde" },
                         { time: 10, text: "Pāri rotē ap sevi" },
                         { time: 20, text: "Visi paceļ rokas - loks" },
@@ -60,7 +58,7 @@ class AudioManager {
             },
             
             'padespaņs': {
-                name: 'Atskaņoju...',
+                name: 'Padespaņs',
                 fragments: {
                     'sākums': 'MUSIC/kadrilas/adi/parts/sakums.mp3',
                     'vidus': 'MUSIC/kadrilas/adi/parts/vidus.mp3', 
@@ -76,7 +74,7 @@ class AudioManager {
                 keywords: ['padespaņs', 'spainis', 'bada spains']
             },
             'narečenka': {
-                name: 'Atskaņoju narečenku!',
+                name: 'Narečenka',
                 fragments: {
                     'sākums': 'MUSIC/kadrilas/adelaida/parts/sakums.mp3',
                     'vidus': 'MUSIC/kadrilas/adelaida/parts/vidus.mp3',
@@ -92,20 +90,20 @@ class AudioManager {
                 keywords: ['narečenku', 'uz upi', 'uz upīti']
             },
             'bērzgali': {
-                name: 'Bērzgales kadriļa',
+                name: 'Bērzgales kadriļa!!',
                 fragments: {
-                    'pirmais gabals': 'MUSIC/kadrilas/Berzgale/parts/pirmais.mp3',
-                    'otrais gabals': 'MUSIC/kadrilas/Berzgale/parts/otrais.mp3',
-                    'trešais gabals': 'MUSIC/kadrilas/Berzgale/parts/trešais.mp3',
-                    'ceturtais gabals': 'MUSIC/kadrilas/Berzgale/parts/ceturtais.mp3',
-                    'piektais gabals': 'MUSIC/kadrilas/Berzgale/parts/piektais.mp3',
-                    'sestais gabals': 'MUSIC/kadrilas/Berzgale/parts/sestais.mp3',
-                    'pilnā': 'MUSIC/kadrilas/Berzgale/berzgalefull.mp3'
+                    'pirmais gabals': 'MUSIC/kadrilas/berzgale/parts/pirmais.mp3',
+                    'otrais gabals': 'MUSIC/kadrilas/berzgale/parts/otrais.mp3',
+                    'trešais gabals': 'MUSIC/kadrilas/berzgale/parts/trešais.mp3',
+                    'ceturtais gabals': 'MUSIC/kadrilas/berzgale/parts/ceturtais.mp3',
+                    'piektais gabals': 'MUSIC/kadrilas/berzgale/parts/piektais.mp3',
+                    'sestais gabals': 'MUSIC/kadrilas/berzgale/parts/sestais.mp3',
+                    'pilnā': 'MUSIC/kadrilas/berzgale/berzgalefull_v1.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/berzgale/berzgale.mp4',
-                    'pirmais gabals': 'VIDEO/kadrilas/berzgale/pirmais.mp4',
-                    'otrais gabals': 'VIDEO/kadrilas/berzgale/otrais.mp4',
+                    'pilnā': 'VIDEO/kadrilas/berzgales/berzgales.mp4',
+                    'pirmais gabals': 'VIDEO/kadrilas/berzgales/pirmais.mp4',
+                    'otrais gabals': 'VIDEO/kadrilas/berzgales/otrais.mp4',
                     'trešais gabals': 'VIDEO/kadrilas/berzgale/tresais.mp4',
                     'ceturtais gabals': 'VIDEO/kadrilas/berzgale/ceturtais.mp4',
                     'piektais gabals': 'VIDEO/kadrilas/berzgale/piektais.mp4',
@@ -113,10 +111,12 @@ class AudioManager {
                 },
                 timemarks: {
                     'pirmais gabals': [
-                        { time: 0, text: "Pirmais gabals - sākuma nostāšanās" },
-                        { time: 6, text: "Soļi uz priekšu un atpakaļ" },
-                        { time: 12, text: "Dāmas maiņa pa labi" },
-                        { time: 18, text: "Atgriešanās pie partnera" }
+                                { time: 0, text: "V2...PIRMAIS GABALS - gatavojamies" },
+                                { time: 5, text: "Pāru maiņa- pirmie pāri" },
+                                { time: 18, text: "Pāru maiņa- otrie pāri" },
+                                { time: 30, text: "Pāru maiņa- pirmie pāri" },
+                                { time: 42, text: "Pāru maiņa- otrie pāri" },
+                            
                     ],
                     'otrais gabals': [
                         { time: 0, text: "Otrais gabals - griezieni" },
@@ -152,14 +152,14 @@ class AudioManager {
                 keywords: ['bērzgale', 'bērzgali', 'bērzgales']
             },
             'berlins': {
-                name: 'Brambergas Berliņš',
+                name: 'Brambergas Berliņš!',
                 fragments: {
                     'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
                     'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
                     'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
                     'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
                     'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/berlins/berlinsfull.mp3'
+                    'pilnā': 'MUSIC/kadrilas/berlins/berlinsfull_v2.mp3'
                 },
                 video: {
                     'pilnā': 'VIDEO/kadrilas/berlins/berlins.mp4',
@@ -171,14 +171,14 @@ class AudioManager {
                 },
                 timemarks: {
                     'dārziņš': [
-                        { time: 0, text: "Dārziņš - lēns ievads" },
-                        { time: 8, text: "Pāri soļo pa lēnam" },
-                        { time: 16, text: "Roku kustības" },
-                        { time: 24, text: "Sagatavošanās galvenai daļai" }
+                        { time: 0, text: "-----" },
+                        { time: 8, text: "-----" },
+                        { time: 16, text: "-----" },
+                        { time: 24, text: "-----" }
                     ],
                     'sākums': [
-                        { time: 0, text: "Sākums - aktīvā daļa sākas" },
-                        { time: 8, text: "Soļi uz priekšu-atpakaļ" },
+                        { time: 0, text: "-----" },
+                        { time: 8, text: "-----" },
                         { time: 16, text: "Partneru satikšanās centrā" },
                         { time: 24, text: "Atgriešanās vietās" }
                     ],
@@ -204,14 +204,14 @@ class AudioManager {
                 keywords: ['berliņš', 'berliņu', 'berliņa', 'brambergas']
             },
             'kvadrats': {
-                name: 'kvadrāts', 
+                name: 'Kvadrāts!', 
                 fragments: {
                     'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
                     'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
                     'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
                     'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
                     'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/kvadrats/kvadrat_full.mp3'
+                    'pilnā': 'MUSIC/kadrilas/kvadrats/kvadrat_v1.mp3'
                 },
                 video: {
                     'pilnā': 'VIDEO/kadrilas/kvadrats/kvadrats.mp4',
@@ -224,7 +224,7 @@ class AudioManager {
                 keywords: ['kvadrāts', 'kvadrātu', 'karēļu kvadrātu', 'karēļu kvadrāts']
             },
             'ciganovskis': {
-                name: 'ciganovskis',
+                name: 'Ciganovskis!',
                 fragments: {
                     'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
                     'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
@@ -244,7 +244,7 @@ class AudioManager {
                 keywords: ['ciganovskis', 'ciganovski', 'cigi']
             },
             'rikava': {
-                name: 'rikava',
+                name: 'Rikavas kadriļa',
                 fragments: {
                     'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
                     'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',

@@ -7,17 +7,7 @@
     <link rel="stylesheet" href="music-style.css">
 </head>
 <body>
-    <!-- MOBILE HAMBURGER MENU -->
-    <div class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    
-    <!-- MOBILE OVERLAY -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <!-- STŪRA ORNAMENTI -->
+    <!-- STŪRA ORNAMENTI - PIEVIENOTI! -->
     <div class="corner-top-left"></div>
     <div class="corner-top-right"></div>
     <div class="corner-bottom-left"></div>
@@ -37,10 +27,33 @@
             <div class="active-song-panel">
                 <h3 id="activeSongTitle">Izvēlieties dziesmu</h3>
                 <div class="player-controls">
-                    <span class="control-btn" id="playPauseBtn">▶️</span>
-                    <span class="control-btn" id="stopBtn">⏹️</span>
-                    <span class="control-btn video-btn" id="videoBtn">🎬 VIDEO</span>
-                </div>
+    <!-- Play/Pause poga -->
+    <span class="control-btn" id="playPauseBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+    </span>
+    
+    <!-- Stop poga -->
+    <span class="control-btn" id="stopBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="6" y="6" width="12" height="12"></rect>
+        </svg>
+    </span>
+    
+    <!-- Video poga ar skaistāku dizainu -->
+    <span class="control-btn video-btn" id="videoBtn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="18" rx="2" ry="2"></rect>
+        <line x1="7" y1="3" x2="7" y2="21"></line>
+        <line x1="17" y1="3" x2="17" y2="21"></line>
+        <line x1="2" y1="9" x2="7" y2="9"></line>
+        <line x1="2" y1="15" x2="7" y2="15"></line>
+        <line x1="17" y1="9" x2="22" y2="9"></line>
+        <line x1="17" y1="15" x2="22" y2="15"></line>
+    </svg>
+</span>
+</div>
                 <div class="progress-container">
                     <div id="progressBar" class="progress-bar"></div>
                 </div>
@@ -62,7 +75,7 @@
         <div id="videoModal" class="video-modal">
             <div class="video-modal-content">
                 <div class="video-header">
-                    <h2>Video Atskaņotājs</h2>
+                    <h2>Video atskaņotājs</h2>
                     <span class="close-video" id="closeVideo">&times;</span>
                 </div>
                 
@@ -79,7 +92,7 @@
                 </div>
                 
                 <div class="video-fragments">
-                    <h3>Video Fragmenti</h3>
+                    <h3>Video fragmenti</h3>
                     <div id="videoFragmentsList" class="video-fragments-list">
                         <!-- Video fragments will be populated by JavaScript -->
                     </div>
@@ -163,47 +176,5 @@
     
     <script type="module" src="main.js"></script>
     <script src="video.js"></script>
-    
-    <!-- MOBILE MENU SCRIPT - FIXED -->
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const songListContainer = document.querySelector('.song-list-container');
-
-        function toggleMenu() {
-            menuToggle.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            songListContainer.classList.toggle('active');
-        }
-
-        // TIKAI hamburger poga atver/aizver
-        menuToggle.addEventListener('click', toggleMenu);
-        
-        // NOŅEMTS: menuOverlay.addEventListener('click', toggleMenu);
-        // Overlay vairs neaizver izvēlni - tikai hamburger poga
-
-        // Swipe gestures
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        document.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            const swipeDistance = touchEndX - touchStartX;
-            
-            // Swipe right from left edge - atver
-            if (touchStartX < 50 && swipeDistance > 100 && !songListContainer.classList.contains('active')) {
-                toggleMenu();
-            }
-            
-            // Swipe left - aizver
-            if (swipeDistance < -100 && songListContainer.classList.contains('active')) {
-                toggleMenu();
-            }
-        }, { passive: true });
-    </script>
 </body>
 </html>

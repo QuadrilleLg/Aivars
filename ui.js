@@ -1,4 +1,4 @@
-// ui.js - Fixed version with proper mobile support
+// ui.js - DEBUG VERSION
 class UIManager {
     constructor() {
         console.log('🎬 UIManager constructor started');
@@ -6,11 +6,38 @@ class UIManager {
         this.setupTabSwitching();
         this.setupEventListeners();
         this.startClock();
+        
+        // Gaidām, līdz audioManager ir gatavs
+        this.waitForAudioManager();
+        
         this.setupAudioPlayer();
+        
+        // Dejas norises apraksta panelis
         this.setupDanceDescriptionPanel();
         this.currentDanceInterval = null;
+    }
+
+    // Gaida audioManager un tad ielādē dziesmas
+    waitForAudioManager() {
+        console.log('⏳ Waiting for audioManager...');
         
-        // Songs will be loaded from main.js after audioManager is ready
+        if (window.audioManager && window.audioManager.kadrils) {
+            console.log('✅ audioManager found immediately!');
+            this.loadSongList();
+        } else {
+            console.log('⏰ audioManager not ready, waiting...');
+            // Mēģina vēlreiz pēc 100ms
+            setTimeout(() => {
+                console.log('🔄 Retry loading song list...');
+                this.loadSongList();
+            }, 100);
+            
+            // Un vēl reizi pēc 500ms, ja vajag
+            setTimeout(() => {
+                console.log('🔄 Second retry...');
+                this.loadSongList();
+            }, 500);
+        }
     }
 
     setupEventListeners() {
@@ -211,11 +238,7 @@ class UIManager {
             li.textContent = kadril.name;
             li.dataset.kadrilKey = kadrilKey;
             
-            // Click handler for both desktop and mobile
-            li.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
+            li.addEventListener('click', () => {
                 console.log(`🎵 Clicked on: ${kadril.name}`);
                 
                 // Iestatīt aktīvo kadriļu
@@ -240,34 +263,12 @@ class UIManager {
                 }
                 
                 this.updateSystemLog(`Izvēlēta dziesma: ${kadril.name}`);
-                
-                // Close mobile menu after selection
-                this.closeMobileMenu();
             });
-            
-            // Touch handler for better mobile response
-            li.addEventListener('touchend', (e) => {
-                // Let click handler do the work, just ensure it fires
-                console.log(`📱 Touch on: ${kadril.name}`);
-            }, { passive: true });
             
             songList.appendChild(li);
         });
         
         console.log(`✅ Successfully added ${kadrilKeys.length} songs to list!`);
-    }
-    
-    // Close mobile menu helper
-    closeMobileMenu() {
-        const menuToggle = document.getElementById('menuToggle');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const songListContainer = document.querySelector('.song-list-container');
-        
-        if (window.innerWidth <= 768) {
-            if (menuToggle) menuToggle.classList.remove('active');
-            if (menuOverlay) menuOverlay.classList.remove('active');
-            if (songListContainer) songListContainer.classList.remove('active');
-        }
     }
 
     // Ielādē audio fragmentus vidējā daļā
