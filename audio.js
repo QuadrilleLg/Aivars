@@ -151,8 +151,70 @@ class AudioManager {
                 },
                 keywords: ['bērzgale', 'bērzgali', 'bērzgales']
             },
+            'bukmuižas': {
+                name: 'Bukmuižas kadriļa',
+                fragments: {
+                    'pirmais gabals': 'MUSIC/kadrilas/berzgale/parts/pirmais.mp3',
+                    'otrais gabals': 'MUSIC/kadrilas/berzgale/parts/otrais.mp3',
+                    'trešais gabals': 'MUSIC/kadrilas/berzgale/parts/trešais.mp3',
+                    'ceturtais gabals': 'MUSIC/kadrilas/berzgale/parts/ceturtais.mp3',
+                    'piektais gabals': 'MUSIC/kadrilas/berzgale/parts/piektais.mp3',
+                    'sestais gabals': 'MUSIC/kadrilas/berzgale/parts/sestais.mp3',
+                    'pilnā': 'MUSIC/kadrilas/bukmuizas/bukmuizasfull_v1.mp3'
+                },
+                video: {
+                    'pilnā': 'VIDEO/kadrilas/berzgales/berzgales.mp4',
+                    'pirmais gabals': 'VIDEO/kadrilas/berzgales/pirmais.mp4',
+                    'otrais gabals': 'VIDEO/kadrilas/berzgales/otrais.mp4',
+                    'trešais gabals': 'VIDEO/kadrilas/berzgale/tresais.mp4',
+                    'ceturtais gabals': 'VIDEO/kadrilas/berzgale/ceturtais.mp4',
+                    'piektais gabals': 'VIDEO/kadrilas/berzgale/piektais.mp4',
+                    'sestais gabals': 'VIDEO/kadrilas/berzgale/sestais.mp4'
+                },
+                timemarks: {
+                    'pirmais gabals': [
+                                { time: 0, text: "V2...PIRMAIS GABALS - gatavojamies" },
+                                { time: 5, text: "Pāru maiņa- pirmie pāri" },
+                                { time: 18, text: "Pāru maiņa- otrie pāri" },
+                                { time: 30, text: "Pāru maiņa- pirmie pāri" },
+                                { time: 42, text: "Pāru maiņa- otrie pāri" },
+                            
+                    ],
+                    'otrais gabals': [
+                        { time: 0, text: "Otrais gabals - griezieni" },
+                        { time: 8, text: "Grieziens ar partneri" },
+                        { time: 16, text: "Grieziens ar pretējo" },
+                        { time: 22, text: "Atpakaļ pie sava" }
+                    ],
+                    'trešais gabals': [
+                        { time: 0, text: "Trešais gabals - zvaigzne" },
+                        { time: 8, text: "Visi veido zvaigzni" },
+                        { time: 16, text: "Rotācija pa labi" },
+                        { time: 24, text: "Iziet no zvaigznes" }
+                    ],
+                    'ceturtais gabals': [
+                        { time: 0, text: "Ceturtais gabals - ķēde" },
+                        { time: 8, text: "Visi saķeras ķēdē" },
+                        { time: 16, text: "Ķēde kustas pa aploksni" },
+                        { time: 24, text: "Atgriešanās sākuma pozīcijās" }
+                    ],
+                    'piektais gabals': [
+                        { time: 0, text: "Piektais gabals - tilts" },
+                        { time: 8, text: "Divi pāri veido tiltu" },
+                        { time: 16, text: "Citi pāri iet zem tilta" },
+                        { time: 24, text: "Maiņa - jauni pāri veido tiltu" }
+                    ],
+                    'sestais gabals': [
+                        { time: 0, text: "Sestais gabals - noslēgums" },
+                        { time: 8, text: "Visi kopā promenāde" },
+                        { time: 16, text: "Liels loks ar visiem" },
+                        { time: 24, text: "Noslēguma paklanīšanās" }
+                    ]
+                },
+                keywords: ['bērzgale', 'bērzgali', 'bērzgales']
+            },
             'berlins': {
-                name: 'Brambergas Berliņš!',
+                name: 'Bramberģes Berliņš!',
                 fragments: {
                     'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
                     'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
@@ -234,7 +296,7 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/ciganovskis/Ciganovskisfull.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/ciganovskis/ciganovskis.mp4',
+                    'pilnā': 'VIDEO/kadrilas/ciganovskis/Ciganovskis.mp4',
                     'dārziņš': 'VIDEO/kadrilas/ciganovskis/darzins.mp4',
                     'sākums': 'VIDEO/kadrilas/ciganovskis/sakums.mp4',
                     'vidus': 'VIDEO/kadrilas/ciganovskis/vidus.mp4',
@@ -263,8 +325,8 @@ class AudioManager {
                 },
                 keywords: ['rikavu', 'rikava', 'rika']
             },
-            'sarkano': {
-                name: 'sarkanbaltsarkanais',
+            'lancis': {
+                name: 'Lancejots',
                 fragments: {
                     'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
                     'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
@@ -274,7 +336,7 @@ class AudioManager {
                     'pilnā': 'MUSIC/sarkanaisfull.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/sarkanais/sarkanais.mp4',
+                    'pilnā': 'VIDEO/kadrilas/lancejots/Lancejots.mp4',
                     'dārziņš': 'VIDEO/kadrilas/sarkanais/darzins.mp4',
                     'sākums': 'VIDEO/kadrilas/sarkanais/sakums.mp4',
                     'vidus': 'VIDEO/kadrilas/sarkanais/vidus.mp4',
