@@ -15,7 +15,7 @@ class AudioManager {
         
         // Definējam wake word audio atbildes
         this.wakeWords = {
-            'ada': 'MUSIC/voice_responses/greetings/sei.mp3',
+            'aivar': 'MUSIC/voice_responses/greetings/sei.mp3',
             'adi': 'AUDIO/responses/adi_response.mp3',
             'adelaida': 'MUSIC/voice_responses/greetings/palidze.mp3'
         };
@@ -63,7 +63,7 @@ class AudioManager {
                     'sākums': 'MUSIC/kadrilas/adi/parts/sakums.mp3',
                     'vidus': 'MUSIC/kadrilas/adi/parts/vidus.mp3', 
                     'beigas': 'MUSIC/kadrilas/adi/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/padespans/Padespaanfull.mp3'
+                    'pilnā': 'MUSIC/kadrilas/padespans/Padespaan_v1.mp3'
                 },
                 video: {
                     'pilnā': 'VIDEO/kadrilas/padespans/padespans.mp4',
@@ -79,7 +79,7 @@ class AudioManager {
                     'sākums': 'MUSIC/kadrilas/adelaida/parts/sakums.mp3',
                     'vidus': 'MUSIC/kadrilas/adelaida/parts/vidus.mp3',
                     'beigas': 'MUSIC/kadrilas/adelaida/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/narechenka/Narechenka - a folk dance..mp3'
+                    'pilnā': 'MUSIC/kadrilas/narecenka/Narechenka.mp3'
                 },
                 video: {
                     'pilnā': 'VIDEO/kadrilas/narecenka/narecenka.mp4',
