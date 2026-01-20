@@ -1,4 +1,4 @@
-// ui.js - DEBUG VERSION
+// ui.js - Fixed version with proper mobile support and video modal integration
 class UIManager {
     constructor() {
         console.log('🎬 UIManager constructor started');
@@ -6,38 +6,11 @@ class UIManager {
         this.setupTabSwitching();
         this.setupEventListeners();
         this.startClock();
-        
-        // Gaidām, līdz audioManager ir gatavs
-        this.waitForAudioManager();
-        
         this.setupAudioPlayer();
-        
-        // Dejas norises apraksta panelis
         this.setupDanceDescriptionPanel();
         this.currentDanceInterval = null;
-    }
-
-    // Gaida audioManager un tad ielādē dziesmas
-    waitForAudioManager() {
-        console.log('⏳ Waiting for audioManager...');
         
-        if (window.audioManager && window.audioManager.kadrils) {
-            console.log('✅ audioManager found immediately!');
-            this.loadSongList();
-        } else {
-            console.log('⏰ audioManager not ready, waiting...');
-            // Mēģina vēlreiz pēc 100ms
-            setTimeout(() => {
-                console.log('🔄 Retry loading song list...');
-                this.loadSongList();
-            }, 100);
-            
-            // Un vēl reizi pēc 500ms, ja vajag
-            setTimeout(() => {
-                console.log('🔄 Second retry...');
-                this.loadSongList();
-            }, 500);
-        }
+        // Songs will be loaded from main.js after audioManager is ready
     }
 
     setupEventListeners() {
@@ -238,7 +211,11 @@ class UIManager {
             li.textContent = kadril.name;
             li.dataset.kadrilKey = kadrilKey;
             
-            li.addEventListener('click', () => {
+            // Click handler for both desktop and mobile
+            li.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 console.log(`🎵 Clicked on: ${kadril.name}`);
                 
                 // Iestatīt aktīvo kadriļu
@@ -257,18 +234,99 @@ class UIManager {
                 // Ielādēt fragmentus
                 this.loadFragments(kadrilKey);
                 
-                // Atskaņot pilno dziesmu
-                if (kadril.fragments.pilnā) {
-                    window.audioManager.playFragment(kadril.fragments.pilnā);
+                // Pārbaudīt vai video modālis ir atvērts
+                const videoModal = document.getElementById('videoModal');
+                const isVideoOpen = videoModal && videoModal.classList.contains('active');
+                
+                if (isVideoOpen && kadril.video && kadril.video.pilnā) {
+                    // Ja video ir atvērts - atskaņot jaunās dziesmas video
+                    if (window.videoPlayer && window.videoPlayer.playFragment) {
+                        // Atjaunot video kadriļu
+                        const currentVideoTitle = document.getElementById('currentVideoTitle');
+                        if (currentVideoTitle) currentVideoTitle.textContent = kadril.name;
+                        
+                        // Atjaunot video fragmentu sarakstu
+                        this.updateVideoFragments(kadrilKey);
+                        
+                        // Atskaņot pilno video
+                        const videoPlayerEl = document.getElementById('videoPlayer');
+                        if (videoPlayerEl && kadril.video.pilnā) {
+                            videoPlayerEl.src = kadril.video.pilnā;
+                            videoPlayerEl.load();
+                            videoPlayerEl.play().catch(err => console.error('Video kļūda:', err));
+                        }
+                    }
+                    this.updateSystemLog(`Video: ${kadril.name}`);
+                } else {
+                    // Ja video nav atvērts - atskaņot audio kā parasti
+                    if (kadril.fragments.pilnā) {
+                        window.audioManager.playFragment(kadril.fragments.pilnā);
+                    }
+                    this.updateSystemLog(`Izvēlēta dziesma: ${kadril.name}`);
                 }
                 
-                this.updateSystemLog(`Izvēlēta dziesma: ${kadril.name}`);
+                // Close mobile menu after selection
+                this.closeMobileMenu();
             });
+            
+            // Touch handler for better mobile response
+            li.addEventListener('touchend', (e) => {
+                // Let click handler do the work, just ensure it fires
+                console.log(`📱 Touch on: ${kadril.name}`);
+            }, { passive: true });
             
             songList.appendChild(li);
         });
         
         console.log(`✅ Successfully added ${kadrilKeys.length} songs to list!`);
+    }
+    
+    // Close mobile menu helper
+    closeMobileMenu() {
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const songListContainer = document.querySelector('.song-list-container');
+        
+        if (window.innerWidth <= 768) {
+            if (menuToggle) menuToggle.classList.remove('active');
+            if (menuOverlay) menuOverlay.classList.remove('active');
+            if (songListContainer) songListContainer.classList.remove('active');
+        }
+    }
+    
+    // Atjaunot video fragmentu sarakstu
+    updateVideoFragments(kadrilKey) {
+        const videoFragmentsList = document.getElementById('videoFragmentsList');
+        if (!videoFragmentsList) return;
+        
+        const kadril = window.audioManager?.kadrils[kadrilKey];
+        if (!kadril || !kadril.video) return;
+        
+        videoFragmentsList.innerHTML = '';
+        
+        Object.keys(kadril.video).forEach(fragmentKey => {
+            const btn = document.createElement('button');
+            btn.className = 'video-fragment-btn';
+            btn.textContent = fragmentKey.charAt(0).toUpperCase() + fragmentKey.slice(1);
+            btn.dataset.fragmentKey = fragmentKey;
+            
+            // Pirmais fragments aktīvs
+            if (fragmentKey === 'pilnā') btn.classList.add('active');
+            
+            btn.addEventListener('click', () => {
+                const videoPlayerEl = document.getElementById('videoPlayer');
+                if (videoPlayerEl) {
+                    videoPlayerEl.src = kadril.video[fragmentKey];
+                    videoPlayerEl.load();
+                    videoPlayerEl.play().catch(err => console.error('Video kļūda:', err));
+                }
+                
+                videoFragmentsList.querySelectorAll('.video-fragment-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+            
+            videoFragmentsList.appendChild(btn);
+        });
     }
 
     // Ielādē audio fragmentus vidējā daļā
