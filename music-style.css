@@ -1132,3 +1132,194 @@ body {
         max-height: 40vh;
     }
 }
+/* ========================================
+   KOMPAKTA VERSIJA - BEZ SCROLL
+   Viss salien ekrānā vertikāli
+   ======================================== */
+
+/* Video modal saturs - KOMPAKTS */
+.video-modal-content {
+    background-color: #1a2724;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #e6ff00;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 92vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Video header - SAMAZINĀTS */
+.video-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(230, 255, 0, 0.3);
+}
+
+.video-header h2 {
+    color: #e6ff00;
+    margin: 0;
+    font-size: 30px;
+}
+
+.close-video {
+    color: #e6ff00;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* Video konteiners - 16:9 bet MAZĀKS */
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 16 / 9;
+    margin: 10px auto;
+    background: black;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Fallback ja neatbalsta aspect-ratio */
+@supports not (aspect-ratio: 16 / 9) {
+    .video-container {
+        padding-bottom: 56.25%;
+        height: 0;
+    }
+}
+
+/* YouTube player */
+#youtubePlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* YouTube iframe */
+#youtubePlayer iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Video info - KOMPAKTS */
+.video-info {
+    text-align: center;
+    margin: 8px 0;
+}
+
+.video-info h3 {
+    color: #e6ff00;
+    margin: 5px 0;
+    font-size: 40px;
+    font-family: monospace;
+}
+
+.video-timer {
+    color: rgba(230, 255, 0, 0.7);
+    font-size: 25px;
+    font-family: monospace;
+}
+
+/* Video fragmenti - KOMPAKTI */
+.video-fragments {
+    margin-top: 8px;
+}
+
+.video-fragments h3 {
+    color: #e6ff00;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 40px;
+    font-family: monospace;
+}
+
+.video-fragments-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+/* Fragmentu pogas - MAZĀKAS */
+.video-fragment-btn {
+    background: rgba(230, 255, 0, 0.1);
+    color: #e6ff00;
+    border: 2px solid rgba(230, 255, 0, 0.3);
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: monospace, cursive;
+}
+
+.video-fragment-btn:hover {
+    background: rgba(230, 255, 0, 0.2);
+    border-color: #00ff80;
+    transform: translateY(-1px);
+}
+
+.video-fragment-btn.active {
+    background: rgba(230, 255, 0, 0.3);
+    border-color: #e6ff00;
+    box-shadow: 0 0 10px rgba(230, 255, 0, 0.4);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .video-modal-content {
+        width: 95%;
+        padding: 12px;
+        max-height: 95vh;
+    }
+    
+    .video-header h2 {
+        font-size: 16px;
+    }
+    
+    .video-container {
+        max-width: 100%;
+    }
+    
+    .video-fragment-btn {
+        font-size: 15px;
+        padding: 8px 10px;
+    }
+}
+
+/* Ekstra maziem ekrāniem */
+@media (max-height: 700px) {
+    .video-modal-content {
+        padding: 15px;
+        max-height: 96vh;
+    }
+    
+    .video-container {
+        max-width: 600px;
+        margin: 8px auto;
+    }
+    
+    .video-header h2 {
+        font-size: 18px;
+    }
+    
+    .video-info h3 {
+        font-size: 14px;
+    }
+    
+    .video-fragments h3 {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+}

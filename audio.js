@@ -30,10 +30,16 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/rusins/rusinsfull.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/rusins/rusins.mp4',
-                    'sākums': 'VIDEO/kadrilas/rusins/sakums.mp4',
-                    'grieziens': 'VIDEO/kadrilas/rusins/grieziens.mp4'
-                },
+            youtube_id: "yALk8KpCwKw",  // ⬅️ Jūsu YouTube video ID
+            
+            fragments: {
+                pilna: { start: 0, end: 240 },
+                ievads: { start: 0, end: 15 },
+                pamata: { start: 15, end: 90 },
+                griezieni: { start: 90, end: 165 },
+                kombinacija: { start: 165, end: 240 }
+            }
+        },
                 timemarks: {
                     'pilnā': [
                         { time: 0, text: "Sākuma nostāšanās - četri pāri kvadrātā" },
