@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegants Login</title>
+    <title>Elegants Login - Firebase</title>
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div class="container">
@@ -15,8 +20,8 @@
             
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="loginUser">Vards</label>
-                    <input type="text" id="loginUser" placeholder="Ievadiet vardu" required>
+                    <label for="loginUser">E-pasts vai Vārds</label>
+                    <input type="text" id="loginUser" placeholder="Ievadiet e-pastu vai vārdu" required>
                 </div>
                 
                 <div class="form-group">
@@ -43,8 +48,8 @@
 
         <!-- REGISTRACIJAS LAPA -->
         <div id="registerPage" class="page">
-            <h1>Registracija</h1>
-            <p class="subtitle">Izveidojiet kontu</p>
+            <h1>Registracija 🤣</h1>
+            <p class="subtitle">Izveidojiet kontu (JOKS - nav maksas!)</p>
             
             <form id="registerForm">
                 <div class="form-group">
@@ -56,11 +61,57 @@
                     <label for="regEmail">E-pasts</label>
                     <input type="email" id="regEmail" placeholder="Ievadiet e-pasta adresi" required>
                 </div>
+
+                <!-- JOKU LAUKI 🤣 -->
+                <div class="form-group">
+                    <label for="regPersonCode">🤣 Personas kods (JOKS)</label>
+                    <input type="text" id="regPersonCode" placeholder="123456-78901 (nav obligāts)" 
+                           style="border: 3px dashed #d4af37;">
+                    <small style="color: #d4af37;">🤣 Šis lauks ir joks - neievadi īsto!</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="regCardNumber">🤣 Bankas kartes numurs (JOKS)</label>
+                    <input type="text" id="regCardNumber" placeholder="1234-5678-9012-3456 (nav obligāts)"
+                           style="border: 3px dashed #d4af37;">
+                    <small style="color: #d4af37;">🤣 Mēs NEKAD neprasīsim kartes datus!</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="regCVV">🤣 CVV (JOKS)</label>
+                    <input type="text" id="regCVV" placeholder="123 (nav obligāts)"
+                           style="border: 3px dashed #d4af37;" maxlength="3">
+                    <small style="color: #d4af37;">🤣 Šis ir sarkanais karogs - nevienam nedod!</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="regExpiry">🤣 Derīguma termiņš (JOKS)</label>
+                    <input type="text" id="regExpiry" placeholder="MM/GG (nav obligāts)"
+                           style="border: 3px dashed #d4af37;">
+                    <small style="color: #d4af37;">🤣 Ja kāds prasa šos datus - tas ir krāpnieks!</small>
+                </div>
+
+                <div class="form-group" style="background: rgba(255,0,0,0.1); padding: 15px; border-radius: 8px; border: 3px dashed #ff0000;">
+                    <label style="color: #ff6b6b; font-size: 1.2em;">🤣 REĢISTRĀCIJAS MAKSA: 100 EUR 🤣</label>
+                    <p style="color: #d4af37; font-weight: bold; margin-top: 10px;">
+                        🤣🤣🤣 ŠIS IR JOKS! 🤣🤣🤣<br>
+                        Reģistrācija ir PILNĪGI BEZMAKSAS!<br>
+                        Ja kāds prasa maksu par reģistrāciju - bēdz!
+                    </p>
+                </div>
                 
-                <button type="submit">SUTIT PIESAKUMU</button>
+                <button type="submit">SUTIT PIESAKUMU (BEZMAKSAS)</button>
                 
                 <div class="links">
                     <a onclick="showPage('loginPage')">Atpakal uz ienagsanu</a>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(212,175,55,0.1); border-radius: 8px; border: 2px solid #d4af37;">
+                    <p style="color: #d4af37; font-size: 0.9em; text-align: center;">
+                        ⚠️ <strong>SVARĪGI:</strong> Šie "joku lauki" ir izglītojošs piemērs!<br>
+                        NEKAD nedodiet personas kodu, kartes datus vai naudu nezināmām vietnēm!<br>
+                        🤣 Droša interneta izmantošana = atpazīt krāpniecību! 🤣
+                    </p>
                 </div>
             </form>
         </div>
@@ -86,9 +137,24 @@
 
         <!-- REGISTRACIJAS APSTIPRINAJUMS -->
         <div id="registerSuccessPage" class="page">
-            <h1>Paldies!</h1>
+            <h1>Paldies! 🤣</h1>
             <div class="success-message">
                 Jusu piesakums ir nosutits administratoram. Jus sanemsiet apstiprinajumu pec piesakuma apstiprinasanas.
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(212,175,55,0.1); border-radius: 8px; border: 2px solid #d4af37;">
+                    <p style="color: #d4af37; font-size: 1.1em;">
+                        🤣 <strong>P.S.</strong> 🤣<br>
+                        Nav jāmaksā 100 EUR!<br>
+                        Tas bija joks par drošību!<br>
+                        <br>
+                        Atcerieties: NEKAD nedodiet:<br>
+                        ❌ Personas kodu<br>
+                        ❌ Bankas kartes datus<br>
+                        ❌ Naudu par "reģistrāciju"<br>
+                        <br>
+                        ✅ Šī reģistrācija ir 100% BEZMAKSAS! ✅
+                    </p>
+                </div>
             </div>
             <div class="links">
                 <a onclick="showPage('loginPage')">Atpakal uz ienagsanu</a>
@@ -99,7 +165,7 @@
         <div id="forgotSuccessPage" class="page">
             <h1>Sutits!</h1>
             <div class="success-message">
-                Instrukcijas paroles atjaunosanai ir nosutitas uz jusu e-pastu.
+                Paroles atjaunošanas instrukcijas ir nosūtītas uz jūsu e-pastu. Pārbaudiet savu e-pastu (arī spam mapi)!
             </div>
             <div class="links">
                 <a onclick="showPage('loginPage')">Atpakal uz ienagsanu</a>
@@ -107,74 +173,8 @@
         </div>
     </div>
 
-    <script>
-        // Parslegsanas starp lapam
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        // Login forma
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('loginUser').value;
-            const password = document.getElementById('loginPass').value;
-            const remember = document.getElementById('remember').checked;
-            
-            // Admin ielogosanas parbaude
-            if (username === 'admin' && password === 'admin123') {
-                // Veiksmiga ielogosanas
-                if (remember) {
-                    localStorage.setItem('rememberMe', 'true');
-                    localStorage.setItem('username', username);
-                }
-                // Pareit uz music.html
-                window.location.href = 'music-index-youtube.html';
-            } else {
-                alert('Nepareizs vards vai parole!');
-            }
-        });
-
-        // Registracijas forma
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            
-            // Simulejam e-pasta sutianu adminam
-            console.log('Suta piesakumu adminam:');
-            console.log('Vards: ' + name);
-            console.log('E-pasts: ' + email);
-            
-            // Seit pievienot AJAX vai fetch, lai sutitu datus uz serveri
-            // Piemeram:
-            // fetch('/api/register', {
-            //     method: 'POST',
-            //     headers: {'Content-Type': 'application/json'},
-            //     body: JSON.stringify({name: name, email: email})
-            // });
-            
-            showPage('registerSuccessPage');
-        });
-
-        // Aizmirsu paroli forma
-        document.getElementById('forgotForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('forgotEmail').value;
-            
-            console.log('Suta paroles atjaunosanu uz: ' + email);
-            
-            // Seit pievienot AJAX vai fetch
-            // fetch('/api/forgot-password', {
-            //     method: 'POST',
-            //     headers: {'Content-Type': 'application/json'},
-            //     body: JSON.stringify({email: email})
-            // });
-            
-            showPage('forgotSuccessPage');
-        });
-    </script>
+    <!-- Firebase konfigurācija un login scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="firebase-login.js"></script>
 </body>
 </html>
