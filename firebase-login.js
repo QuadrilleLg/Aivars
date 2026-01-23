@@ -215,10 +215,6 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const email = document.getElementById('regEmail').value.trim();
     const password = document.getElementById('regPassword').value;
     const passwordConfirm = document.getElementById('regPasswordConfirm').value;
-    const name = document.getElementById('regName').value.trim();
-    const email = document.getElementById('regEmail').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const passwordConfirm = document.getElementById('regPasswordConfirm').value;
     
     // Paroles validācija
     if (password !== passwordConfirm) {
