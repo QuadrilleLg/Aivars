@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panelis - Firebase</title>
+    <link rel="stylesheet" href="admin-style.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>👨‍💼 Admin Panelis (Firebase)</h1>
+            <p style="color: #999;">Real-time lietotāju pārvaldība</p>
+            <button class="logout-btn" onclick="logout()">Iziet</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3 id="totalUsers">0</h3>
+                <p>Aktīvie lietotāji</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="pendingUsers">0</h3>
+                <p>Gaida apstiprinājumu</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="approvedUsers">0</h3>
+                <p>Apstiprināti</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">🕐 Gaida apstiprinājumu</h2>
+        <div class="users-table" id="pendingUsersTable"></div>
+
+        <h2 class="section-title">✓ Apstiprināti lietotāji</h2>
+        <div class="users-table" id="approvedUsersTable"></div>
+    </div>
+
+    <!-- Firebase config un admin script -->
+    <script src="firebase-config.js"></script>
+    <script>
+        let currentAdmin = null;
+
+        // Pārbaude vai ir admin
+        async function checkAdminAuth() {
+            const user = auth.currentUser;
+            
+            if (!user) {
+                alert('Piekļuve liegta! Ielogojieties.');
+                window.location.href = 'firebase-index.html';
+                return false;
+            }
+
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            
+            if (!userDoc.exists || userDoc.data().role !== 'admin') {
+                alert('Piekļuve liegta! Nepieciešamas admin tiesības.');
+                await auth.signOut();
+                window.location.href = 'firebase-index.html';
+                return false;
+            }
+
+            currentAdmin = user;
+            return true;
+        }
+
+        // Iziet
+        async function logout() {
+            await auth.signOut();
+            window.location.href = 'firebase-index.html';
+        }
+
+        // Apstiprināt lietotāju
+        async function approveUser(pendingDocId, userData) {
+            try {
+                if (userData.authProvider === 'email') {
+                    // Email/Password lietotājs - izmanto viņa paroli
+                    if (!userData.password) {
+                        alert('Kļūda: Parole nav atrasta!');
+                        return;
+                    }
+                    
+                    if (!confirm(`Apstiprināt lietotāju "${userData.name}" ar viņa izvēlēto paroli?`)) {
+                        return;
+                    }
+                    
+                    // Izveidojam Firebase Auth kontu
+                    const userCredential = await auth.createUserWithEmailAndPassword(userData.email, userData.password);
+                    const newUser = userCredential.user;
+
+                    // Pievienojam lietotāju users collection
+                    await db.collection('users').doc(newUser.uid).set({
+                        name: userData.name,
+                        email: userData.email,
+                        authProvider: 'email',
+                        role: 'user',
+                        approved: true,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        approvedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    // Dzēšam no pending_users
+                    await db.collection('pending_users').doc(pendingDocId).delete();
+
+                    alert('✅ Email lietotājs apstiprināts! Viņš var ielogoties ar savu paroli.');
+                    
+                } else if (userData.authProvider === 'google') {
+                    // Google lietotājs
+                    if (!userData.googleUID) {
+                        alert('Kļūda: Google UID nav atrasts!');
+                        return;
+                    }
+                    
+                    if (!confirm(`Apstiprināt Google lietotāju "${userData.name}"?`)) {
+                        return;
+                    }
+                    
+                    // Pievienojam tieši users collection (Auth konts jau eksistē)
+                    await db.collection('users').doc(userData.googleUID).set({
+                        name: userData.name,
+                        email: userData.email,
+                        authProvider: 'google',
+                        photoURL: userData.photoURL || null,
+                        role: 'user',
+                        approved: true,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        approvedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    // Dzēšam no pending_users
+                    await db.collection('pending_users').doc(pendingDocId).delete();
+
+                    alert('✅ Google lietotājs apstiprināts! Viņš var ielogoties ar Google.');
+                    
+                } else {
+                    alert('Nezināms autentifikācijas veids!');
+                }
+                
+            } catch (error) {
+                console.error('Kļūda apstiprinot:', error);
+                alert('Kļūda: ' + error.message);
+            }
+        }
+
+        // Noraidīt lietotāju
+        async function rejectUser(pendingDocId, userData) {
+            if (!confirm(`Vai tiešām noraidīt lietotāju "${userData.name}"?`)) return;
+
+            try {
+                await db.collection('pending_users').doc(pendingDocId).delete();
+                alert('Lietotājs noraidīts!');
+            } catch (error) {
+                console.error('Kļūda noraidot:', error);
+                alert('Kļūda: ' + error.message);
+            }
+        }
+
+        // Dzēst lietotāju
+        async function deleteUser(userId, userData) {
+            if (!confirm(`Vai tiešām dzēst lietotāju "${userData.name}"?`)) return;
+
+            try {
+                // Dzēšam no Firestore
+                await db.collection('users').doc(userId).delete();
+                
+                // Piezīme: Auth lietotāja dzēšana prasa admin SDK
+                // Tas nav iespējams no klienta puses, bet Firestore ieraksts tiks dzēsts
+                alert('Lietotājs dzēsts no datubāzes!');
+            } catch (error) {
+                console.error('Kļūda dzēšot:', error);
+                alert('Kļūda: ' + error.message);
+            }
+        }
+
+        // Renderēt pending lietotājus
+        function renderPendingUsers(snapshot) {
+            const table = document.getElementById('pendingUsersTable');
+            
+            if (snapshot.empty) {
+                table.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Nav jaunu pieteikumu</h3>
+                        <p>Jauni lietotāji parādīsies šeit pēc reģistrācijas.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            table.innerHTML = snapshot.docs.map(doc => {
+                const user = doc.data();
+                const createdAt = user.createdAt ? user.createdAt.toDate().toLocaleString('lv-LV') : 'Nav datos';
+                const authIcon = user.authProvider === 'google' ? '🔵' : '📧';
+                const authText = user.authProvider === 'google' ? 'Google' : 'Email/Parole';
+                
+                return `
+                    <div class="user-item">
+                        <div class="user-info">
+                            <h3>${authIcon} ${user.name}</h3>
+                            <p>${user.email}</p>
+                            <p style="font-size: 0.8em; color: #666;">
+                                Reģistrēts: ${createdAt}
+                            </p>
+                            <p style="font-size: 0.85em; color: #d4af37;">
+                                🔑 Metode: ${authText}
+                            </p>
+                        </div>
+                        <span class="user-status status-pending">⏳ Gaida</span>
+                        <div class="user-actions">
+                            <button class="btn btn-approve" onclick='approveUser("${doc.id}", ${JSON.stringify(user)})'>
+                                ✓ Apstiprināt
+                            </button>
+                            <button class="btn btn-reject" onclick='rejectUser("${doc.id}", ${JSON.stringify(user)})'>
+                                ❌ Noraidīt
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Renderēt apstiprinātos lietotājus
+        function renderApprovedUsers(snapshot) {
+            const table = document.getElementById('approvedUsersTable');
+            
+            if (snapshot.empty) {
+                table.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Nav apstiprinātu lietotāju</h3>
+                        <p>(Izņemot admin kontus)</p>
+                    </div>
+                `;
+                return;
+            }
+
+            table.innerHTML = snapshot.docs.map(doc => {
+                const user = doc.data();
+                const createdAt = user.createdAt ? user.createdAt.toDate().toLocaleString('lv-LV') : 'Nav datos';
+                const authIcon = user.authProvider === 'google' ? '🔵' : '📧';
+                const authText = user.authProvider === 'google' ? 'Google' : 'Email';
+                
+                return `
+                    <div class="user-item">
+                        <div class="user-info">
+                            <h3>${authIcon} ${user.name} ${user.role === 'admin' ? '(Admin)' : ''}</h3>
+                            <p>${user.email}</p>
+                            <p style="font-size: 0.8em; color: #666;">
+                                Izveidots: ${createdAt}
+                            </p>
+                            <p style="font-size: 0.85em; color: #4CAF50;">
+                                🔑 ${authText}
+                            </p>
+                        </div>
+                        <span class="user-status status-approved">✓ Apstiprināts</span>
+                        <div class="user-actions">
+                            ${user.role !== 'admin' ? `
+                                <button class="btn btn-delete" onclick='deleteUser("${doc.id}", ${JSON.stringify(user)})'>
+                                    🗑️ Dzēst
+                                </button>
+                            ` : '<span style="color: #666;">Aizsargāts</span>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Real-time listeners
+        function setupListeners() {
+            // Pending users listener
+            db.collection('pending_users')
+                .orderBy('createdAt', 'desc')
+                .onSnapshot(snapshot => {
+                    renderPendingUsers(snapshot);
+                    document.getElementById('pendingUsers').textContent = snapshot.size;
+                });
+
+            // Approved users listener
+            db.collection('users')
+                .where('approved', '==', true)
+                .orderBy('createdAt', 'desc')
+                .onSnapshot(snapshot => {
+                    renderApprovedUsers(snapshot);
+                    const approvedCount = snapshot.docs.filter(doc => doc.data().role !== 'admin').length;
+                    document.getElementById('approvedUsers').textContent = approvedCount;
+                    document.getElementById('totalUsers').textContent = snapshot.size;
+                });
+        }
+
+        // Inicializācija
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const isAdmin = await checkAdminAuth();
+                if (isAdmin) {
+                    setupListeners();
+                    console.log('✅ Admin panelis inicializēts!');
+                }
+            } else {
+                window.location.href = 'firebase-index.html';
+            }
+        });
+    </script>
+</body>
+</html>

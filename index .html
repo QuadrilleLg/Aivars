@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegants Login - Firebase</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- LOGIN LAPA -->
+        <div id="loginPage" class="page active">
+            <h1>Laipni gaiditi</h1>
+            <p class="subtitle">Ielogojieties sistema</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUser">E-pasts vai Vārds</label>
+                    <input type="text" id="loginUser" placeholder="Ievadiet e-pastu vai vārdu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPass">Parole</label>
+                    <input type="password" id="loginPass" placeholder="Ievadiet paroli" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Atcereties mani</label>
+                </div>
+                
+                <button type="submit">IENAKT</button>
+                
+                <div class="divider">vai</div>
+                
+                <div class="links">
+                    <a onclick="showPage('registerPage')">Registreties</a>
+                    <span style="color: #d4af37;">|</span>
+                    <a onclick="showPage('forgotPage')">Aizmirsu paroli</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- REGISTRACIJAS LAPA -->
+        <div id="registerPage" class="page">
+            <h1>Registracija 🤣</h1>
+            <p class="subtitle">Izveidojiet kontu (JOKS - nav maksas!)</p>
+            
+            <!-- GOOGLE SIGN-IN -->
+            <button type="button" id="googleSignInBtn" style="width: 100%; padding: 14px; background: #4285f4; color: white; border: none; border-radius: 8px; font-size: 20px; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span style="font-size: 24px;">🔵</span> Sign in with Google
+            </button>
+            
+            <div class="divider">vai</div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regName">Vards</label>
+                    <input type="text" id="regName" placeholder="Ievadiet savu vardu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">E-pasts</label>
+                    <input type="email" id="regEmail" placeholder="Ievadiet e-pasta adresi" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Parole</label>
+                    <input type="password" id="regPassword" placeholder="Ievadiet paroli (min 6 simboli)" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPasswordConfirm">Atkartot paroli</label>
+                    <input type="password" id="regPasswordConfirm" placeholder="Atkartojiet paroli" required minlength="6">
+                </div>
+
+                <!-- JOKU LAUKI 🤣 -->
+                <div class="form-group">
+                    <label for="regPersonCode">🤣 Personas kods (JOKS)</label>
+                    <input type="text" id="regPersonCode" placeholder="123456-78901 (nav obligāts)" 
+                           style="border: 3px dashed #d4af37;">
+                    <small style="color: #d4af37;">🤣 Šis lauks ir joks - neievadi īsto!</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="regCardNumber">🤣 Bankas kartes numurs (JOKS)</label>
+                    <input type="text" id="regCardNumber" placeholder="1234-5678-9012-3456 (nav obligāts)"
+                           style="border: 3px dashed #d4af37;">
+                    <small style="color: #d4af37;">🤣 Mēs NEKAD neprasīsim kartes datus!</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="regCVV">🤣 CVV (JOKS)</label>
+                    <input type="text" id="regCVV" placeholder="123 (nav obligāts)"
+                           style="border: 3px dashed #d4af37;" maxlength="3">
+                    <small style="color: #d4af37;">🤣 Šis ir sarkanais karogs - nevienam nedod!</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="regExpiry">🤣 Derīguma termiņš (JOKS)</label>
+                    <input type="text" id="regExpiry" placeholder="MM/GG (nav obligāts)"
+                           style="border: 3px dashed #d4af37;">
+                    <small style="color: #d4af37;">🤣 Ja kāds prasa šos datus - tas ir krāpnieks!</small>
+                </div>
+
+                <div class="form-group" style="background: rgba(255,0,0,0.1); padding: 15px; border-radius: 8px; border: 3px dashed #ff0000;">
+                    <label style="color: #ff6b6b; font-size: 1.2em;">🤣 REĢISTRĀCIJAS MAKSA: 100 EUR 🤣</label>
+                    <p style="color: #d4af37; font-weight: bold; margin-top: 10px;">
+                        🤣🤣🤣 ŠIS IR JOKS! 🤣🤣🤣<br>
+                        Reģistrācija ir PILNĪGI BEZMAKSAS!<br>
+                        Ja kāds prasa maksu par reģistrāciju - bēdz!
+                    </p>
+                </div>
+                
+                <button type="submit">SUTIT PIESAKUMU (BEZMAKSAS)</button>
+                
+                <div class="links">
+                    <a onclick="showPage('loginPage')">Atpakal uz ienagsanu</a>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(212,175,55,0.1); border-radius: 8px; border: 2px solid #d4af37;">
+                    <p style="color: #d4af37; font-size: 0.9em; text-align: center;">
+                        ⚠️ <strong>SVARĪGI:</strong> Šie "joku lauki" ir izglītojošs piemērs!<br>
+                        NEKAD nedodiet personas kodu, kartes datus vai naudu nezināmām vietnēm!<br>
+                        🤣 Droša interneta izmantošana = atpazīt krāpniecību! 🤣
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- AIZMIRSU PAROLI LAPA -->
+        <div id="forgotPage" class="page">
+            <h1>Atjaunot paroli</h1>
+            <p class="subtitle">Ievadiet e-pastu</p>
+            
+            <form id="forgotForm">
+                <div class="form-group">
+                    <label for="forgotEmail">E-pasts</label>
+                    <input type="email" id="forgotEmail" placeholder="Ievadiet e-pasta adresi" required>
+                </div>
+                
+                <button type="submit">SUTIT</button>
+                
+                <div class="links">
+                    <a onclick="showPage('loginPage')">Atpakal uz ienagsanu</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- REGISTRACIJAS APSTIPRINAJUMS -->
+        <div id="registerSuccessPage" class="page">
+            <h1>Paldies! 🤣</h1>
+            <div class="success-message">
+                Jusu piesakums ir nosutits administratoram. Jus sanemsiet apstiprinajumu pec piesakuma apstiprinasanas.
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(212,175,55,0.1); border-radius: 8px; border: 2px solid #d4af37;">
+                    <p style="color: #d4af37; font-size: 1.1em;">
+                        🤣 <strong>P.S.</strong> 🤣<br>
+                        Nav jāmaksā 100 EUR!<br>
+                        Tas bija joks par drošību!<br>
+                        <br>
+                        Atcerieties: NEKAD nedodiet:<br>
+                        ❌ Personas kodu<br>
+                        ❌ Bankas kartes datus<br>
+                        ❌ Naudu par "reģistrāciju"<br>
+                        <br>
+                        ✅ Šī reģistrācija ir 100% BEZMAKSAS! ✅
+                    </p>
+                </div>
+            </div>
+            <div class="links">
+                <a onclick="showPage('loginPage')">Atpakal uz ienagsanu</a>
+            </div>
+        </div>
+
+        <!-- AIZMIRSU PAROLI APSTIPRINAJUMS -->
+        <div id="forgotSuccessPage" class="page">
+            <h1>Sutits!</h1>
+            <div class="success-message">
+                Paroles atjaunošanas instrukcijas ir nosūtītas uz jūsu e-pastu. Pārbaudiet savu e-pastu (arī spam mapi)!
+            </div>
+            <div class="links">
+                <a onclick="showPage('loginPage')">Atpakal uz ienagsanu</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase konfigurācija un login scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="firebase-login.js"></script>
+</body>
+</html>
