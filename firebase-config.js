@@ -1,15 +1,15 @@
 // ============================================
-// FIREBASE KONFIGURĀCIJA - AIZPILDĪTS
+// FIREBASE KONFIGURĀCIJA
 // ============================================
+// AIZPILDI AR SAVIEM DATIEM no Firebase Console!
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDKOM8dgoNnzzmfLJfmDGdg_iC_MNDBodI",
-    authDomain: "kadrilas-lv.firebaseapp.com",
-    projectId: "kadrilas-lv",
-    storageBucket: "kadrilas-lv.firebasestorage.app",
-    messagingSenderId: "607969548841",
-    appId: "1:607969548841:web:e2e4ad7e8c1fdc33c7da38",
-    measurementId: "G-G6Y4L5ZY6E"
+    apiKey: "AIzaSy...",                    // ← Tavs API Key
+    authDomain: "tavs-projekts.firebaseapp.com",  // ← Tavs Auth Domain
+    projectId: "tavs-projekts",                   // ← Tavs Project ID
+    storageBucket: "tavs-projekts.appspot.com",   // ← Tavs Storage Bucket
+    messagingSenderId: "123456789",               // ← Tavs Sender ID
+    appId: "1:123456789:web:abc123..."           // ← Tavs App ID
 };
 
 // Inicializē Firebase

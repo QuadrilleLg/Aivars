@@ -145,13 +145,91 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 });
 
 // ============================================
-// REĢISTRĀCIJAS FORMA
+// GOOGLE SIGN-IN
+// ============================================
+document.getElementById('googleSignInBtn').addEventListener('click', async function() {
+    try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        
+        // Pārbaudām vai lietotājs jau ir sistēmā
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            
+            if (userData.approved) {
+                // Jau apstiprināts - iet uz music-index
+                window.location.href = 'music-index.html';
+            } else {
+                // Gaida apstiprinājumu
+                alert('Jūsu konts gaida administratora apstiprinājumu.');
+                await auth.signOut();
+            }
+        } else {
+            // Jauns lietotājs - pievienojam pending
+            const pendingCheck = await db.collection('pending_users')
+                .where('email', '==', user.email)
+                .get();
+            
+            if (!pendingCheck.empty) {
+                alert('Jūsu pieteikums jau ir iesniegts un gaida apstiprinājumu.');
+                await auth.signOut();
+                return;
+            }
+            
+            await db.collection('pending_users').add({
+                name: user.displayName || user.email.split('@')[0],
+                email: user.email,
+                authProvider: 'google',
+                googleUID: user.uid,
+                photoURL: user.photoURL || null,
+                approved: false,
+                createdAt: timestamp()
+            });
+            
+            console.log('✅ Google lietotājs pievienots pending_users');
+            alert('Paldies! Jūsu pieteikums ir nosūtīts administratoram. Jūs saņemsiet apstiprinājumu pēc pieteikuma apstiprināšanas.');
+            await auth.signOut();
+            showPage('registerSuccessPage');
+        }
+        
+    } catch (error) {
+        console.error('Google Sign-In kļūda:', error);
+        if (error.code === 'auth/popup-closed-by-user') {
+            // Lietotājs aizvēra popup - nav jārāda kļūda
+            return;
+        }
+        alert('Kļūda ar Google ielogošanos: ' + error.message);
+    }
+});
+
+// ============================================
+// REĢISTRĀCIJAS FORMA (Email/Password)
 // ============================================
 document.getElementById('registerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const name = document.getElementById('regName').value.trim();
     const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const passwordConfirm = document.getElementById('regPasswordConfirm').value;
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const passwordConfirm = document.getElementById('regPasswordConfirm').value;
+    
+    // Paroles validācija
+    if (password !== passwordConfirm) {
+        alert('Paroles nesakrīt! Lūdzu pārbaudiet un mēģiniet vēlreiz.');
+        return;
+    }
+    
+    if (password.length < 6) {
+        alert('Parole ir pārāk īsa! Minimums 6 simboli.');
+        return;
+    }
     
     // 🤣 JOKU LAUKU BRĪDINĀJUMS
     const personCode = document.getElementById('regPersonCode').value;
@@ -197,10 +275,12 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             return;
         }
         
-        // Saglabājam pending lietotāju
+        // Saglabājam pending lietotāju AR PAROLI
         const pendingUser = {
             name: name,
             email: email,
+            password: password, // Saglabājam paroli (Firebase Authentication to šifrēs)
+            authProvider: 'email',
             approved: false,
             createdAt: timestamp()
         };

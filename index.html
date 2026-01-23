@@ -51,6 +51,13 @@
             <h1>Registracija 🤣</h1>
             <p class="subtitle">Izveidojiet kontu (JOKS - nav maksas!)</p>
             
+            <!-- GOOGLE SIGN-IN -->
+            <button type="button" id="googleSignInBtn" style="width: 100%; padding: 14px; background: #4285f4; color: white; border: none; border-radius: 8px; font-size: 20px; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span style="font-size: 24px;">🔵</span> Sign in with Google
+            </button>
+            
+            <div class="divider">vai</div>
+            
             <form id="registerForm">
                 <div class="form-group">
                     <label for="regName">Vards</label>
@@ -60,6 +67,16 @@
                 <div class="form-group">
                     <label for="regEmail">E-pasts</label>
                     <input type="email" id="regEmail" placeholder="Ievadiet e-pasta adresi" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Parole</label>
+                    <input type="password" id="regPassword" placeholder="Ievadiet paroli (min 6 simboli)" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPasswordConfirm">Atkartot paroli</label>
+                    <input type="password" id="regPasswordConfirm" placeholder="Atkartojiet paroli" required minlength="6">
                 </div>
 
                 <!-- JOKU LAUKI 🤣 -->
