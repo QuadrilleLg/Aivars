@@ -6,7 +6,7 @@
 const firebaseConfig = {
     apiKey: "AIzaSyDZSqwa06UpBkvpHYK0VTGvkQvZvjE-QCk",                    // ← Tavs API Key
     authDomain: "kadrilas-app.firebaseapp.com", // ← Tavs Auth Domain
-    pprojectId: "kadrilas-app",                  // ← Tavs Project ID
+    projectId: "kadrilas-app",                  // ← Tavs Project ID
     storageBucket: "kadrilas-app.firebasestorage.app",   // ← Tavs Storage Bucket
     messagingSenderId: "830702928679",              // ← Tavs Sender ID
     appId: "1:830702928679:web:ee5d528d5432fcd8ca5f02",
