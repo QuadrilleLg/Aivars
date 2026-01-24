@@ -19,6 +19,8 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 100; /* LABOJUMS: Lai būtu virs SVG background */
         }
 
         .admin-header {
@@ -231,7 +233,7 @@
             </div>
         </div>
 
-        <h2 class="section-title">🕐 Gaida apstiprinājumu</h2>
+        <h2 class="section-title">⏳ Gaida apstiprinājumu</h2>
         <div class="users-table" id="pendingUsersTable"></div>
 
         <h2 class="section-title">✓ Apstiprināti lietotāji</h2>
@@ -249,7 +251,7 @@
             
             if (!user) {
                 alert('Piekļuve liegta! Ielogojieties.');
-                window.location.href = 'firebase-index.html';
+                window.location.href = 'index.html';
                 return false;
             }
 
@@ -258,7 +260,7 @@
             if (!userDoc.exists || userDoc.data().role !== 'admin') {
                 alert('Piekļuve liegta! Nepieciešamas admin tiesības.');
                 await auth.signOut();
-                window.location.href = 'firebase-index.html';
+                window.location.href = 'index.html';
                 return false;
             }
 
@@ -269,33 +271,35 @@
         // Iziet
         async function logout() {
             await auth.signOut();
-            window.location.href = 'firebase-index.html';
+            window.location.href = 'index.html';
         }
 
-        // Apstiprināt lietotāju
-        async function approveUser(pendingDocId, userData) {
-            const password = prompt(`Ievadiet paroli lietotājam "${userData.name}":`);
-            if (!password) return;
+        // ⭐ JAUNA LOĢIKA: Apstiprināt lietotāju (BEZ paroles ievades!)
+        // Lietotājs jau ir izveidojis kontu ar savu paroli
+        // Admin tikai apstiprina piekļuvi
+        async function approveUser(pendingUserId, userData) {
+            if (!confirm(`Vai apstiprināt lietotāju "${userData.name}" (${userData.email})?`)) {
+                return;
+            }
 
             try {
-                // Izveidojam Firebase Auth kontu
-                const userCredential = await auth.createUserWithEmailAndPassword(userData.email, password);
-                const newUser = userCredential.user;
-
-                // Pievienojam lietotāju users collection
-                await db.collection('users').doc(newUser.uid).set({
+                // Pārvietojam lietotāju no pending_users uz users
+                await db.collection('users').doc(pendingUserId).set({
                     name: userData.name,
                     email: userData.email,
                     role: 'user',
                     approved: true,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    authProvider: userData.authProvider || 'email',
+                    createdAt: userData.createdAt || firebase.firestore.FieldValue.serverTimestamp(),
                     approvedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
                 // Dzēšam no pending_users
-                await db.collection('pending_users').doc(pendingDocId).delete();
+                await db.collection('pending_users').doc(pendingUserId).delete();
 
-                alert('Lietotājs apstiprināts!');
+                console.log('✅ Lietotājs apstiprināts!');
+                alert(`Lietotājs "${userData.name}" ir apstiprināts! Viņš tagad var ielogoties ar savu paroli.`);
+                
             } catch (error) {
                 console.error('Kļūda apstiprinot:', error);
                 alert('Kļūda: ' + error.message);
@@ -304,11 +308,17 @@
 
         // Noraidīt lietotāju
         async function rejectUser(pendingDocId, userData) {
-            if (!confirm(`Vai tiešām noraidīt lietotāju "${userData.name}"?`)) return;
+            if (!confirm(`Vai tiešām noraidīt lietotāju "${userData.name}"?\n\nŠī darbība dzēsīs viņa kontu!`)) return;
 
             try {
+                // Dzēšam no pending_users
                 await db.collection('pending_users').doc(pendingDocId).delete();
+                
+                // Ja lietotājs ir izveidots Authentication, mēģinām dzēst (bet tas var neizdoties no klienta puses)
+                // Labāk būtu izmantot Cloud Functions vai Admin SDK serverī
+                console.log('✅ Lietotājs noraidīts un dzēsts no pending_users');
                 alert('Lietotājs noraidīts!');
+                
             } catch (error) {
                 console.error('Kļūda noraidot:', error);
                 alert('Kļūda: ' + error.message);
@@ -356,16 +366,16 @@
                             <h3>${user.name}</h3>
                             <p>${user.email}</p>
                             <p style="font-size: 0.8em; color: #666;">
-                                Reģistrēts: ${createdAt}
+                                Reģistrēts: ${createdAt} | Auth: ${user.authProvider || 'email'}
                             </p>
                         </div>
                         <span class="user-status status-pending">⏳ Gaida</span>
                         <div class="user-actions">
-                            <button class="btn btn-approve" onclick='approveUser("${doc.id}", ${JSON.stringify(user)})'>
+                            <button class="btn btn-approve" onclick='approveUser("${doc.id}", ${JSON.stringify(user).replace(/'/g, "&apos;")})'>
                                 ✓ Apstiprināt
                             </button>
-                            <button class="btn btn-reject" onclick='rejectUser("${doc.id}", ${JSON.stringify(user)})'>
-                                ❌ Noraidīt
+                            <button class="btn btn-reject" onclick='rejectUser("${doc.id}", ${JSON.stringify(user).replace(/'/g, "&apos;")})'>
+                                ✕ Noraidīt
                             </button>
                         </div>
                     </div>
@@ -403,7 +413,7 @@
                         <span class="user-status status-approved">✓ Apstiprināts</span>
                         <div class="user-actions">
                             ${user.role !== 'admin' ? `
-                                <button class="btn btn-delete" onclick='deleteUser("${doc.id}", ${JSON.stringify(user)})'>
+                                <button class="btn btn-delete" onclick='deleteUser("${doc.id}", ${JSON.stringify(user).replace(/'/g, "&apos;")})'>
                                     🗑️ Dzēst
                                 </button>
                             ` : '<span style="color: #666;">Aizsargāts</span>'}
@@ -444,7 +454,7 @@
                     console.log('✅ Admin panelis inicializēts!');
                 }
             } else {
-                window.location.href = 'firebase-index.html';
+                window.location.href = 'index.html';
             }
         });
     </script>

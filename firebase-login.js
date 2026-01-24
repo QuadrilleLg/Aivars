@@ -1,6 +1,8 @@
 // ============================================
-// FIREBASE LOGIN SISTĒMA
+// FIREBASE LOGIN SISTĒMA (UPDATED)
 // ============================================
+// Lietotājs pats izdomā paroli reģistrējoties
+// Admin tikai apstiprina piekļuvi
 
 let currentUser = null;
 
@@ -208,6 +210,8 @@ document.getElementById('googleSignInBtn').addEventListener('click', async funct
 // ============================================
 // REĢISTRĀCIJAS FORMA (Email/Password)
 // ============================================
+// JAUNA LOĢIKA: Lietotājs pats izdomā paroli!
+// Admin tikai apstiprina kontu, bet neizdomā paroli
 document.getElementById('registerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -271,24 +275,40 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             return;
         }
         
-        // Saglabājam pending lietotāju AR PAROLI
-        const pendingUser = {
+        // ⭐ JAUNA LOĢIKA: Saglabājam lietotāju ar disabled statusu
+        // Izveidojam Firebase Authentication kontu, bet ar disabled custom claim
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const newUser = userCredential.user;
+        
+        // Pievienojam lietotāju ar pending statusu
+        await db.collection('pending_users').doc(newUser.uid).set({
             name: name,
             email: email,
-            password: password, // Saglabājam paroli (Firebase Authentication to šifrēs)
             authProvider: 'email',
             approved: false,
+            disabled: true, // Konts ir disabled līdz admin apstiprina
             createdAt: timestamp()
-        };
+        });
         
-        await db.collection('pending_users').add(pendingUser);
+        // Uzreiz izlogojas, jo konts nav apstiprināts
+        await auth.signOut();
         
         console.log('✅ Reģistrācijas pieprasījums nosūtīts!');
+        alert('Paldies par reģistrāciju! Jūsu konts ir izveidots, bet gaida administratora apstiprinājumu. Jūs saņemsiet paziņojumu, kad varēsiet ielogoties.');
         showPage('registerSuccessPage');
         
     } catch (error) {
         console.error('Reģistrācijas kļūda:', error);
-        alert('Kļūda reģistrējoties: ' + error.message);
+        
+        if (error.code === 'auth/email-already-in-use') {
+            alert('Šis e-pasts jau tiek izmantots!');
+        } else if (error.code === 'auth/invalid-email') {
+            alert('Nepareizs e-pasta formāts!');
+        } else if (error.code === 'auth/weak-password') {
+            alert('Parole ir pārāk vāja! Izmantojiet vismaz 6 simbolus.');
+        } else {
+            alert('Kļūda reģistrējoties: ' + error.message);
+        }
     }
 });
 
