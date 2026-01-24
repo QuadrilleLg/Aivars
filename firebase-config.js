@@ -4,12 +4,13 @@
 // AIZPILDI AR SAVIEM DATIEM no Firebase Console!
 
 const firebaseConfig = {
-    apiKey: "AIzaSy...",                    // ← Tavs API Key
-    authDomain: "tavs-projekts.firebaseapp.com",  // ← Tavs Auth Domain
-    projectId: "tavs-projekts",                   // ← Tavs Project ID
-    storageBucket: "tavs-projekts.appspot.com",   // ← Tavs Storage Bucket
-    messagingSenderId: "123456789",               // ← Tavs Sender ID
-    appId: "1:123456789:web:abc123..."           // ← Tavs App ID
+    apiKey: "AIzaSyDZSqwa06UpBkvpHYK0VTGvkQvZvjE-QCk",                    // ← Tavs API Key
+    authDomain: "kadrilas-app.firebaseapp.com", // ← Tavs Auth Domain
+    pprojectId: "kadrilas-app",                  // ← Tavs Project ID
+    storageBucket: "kadrilas-app.firebasestorage.app",   // ← Tavs Storage Bucket
+    messagingSenderId: "830702928679",              // ← Tavs Sender ID
+    appId: "1:830702928679:web:ee5d528d5432fcd8ca5f02",
+    measurementId: "G-Q3BD0MCBQ0" // ← Tavs App ID
 };
 
 // Inicializē Firebase
