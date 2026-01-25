@@ -128,7 +128,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         if (userData.role === 'admin') {
             window.location.href = 'firebase-admin.html';
         } else {
-            window.location.href = 'music-index.html';
+            window.location.href = 'music-index-youtube.html';
         }
         
     } catch (error) {
