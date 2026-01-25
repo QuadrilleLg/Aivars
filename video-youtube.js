@@ -66,7 +66,8 @@ function createSimpleIframe(videoId, startTime) {
                       '?start=' + Math.floor(startTime) +
                       '&autoplay=1' +
                       '&rel=0' +
-                      '&modestbranding=1';
+                      '&modestbranding=1' +
+                      '&origin=' + encodeURIComponent(window.location.origin);
     
     const iframe = document.createElement('iframe');
     iframe.src = iframeUrl;
