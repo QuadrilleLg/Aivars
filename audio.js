@@ -39,11 +39,11 @@ class AudioManager {
                 video: {
                     youtube_id: "yALk8KpCwKw",
                     fragments: {
-                        pilna: { start: "0:00", end: "4:00" },      // Pilnā dziesma
-                        ievads: { start: "0:00", end: "0:15" },     // Ievads
-                        pamata: { start: "0:15", end: "1:30" },     // Pamata soļi
-                        griezieni: { start: "1:30", end: "2:45" },  // Griezieni
-                        kombinacija: { start: "2:45", end: "4:00" } // Noslēgums
+                        pilna: { start: "0:00", end: "1:45" },      // Pilnā dziesma
+                        sveicināšanās: { start: "0:00", end: "0:15" },     // Ievads
+                        
+                        griezieni: { start: "0:17", end: "0:25" },  // Griezieni
+                        
                     }
                 },
                 timemarks: {
