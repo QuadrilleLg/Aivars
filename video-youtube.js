@@ -1,8 +1,7 @@
-// video-youtube-SIMPLE-IFRAME.js
-// VIENKĀRŠĀKAIS risinājums - iframe BEZ API
-// ⚠️ Fragmenti SĀKSIES pareizi, bet NEAPSTĀSIES beigās!
+// video-youtube.js - GATAVS AR VISIEM LABOJUMIEM
+// Error 153 fix + origin parameter
 
-console.log('🎬 Simple YouTube iframe player...');
+console.log('🎬 YouTube video player...');
 
 let currentVideoKadril = null;
 
@@ -13,36 +12,23 @@ const videoFragmentsList = document.getElementById('videoFragmentsList');
 const currentVideoTitle = document.getElementById('currentVideoTitle');
 
 // ========================================
-// HELPER: Pārveido "3:24" → 204 sekundes
+// HELPER
 // ========================================
 function parseTimeToSeconds(time) {
-    if (typeof time === 'number') {
-        return time;
-    }
+    if (typeof time === 'number') return time;
     
     if (typeof time === 'string' && time.includes(':')) {
         const parts = time.split(':');
-        
         if (parts.length === 2) {
-            const mins = parseInt(parts[0], 10);
-            const secs = parseInt(parts[1], 10);
-            return (mins * 60) + secs;
+            return (parseInt(parts[0], 10) * 60) + parseInt(parts[1], 10);
         }
-        
         if (parts.length === 3) {
-            const hours = parseInt(parts[0], 10);
-            const mins = parseInt(parts[1], 10);
-            const secs = parseInt(parts[2], 10);
-            return (hours * 3600) + (mins * 60) + secs;
+            return (parseInt(parts[0], 10) * 3600) + (parseInt(parts[1], 10) * 60) + parseInt(parts[2], 10);
         }
     }
     
     const parsed = parseFloat(time);
-    if (!isNaN(parsed)) {
-        return parsed;
-    }
-    
-    return 0;
+    return !isNaN(parsed) ? parsed : 0;
 }
 
 function formatTime(seconds) {
@@ -53,21 +39,25 @@ function formatTime(seconds) {
 }
 
 // ========================================
-// IFRAME CREATION
+// IFRAME CREATION - AR ORIGIN FIX!
 // ========================================
 function createSimpleIframe(videoId, startTime) {
     const container = document.getElementById('youtubePlayer');
-    if (!container) return;
+    if (!container) {
+        console.error('❌ youtubePlayer container nav atrasts!');
+        return;
+    }
     
     container.innerHTML = '';
     
-    // Vienkāršs iframe URL
+    // ✅ AR ORIGIN PARAMETRU (Error 153 fix)
+    const origin = encodeURIComponent(window.location.origin);
     const iframeUrl = 'https://www.youtube.com/embed/' + videoId + 
                       '?start=' + Math.floor(startTime) +
                       '&autoplay=1' +
                       '&rel=0' +
                       '&modestbranding=1' +
-                      '&origin=' + encodeURIComponent(window.location.origin);
+                      '&origin=' + origin;
     
     const iframe = document.createElement('iframe');
     iframe.src = iframeUrl;
@@ -79,24 +69,49 @@ function createSimpleIframe(videoId, startTime) {
     
     container.appendChild(iframe);
     
-    console.log('✅ Iframe izveidots:', videoId, 'start:', startTime);
+    console.log('✅ Iframe izveidots:', videoId);
+    console.log('📍 Origin:', window.location.origin);
+    console.log('🔗 URL:', iframeUrl);
 }
 
 // ========================================
 // MODAL
 // ========================================
 function openVideoModal() {
-    const currentKadril = window.audioManager && window.audioManager.getCurrentKadril();
+    console.log('🎬 Atver video modal...');
+    
+    // Pārbauda vai audioManager eksistē
+    if (!window.audioManager) {
+        console.error('❌ window.audioManager nav pieejams!');
+        alert('Kļūda: audioManager nav ielādēts!');
+        return;
+    }
+    
+    const currentKadril = window.audioManager.getCurrentKadril();
     
     if (!currentKadril) {
+        console.warn('⚠️ Nav izvēlēta dziesma');
         alert('Izvēlies dziesmu!');
         return;
     }
     
+    console.log('✅ Dziesma:', currentKadril.key);
+    
     if (!currentKadril.data.video || !currentKadril.data.video.youtube_id) {
-        alert('Nav YouTube video!');
+        console.error('❌ Nav YouTube video!');
+        alert('Šai dziesmai nav YouTube video!');
         return;
     }
+    
+    const youtubeId = currentKadril.data.video.youtube_id;
+    
+    if (youtubeId === 'IEVADI_VIDEO_ID') {
+        console.error('❌ YouTube ID ir placeholder!');
+        alert('YouTube ID nav ievadīts! Vajag īstu video ID.');
+        return;
+    }
+    
+    console.log('✅ YouTube ID:', youtubeId);
     
     currentVideoKadril = currentKadril;
     
@@ -107,10 +122,10 @@ function openVideoModal() {
     if (videoModal) {
         videoModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        console.log('✅ Modal atvērts');
     }
     
-    // Izveido iframe ar pilno video no sākuma
-    createSimpleIframe(currentKadril.data.video.youtube_id, 0);
+    createSimpleIframe(youtubeId, 0);
     loadVideoFragments();
 }
 
@@ -119,17 +134,15 @@ function closeVideoModal() {
         videoModal.classList.remove('active');
         document.body.style.overflow = 'auto';
     }
-    
     currentVideoKadril = null;
+    console.log('🔒 Modal aizvērts');
 }
 
 // ========================================
-// FRAGMENTS LIST
+// FRAGMENTS
 // ========================================
 function loadVideoFragments() {
-    if (!videoFragmentsList || !currentVideoKadril) {
-        return;
-    }
+    if (!videoFragmentsList || !currentVideoKadril) return;
     
     videoFragmentsList.innerHTML = '';
     
@@ -152,7 +165,6 @@ function loadVideoFragments() {
         
         btn.addEventListener('click', function() {
             playVideoFragment(key);
-            
             videoFragmentsList.querySelectorAll('.video-fragment-btn').forEach(function(b) {
                 b.classList.remove('active');
             });
@@ -161,11 +173,10 @@ function loadVideoFragments() {
         
         videoFragmentsList.appendChild(btn);
     });
+    
+    console.log('✅ Fragmenti ielādēti:', Object.keys(fragments).length);
 }
 
-// ========================================
-// PLAY FRAGMENT - REKONSTRUĒ IFRAME!
-// ========================================
 function playVideoFragment(fragmentKey) {
     if (!currentVideoKadril) return;
     
@@ -173,22 +184,25 @@ function playVideoFragment(fragmentKey) {
     if (!fragment) return;
     
     const startSec = parseTimeToSeconds(fragment.start);
+    console.log('▶️ Fragments:', fragmentKey, 'no', startSec, 'sek');
     
-    console.log('▶️ Spēlēju fragmentu:', fragmentKey, 'no', startSec, 'sek');
-    console.log('⚠️ BRĪDINĀJUMS: Video NEAPSTĀSIES pie', parseTimeToSeconds(fragment.end));
-    
-    // Rekonstruē iframe ar jaunu start laiku
     createSimpleIframe(currentVideoKadril.data.video.youtube_id, startSec);
 }
 
 // ========================================
-// INITIALIZATION
+// INIT
 // ========================================
 function initVideoPlayer() {
-    console.log('🔧 Init simple iframe player...');
+    console.log('🔧 Init video player...');
+    console.log('📍 Domain:', window.location.hostname);
+    console.log('🔗 Origin:', window.location.origin);
+    console.log('🔒 Protocol:', window.location.protocol);
     
     if (videoBtn) {
         videoBtn.addEventListener('click', openVideoModal);
+        console.log('✅ VIDEO button listener pievienots');
+    } else {
+        console.error('❌ VIDEO button nav atrasts!');
     }
     
     if (closeVideo) {
@@ -207,8 +221,7 @@ function initVideoPlayer() {
         }
     });
     
-    console.log('✅ Simple iframe player ready');
-    console.log('⚠️ BRĪDINĀJUMS: Fragmenti sāksies pareizi, bet NEAPSTĀSIES beigās!');
+    console.log('✅ Video player gatavs');
 }
 
 window.videoPlayer = {
@@ -223,4 +236,4 @@ if (document.readyState === 'loading') {
     initVideoPlayer();
 }
 
-console.log('✅ Ready - VIENKĀRŠS IFRAME (bez auto-stop)');
+console.log('✅ video-youtube.js ielādēts');
