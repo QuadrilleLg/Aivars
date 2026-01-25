@@ -37,7 +37,7 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/rusins/rusinsfull.mp3'
                 },
                 video: {
-                    youtube_id: "https://youtu.be/Qb63Y-XFm1w",
+                    youtube_id: "Qb63Y-XFm1w",
                     fragments: {
                         pilna: { start: "0:00", end: "4:00" },      // Pilnā dziesma
                         ievads: { start: "0:00", end: "0:15" },     // Ievads
