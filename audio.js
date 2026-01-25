@@ -1,4 +1,5 @@
-// audio.js - AR YOUTUBE VIDEO VISĀM DZIESMĀM
+// audio.js - AR MINŪTES:SEKUNDES FORMĀTU!
+// Tagad vari rakstīt start: "3:24" tā vietā lai 204!
 
 class AudioManager {
     constructor() {
@@ -20,10 +21,13 @@ class AudioManager {
             'adelaida': 'MUSIC/voice_responses/greetings/palidze.mp3'
         };
 
-        // Definējam deju struktūru ar YOUTUBE VIDEO
+        // ========================================
+        // DEJU STRUKTŪRA AR YOUTUBE VIDEO
+        // Formāts: start: "3:24" vai start: 204
+        // ========================================
         this.kadrils = {
             // ========================================
-            // 1️⃣ RUSIŅŠ - JAU GATAVS
+            // 1️⃣ RUSIŅŠ - PARAUGS AR JAUNIEM LAIKIEM
             // ========================================
             'rusiņš': {
                 name: 'Kadriļa Rusiņš',
@@ -35,11 +39,11 @@ class AudioManager {
                 video: {
                     youtube_id: "yALk8KpCwKw",
                     fragments: {
-                        pilna: { start: 0, end: 240 },
-                        ievads: { start: 0, end: 15 },
-                        pamata: { start: 15, end: 90 },
-                        griezieni: { start: 90, end: 165 },
-                        kombinacija: { start: 165, end: 240 }
+                        pilna: { start: "0:00", end: "4:00" },      // Pilnā dziesma
+                        ievads: { start: "0:00", end: "0:15" },     // Ievads
+                        pamata: { start: "0:15", end: "1:30" },     // Pamata soļi
+                        griezieni: { start: "1:30", end: "2:45" },  // Griezieni
+                        kombinacija: { start: "2:45", end: "4:00" } // Noslēgums
                     }
                 },
                 timemarks: {
@@ -79,10 +83,10 @@ class AudioManager {
                 video: {
                     youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 180 },        // ⬅️ Mainīt sekundes
-                        sakums: { start: 0, end: 60 },
-                        vidus: { start: 60, end: 120 },
-                        beigas: { start: 120, end: 180 }
+                        pilna: { start: "0:00", end: "3:00" },     // ⬅️ Mainīt!
+                        sakums: { start: "0:00", end: "1:00" },    // Piemēram "1:23"
+                        vidus: { start: "1:00", end: "2:00" },
+                        beigas: { start: "2:00", end: "3:00" }
                     }
                 },
                 keywords: ['padespaņs', 'spainis', 'bada spains']
@@ -102,10 +106,10 @@ class AudioManager {
                 video: {
                     youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 180 },        // ⬅️ Mainīt sekundes
-                        sakums: { start: 0, end: 60 },
-                        vidus: { start: 60, end: 120 },
-                        beigas: { start: 120, end: 180 }
+                        pilna: { start: "0:00", end: "3:00" },     // ⬅️ Mainīt!
+                        sakums: { start: "0:00", end: "1:00" },
+                        vidus: { start: "1:00", end: "2:00" },
+                        beigas: { start: "2:00", end: "3:00" }
                     }
                 },
                 keywords: ['narečenku', 'uz upi', 'uz upīti']
@@ -126,15 +130,15 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/berzgale/berzgalefull_v1.mp3'
                 },
                 video: {
-                    youtube_id: "_f_B58CEZNc",  // ⬅️ Ievadi YouTube ID
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 300 },              // ⬅️ Mainīt sekundes
-                        pirmais_gabals: { start: 0, end: 50 },
-                        otrais_gabals: { start: 50, end: 100 },
-                        tresais_gabals: { start: 100, end: 169 },
-                        ceturtais_gabals: { start: 169, end: 204 },
-                        piektais_gabals: { start: 204 , end: 250 },
-                        sestais_gabals: { start: 250, end: 300 }
+                        pilna: { start: "0:00", end: "5:00" },           // ⬅️ Mainīt!
+                        pirmais_gabals: { start: "0:00", end: "0:50" },
+                        otrais_gabals: { start: "0:50", end: "1:40" },
+                        tresais_gabals: { start: "1:40", end: "2:30" },
+                        ceturtais_gabals: { start: "2:30", end: "3:20" },
+                        piektais_gabals: { start: "3:20", end: "4:10" },
+                        sestais_gabals: { start: "4:10", end: "5:00" }
                     }
                 },
                 timemarks: {
@@ -196,13 +200,13 @@ class AudioManager {
                 video: {
                     youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 300 },              // ⬅️ Mainīt sekundes
-                        pirmais_gabals: { start: 0, end: 50 },
-                        otrais_gabals: { start: 50, end: 100 },
-                        tresais_gabals: { start: 100, end: 150 },
-                        ceturtais_gabals: { start: 150, end: 200 },
-                        piektais_gabals: { start: 200, end: 250 },
-                        sestais_gabals: { start: 250, end: 300 }
+                        pilna: { start: "0:00", end: "5:00" },           // ⬅️ Mainīt!
+                        pirmais_gabals: { start: "0:00", end: "0:50" },
+                        otrais_gabals: { start: "0:50", end: "1:40" },
+                        tresais_gabals: { start: "1:40", end: "2:30" },
+                        ceturtais_gabals: { start: "2:30", end: "3:20" },
+                        piektais_gabals: { start: "3:20", end: "4:10" },
+                        sestais_gabals: { start: "4:10", end: "5:00" }
                     }
                 },
                 timemarks: {
@@ -248,8 +252,8 @@ class AudioManager {
                 video: {
                     youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 200 },        // ⬅️ Mainīt sekundes
-                        sakums: { start: 0, end: 50 }
+                        pilna: { start: "0:00", end: "3:20" },     // ⬅️ Mainīt!
+                        sakums: { start: "0:00", end: "0:50" }
                     }
                 },
                 keywords: ['līgo', 'līgu']
@@ -270,11 +274,11 @@ class AudioManager {
                 video: {
                     youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 240 },          // ⬅️ Mainīt sekundes
-                        sakums: { start: 0, end: 60 },
-                        vidus: { start: 60, end: 120 },
-                        otra_puse: { start: 120, end: 180 },
-                        beigas: { start: 180, end: 240 }
+                        pilna: { start: "0:00", end: "4:00" },         // ⬅️ Mainīt!
+                        sakums: { start: "0:00", end: "1:00" },
+                        vidus: { start: "1:00", end: "2:00" },
+                        otra_puse: { start: "2:00", end: "3:00" },
+                        beigas: { start: "3:00", end: "4:00" }
                     }
                 },
                 keywords: ['berlīns', 'berlīnu', 'berlīnā']
@@ -294,10 +298,10 @@ class AudioManager {
                 video: {
                     youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 180 },        // ⬅️ Mainīt sekundes
-                        sakums: { start: 0, end: 60 },
-                        vidus: { start: 60, end: 120 },
-                        beigas: { start: 120, end: 180 }
+                        pilna: { start: "0:00", end: "3:00" },     // ⬅️ Mainīt!
+                        sakums: { start: "0:00", end: "1:00" },
+                        vidus: { start: "1:00", end: "2:00" },
+                        beigas: { start: "2:00", end: "3:00" }
                     }
                 },
                 keywords: ['sarkanais', 'sarkano', 'baltais']
@@ -319,12 +323,12 @@ class AudioManager {
                 video: {
                     youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
                     fragments: {
-                        pilna: { start: 0, end: 240 },          // ⬅️ Mainīt sekundes
-                        darzins: { start: 0, end: 48 },
-                        sakums: { start: 48, end: 96 },
-                        vidus: { start: 96, end: 144 },
-                        otra_puse: { start: 144, end: 192 },
-                        beigas: { start: 192, end: 240 }
+                        pilna: { start: "0:00", end: "4:00" },         // ⬅️ Mainīt!
+                        darzins: { start: "0:00", end: "0:48" },
+                        sakums: { start: "0:48", end: "1:36" },
+                        vidus: { start: "1:36", end: "2:24" },
+                        otra_puse: { start: "2:24", end: "3:12" },
+                        beigas: { start: "3:12", end: "4:00" }
                     }
                 },
                 keywords: ['family jig', 'džīga', 'žīga', 'brambergas']
@@ -463,7 +467,7 @@ class AudioManager {
         }
     }
     
-    // Jauna metode - atgriež pašreizējo kadriļu ar video datiem
+    // Atgriež pašreizējo kadriļu ar video datiem
     getCurrentKadril() {
         if (this.currentKadril && this.kadrils[this.currentKadril]) {
             return {
@@ -474,7 +478,7 @@ class AudioManager {
         return null;
     }
     
-    // Jauna metode - iestatīt aktīvo kadriļu
+    // Iestatīt aktīvo kadriļu
     setCurrentKadril(kadrilKey) {
         if (this.kadrils[kadrilKey]) {
             this.currentKadril = kadrilKey;

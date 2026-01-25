@@ -1,5 +1,5 @@
-// video-youtube.js - VIENKĀRŠA un PAREIZA versija
-// 16:9 HORIZONTĀLS video (width LIELĀKS par height)
+// video-youtube.js - AR MINŪTES:SEKUNDES FORMĀTU
+// Pieņem GAN 204 GAN "3:24"!
 
 console.log('🎬 YouTube video player...');
 
@@ -16,6 +16,49 @@ const videoFragmentsList = document.getElementById('videoFragmentsList');
 const currentVideoTitle = document.getElementById('currentVideoTitle');
 const videoTimer = document.getElementById('videoTimer');
 
+// ========================================
+// HELPER: Pārveido "3:24" → 204 sekundes
+// ========================================
+function parseTimeToSeconds(time) {
+    // Ja jau ir skaitlis, atgriež to
+    if (typeof time === 'number') {
+        return time;
+    }
+    
+    // Ja ir string "3:24"
+    if (typeof time === 'string' && time.includes(':')) {
+        const parts = time.split(':');
+        
+        if (parts.length === 2) {
+            // Formāts "M:SS" vai "MM:SS"
+            const mins = parseInt(parts[0], 10);
+            const secs = parseInt(parts[1], 10);
+            return (mins * 60) + secs;
+        }
+        
+        if (parts.length === 3) {
+            // Formāts "H:MM:SS"
+            const hours = parseInt(parts[0], 10);
+            const mins = parseInt(parts[1], 10);
+            const secs = parseInt(parts[2], 10);
+            return (hours * 3600) + (mins * 60) + secs;
+        }
+    }
+    
+    // Ja ir string skaitlis "204"
+    const parsed = parseFloat(time);
+    if (!isNaN(parsed)) {
+        return parsed;
+    }
+    
+    // Fallback
+    console.warn('Neizdevās konvertēt laiku:', time);
+    return 0;
+}
+
+// ========================================
+// YOUTUBE API LOADING
+// ========================================
 function loadYouTubeAPI() {
     if (window.YT && window.YT.Player) {
         return Promise.resolve();
@@ -23,7 +66,7 @@ function loadYouTubeAPI() {
     
     return new Promise(function(resolve, reject) {
         const timeout = setTimeout(function() {
-            reject(new Error('Timeout'));
+            reject(new Error('YouTube API timeout (10s)'));
         }, 10000);
         
         window.onYouTubeIframeAPIReady = function() {
@@ -52,8 +95,16 @@ function initVideoPlayer() {
         closeVideo.addEventListener('click', closeVideoModal);
     }
     
+    // Click uz fonu aizvēr modal
     window.addEventListener('click', function(e) {
         if (e.target === videoModal) {
+            closeVideoModal();
+        }
+    });
+    
+    // ESC taustiņš aizvēr modal
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && videoModal && videoModal.classList.contains('active')) {
             closeVideoModal();
         }
     });
@@ -86,7 +137,8 @@ function createYouTubePlayer(videoId) {
                 playerVars: {
                     playsinline: 1,
                     rel: 0,
-                    modestbranding: 1
+                    modestbranding: 1,
+                    origin: window.location.origin  // FIX priekš production!
                 },
                 events: {
                     onReady: function(event) {
@@ -101,6 +153,11 @@ function createYouTubePlayer(videoId) {
                             msg = 'Video nav embeddable! Iestatījumos: Allow embedding ON';
                         }
                         reject(new Error(msg));
+                    },
+                    onStateChange: function(event) {
+                        if (event.data === 0) { // Video beidzies
+                            stopFragmentCheck();
+                        }
                     }
                 }
             });
@@ -182,8 +239,12 @@ function loadVideoFragments() {
         const btn = document.createElement('button');
         btn.className = 'video-fragment-btn';
         
+        // Konvertē laiku uz sekundēm ⬅️ SVARĪGI!
+        const startSec = parseTimeToSeconds(frag.start);
+        const endSec = parseTimeToSeconds(frag.end);
+        
         const name = key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ');
-        btn.textContent = name + ' (' + formatTime(frag.start) + ' - ' + formatTime(frag.end) + ')';
+        btn.textContent = name + ' (' + formatTime(startSec) + ' - ' + formatTime(endSec) + ')';
         
         btn.addEventListener('click', function() {
             playVideoFragment(key);
@@ -205,9 +266,14 @@ function playVideoFragment(fragmentKey) {
     if (!fragment) return;
     
     stopFragmentCheck();
-    currentFragmentEnd = fragment.end;
     
-    youtubePlayer.seekTo(fragment.start, true);
+    // Konvertē laiku uz sekundēm ⬅️ SVARĪGI!
+    const startSec = parseTimeToSeconds(fragment.start);
+    const endSec = parseTimeToSeconds(fragment.end);
+    
+    currentFragmentEnd = endSec;
+    
+    youtubePlayer.seekTo(startSec, true);
     youtubePlayer.playVideo();
     startFragmentCheck();
 }
