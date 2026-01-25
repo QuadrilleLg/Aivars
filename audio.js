@@ -489,7 +489,3 @@ class AudioManager {
 }
 
 export const audioManager = new AudioManager();
-
-// ✅ SVARĪGI! Lai video-youtube.js var piekļūt
-window.audioManager = audioManager;
-console.log('✅ audioManager pieejams caur window');
