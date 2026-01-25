@@ -40,9 +40,9 @@ class AudioManager {
                     youtube_id: "yALk8KpCwKw",
                     fragments: {
                         pilna: { start: "0:00", end: "1:45" },      // Pilnā dziesma
-                        sveicināšanās: { start: "0:00", end: "0:15" },     // Ievads
+                        sveicināšanās: { start: "0:00", end: "0:17" },     // Ievads
                         
-                        griezieni: { start: "0:17", end: "0:25" },  // Griezieni
+                        griezieni: { start: "0:17", end: "0:27" },  // Griezieni
                         
                     }
                 },
