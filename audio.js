@@ -1,4 +1,4 @@
-// audio.js
+// audio.js - AR YOUTUBE VIDEO VISĀM DZIESMĀM
 
 class AudioManager {
     constructor() {
@@ -20,8 +20,11 @@ class AudioManager {
             'adelaida': 'MUSIC/voice_responses/greetings/palidze.mp3'
         };
 
-        // Definējam deju struktūru ar atsevišķu VIDEO objektu
+        // Definējam deju struktūru ar YOUTUBE VIDEO
         this.kadrils = {
+            // ========================================
+            // 1️⃣ RUSIŅŠ - JAU GATAVS
+            // ========================================
             'rusiņš': {
                 name: 'Kadriļa Rusiņš',
                 fragments: {
@@ -30,16 +33,15 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/rusins/rusinsfull.mp3'
                 },
                 video: {
-            youtube_id: "yALk8KpCwKw",  // ⬅️ Jūsu YouTube video ID
-            
-            fragments: {
-                pilna: { start: 0, end: 240 },
-                ievads: { start: 0, end: 15 },
-                pamata: { start: 15, end: 90 },
-                griezieni: { start: 90, end: 165 },
-                kombinacija: { start: 165, end: 240 }
-            }
-        },
+                    youtube_id: "yALk8KpCwKw",
+                    fragments: {
+                        pilna: { start: 0, end: 240 },
+                        ievads: { start: 0, end: 15 },
+                        pamata: { start: 15, end: 90 },
+                        griezieni: { start: 90, end: 165 },
+                        kombinacija: { start: 165, end: 240 }
+                    }
+                },
                 timemarks: {
                     'pilnā': [
                         { time: 0, text: "Sākuma nostāšanās - četri pāri kvadrātā" },
@@ -63,6 +65,9 @@ class AudioManager {
                 keywords: ['rusiņš', 'rusiņu', 'russu']
             },
             
+            // ========================================
+            // 2️⃣ PADESPAŅS
+            // ========================================
             'padespaņs': {
                 name: 'Padespaņs',
                 fragments: {
@@ -72,13 +77,20 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/padespans/Padespaan_v1.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/padespans/padespans.mp4',
-                    'sākums': 'VIDEO/kadrilas/padespans/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/padespans/vidus.mp4',
-                    'beigas': 'VIDEO/kadrilas/padespans/beigas.mp4'
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 180 },        // ⬅️ Mainīt sekundes
+                        sakums: { start: 0, end: 60 },
+                        vidus: { start: 60, end: 120 },
+                        beigas: { start: 120, end: 180 }
+                    }
                 },
                 keywords: ['padespaņs', 'spainis', 'bada spains']
             },
+            
+            // ========================================
+            // 3️⃣ NAREČENKA
+            // ========================================
             'narečenka': {
                 name: 'Narečenka',
                 fragments: {
@@ -88,13 +100,20 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/narecenka/Narechenka.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/narecenka/narecenka.mp4',
-                    'sākums': 'VIDEO/kadrilas/narecenka/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/narecenka/vidus.mp4',
-                    'beigas': 'VIDEO/kadrilas/narecenka/beigas.mp4'
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 180 },        // ⬅️ Mainīt sekundes
+                        sakums: { start: 0, end: 60 },
+                        vidus: { start: 60, end: 120 },
+                        beigas: { start: 120, end: 180 }
+                    }
                 },
                 keywords: ['narečenku', 'uz upi', 'uz upīti']
             },
+            
+            // ========================================
+            // 4️⃣ BĒRZGALI
+            // ========================================
             'bērzgali': {
                 name: 'Bērzgales kadriļa!!',
                 fragments: {
@@ -107,22 +126,24 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/berzgale/berzgalefull_v1.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/berzgales/berzgales.mp4',
-                    'pirmais gabals': 'VIDEO/kadrilas/berzgales/pirmais.mp4',
-                    'otrais gabals': 'VIDEO/kadrilas/berzgales/otrais.mp4',
-                    'trešais gabals': 'VIDEO/kadrilas/berzgale/tresais.mp4',
-                    'ceturtais gabals': 'VIDEO/kadrilas/berzgale/ceturtais.mp4',
-                    'piektais gabals': 'VIDEO/kadrilas/berzgale/piektais.mp4',
-                    'sestais gabals': 'VIDEO/kadrilas/berzgale/sestais.mp4'
+                    youtube_id: "_f_B58CEZNc",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 300 },              // ⬅️ Mainīt sekundes
+                        pirmais_gabals: { start: 0, end: 50 },
+                        otrais_gabals: { start: 50, end: 100 },
+                        tresais_gabals: { start: 100, end: 169 },
+                        ceturtais_gabals: { start: 169, end: 204 },
+                        piektais_gabals: { start: 204 , end: 250 },
+                        sestais_gabals: { start: 250, end: 300 }
+                    }
                 },
                 timemarks: {
                     'pirmais gabals': [
-                                { time: 0, text: "V2...PIRMAIS GABALS - gatavojamies" },
-                                { time: 5, text: "Pāru maiņa- pirmie pāri" },
-                                { time: 18, text: "Pāru maiņa- otrie pāri" },
-                                { time: 30, text: "Pāru maiņa- pirmie pāri" },
-                                { time: 42, text: "Pāru maiņa- otrie pāri" },
-                            
+                        { time: 0, text: "V2...PIRMAIS GABALS - gatavojamies" },
+                        { time: 5, text: "Pāru maiņa- pirmie pāri" },
+                        { time: 18, text: "Pāru maiņa- otrie pāri" },
+                        { time: 30, text: "Pāru maiņa- pirmie pāri" },
+                        { time: 42, text: "Pāru maiņa- otrie pāri" }
                     ],
                     'otrais gabals': [
                         { time: 0, text: "Otrais gabals - griezieni" },
@@ -157,6 +178,10 @@ class AudioManager {
                 },
                 keywords: ['bērzgale', 'bērzgali', 'bērzgales']
             },
+            
+            // ========================================
+            // 5️⃣ BUKMUIŽAS
+            // ========================================
             'bukmuižas': {
                 name: 'Bukmuižas kadriļa',
                 fragments: {
@@ -169,188 +194,118 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/bukmuizas/bukmuizasfull_v1.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/berzgales/berzgales.mp4',
-                    'pirmais gabals': 'VIDEO/kadrilas/berzgales/pirmais.mp4',
-                    'otrais gabals': 'VIDEO/kadrilas/berzgales/otrais.mp4',
-                    'trešais gabals': 'VIDEO/kadrilas/berzgale/tresais.mp4',
-                    'ceturtais gabals': 'VIDEO/kadrilas/berzgale/ceturtais.mp4',
-                    'piektais gabals': 'VIDEO/kadrilas/berzgale/piektais.mp4',
-                    'sestais gabals': 'VIDEO/kadrilas/berzgale/sestais.mp4'
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 300 },              // ⬅️ Mainīt sekundes
+                        pirmais_gabals: { start: 0, end: 50 },
+                        otrais_gabals: { start: 50, end: 100 },
+                        tresais_gabals: { start: 100, end: 150 },
+                        ceturtais_gabals: { start: 150, end: 200 },
+                        piektais_gabals: { start: 200, end: 250 },
+                        sestais_gabals: { start: 250, end: 300 }
+                    }
                 },
                 timemarks: {
                     'pirmais gabals': [
-                                { time: 0, text: "V2...PIRMAIS GABALS - gatavojamies" },
-                                { time: 5, text: "Pāru maiņa- pirmie pāri" },
-                                { time: 18, text: "Pāru maiņa- otrie pāri" },
-                                { time: 30, text: "Pāru maiņa- pirmie pāri" },
-                                { time: 42, text: "Pāru maiņa- otrie pāri" },
-                            
+                        { time: 0, text: "Pirmais gabals - sākas" },
+                        { time: 10, text: "Soļi pa labi" },
+                        { time: 20, text: "Grieziens" },
+                        { time: 30, text: "Atpakaļ" }
                     ],
                     'otrais gabals': [
-                        { time: 0, text: "Otrais gabals - griezieni" },
-                        { time: 8, text: "Grieziens ar partneri" },
-                        { time: 16, text: "Grieziens ar pretējo" },
-                        { time: 22, text: "Atpakaļ pie sava" }
+                        { time: 0, text: "Otrais gabals" },
+                        { time: 10, text: "Partneru maiņa" }
                     ],
                     'trešais gabals': [
-                        { time: 0, text: "Trešais gabals - zvaigzne" },
-                        { time: 8, text: "Visi veido zvaigzni" },
-                        { time: 16, text: "Rotācija pa labi" },
-                        { time: 24, text: "Iziet no zvaigznes" }
+                        { time: 0, text: "Trešais gabals" },
+                        { time: 10, text: "Zvaigzne" }
                     ],
                     'ceturtais gabals': [
-                        { time: 0, text: "Ceturtais gabals - ķēde" },
-                        { time: 8, text: "Visi saķeras ķēdē" },
-                        { time: 16, text: "Ķēde kustas pa aploksni" },
-                        { time: 24, text: "Atgriešanās sākuma pozīcijās" }
+                        { time: 0, text: "Ceturtais gabals" },
+                        { time: 10, text: "Ķēde" }
                     ],
                     'piektais gabals': [
-                        { time: 0, text: "Piektais gabals - tilts" },
-                        { time: 8, text: "Divi pāri veido tiltu" },
-                        { time: 16, text: "Citi pāri iet zem tilta" },
-                        { time: 24, text: "Maiņa - jauni pāri veido tiltu" }
+                        { time: 0, text: "Piektais gabals" },
+                        { time: 10, text: "Tilts" }
                     ],
                     'sestais gabals': [
                         { time: 0, text: "Sestais gabals - noslēgums" },
-                        { time: 8, text: "Visi kopā promenāde" },
-                        { time: 16, text: "Liels loks ar visiem" },
-                        { time: 24, text: "Noslēguma paklanīšanās" }
+                        { time: 10, text: "Paklanīšanās" }
                     ]
                 },
-                keywords: ['bērzgale', 'bērzgali', 'bērzgales']
+                keywords: ['bukmuiža', 'bukmuižas']
             },
-            'berlins': {
-                name: 'Bramberģes Berliņš!',
+            
+            // ========================================
+            // 6️⃣ LĪGO
+            // ========================================
+            'līgo': {
+                name: 'Līgo',
                 fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
+                    'sākums': 'MUSIC/kadrilas/adelaida/parts/sakums.mp3',
+                    'pilnā': 'MUSIC/kadrilas/ligo/ligofull_v1.mp3'
+                },
+                video: {
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 200 },        // ⬅️ Mainīt sekundes
+                        sakums: { start: 0, end: 50 }
+                    }
+                },
+                keywords: ['līgo', 'līgu']
+            },
+            
+            // ========================================
+            // 7️⃣ BERLĪNS
+            // ========================================
+            'berlīns': {
+                name: 'Berlīns',
+                fragments: {
                     'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
                     'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
                     'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
                     'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/berlins/berlinsfull_v2.mp3'
+                    'pilnā': 'MUSIC/kadrilas/berlins/berlinsfull_v1.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/berlins/berlins.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/berlins/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/berlins/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/berlins/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/berlins/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/berlins/beigas.mp4'
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 240 },          // ⬅️ Mainīt sekundes
+                        sakums: { start: 0, end: 60 },
+                        vidus: { start: 60, end: 120 },
+                        otra_puse: { start: 120, end: 180 },
+                        beigas: { start: 180, end: 240 }
+                    }
                 },
-                timemarks: {
-                    'dārziņš': [
-                        { time: 0, text: "-----" },
-                        { time: 8, text: "-----" },
-                        { time: 16, text: "-----" },
-                        { time: 24, text: "-----" }
-                    ],
-                    'sākums': [
-                        { time: 0, text: "-----" },
-                        { time: 8, text: "-----" },
-                        { time: 16, text: "Partneru satikšanās centrā" },
-                        { time: 24, text: "Atgriešanās vietās" }
-                    ],
-                    'vidus': [
-                        { time: 0, text: "Vidus - dāmu maiņa" },
-                        { time: 10, text: "Dāmas rotē pa kreisi" },
-                        { time: 20, text: "Grieziens ar jauno partneri" },
-                        { time: 30, text: "Vēl viena maiņa" }
-                    ],
-                    'otra puse': [
-                        { time: 0, text: "Otra puse - kungu maiņa" },
-                        { time: 10, text: "Kungi rotē pretēji" },
-                        { time: 20, text: "Sastapu ar pretējo dāmu" },
-                        { time: 30, text: "Visi atgriežas pie savējiem" }
-                    ],
-                    'beigas': [
-                        { time: 0, text: "Beigas - noslēguma figūra" },
-                        { time: 8, text: "Visi kopā promenāde" },
-                        { time: 16, text: "Liels riņķis" },
-                        { time: 24, text: "Paklanīšanās noslēgumā" }
-                    ]
-                },
-                keywords: ['berliņš', 'berliņu', 'berliņa', 'brambergas']
+                keywords: ['berlīns', 'berlīnu', 'berlīnā']
             },
-            'kvadrats': {
-                name: 'Kvadrāts!', 
+            
+            // ========================================
+            // 8️⃣ SARKANAIS/BALTAIS
+            // ========================================
+            'sarkanais': {
+                name: 'Sarkanais/Baltais',
                 fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/kvadrats/kvadrat_v1.mp3'
+                    'sākums': 'MUSIC/kadrilas/sarkanais_baltais/parts/sakums.mp3',
+                    'vidus': 'MUSIC/kadrilas/sarkanais_baltais/parts/vidus.mp3',
+                    'beigas': 'MUSIC/kadrilas/sarkanais_baltais/parts/beigas.mp3',
+                    'pilnā': 'MUSIC/kadrilas/sarkanais_baltais/sarkanais_baltais_full.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/kvadrats/kvadrats.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/kvadrats/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/kvadrats/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/kvadrats/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/kvadrats/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/kvadrats/beigas.mp4'
-                },
-                keywords: ['kvadrāts', 'kvadrātu', 'karēļu kvadrātu', 'karēļu kvadrāts']
-            },
-            'ciganovskis': {
-                name: 'Ciganovskis!',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/ciganovskis/Ciganovskisfull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/ciganovskis/Ciganovskis.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/ciganovskis/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/ciganovskis/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/ciganovskis/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/ciganovskis/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/ciganovskis/beigas.mp4'
-                },
-                keywords: ['ciganovskis', 'ciganovski', 'cigi']
-            },
-            'rikava': {
-                name: 'Rikavas kadriļa',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/ciganovskis/rikavafull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/rikava/rikava.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/rikava/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/rikava/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/rikava/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/rikava/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/rikava/beigas.mp4'
-                },
-                keywords: ['rikavu', 'rikava', 'rika']
-            },
-            'lancis': {
-                name: 'Lancejots',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/sarkanaisfull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/lancejots/Lancejots.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/sarkanais/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/sarkanais/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/sarkanais/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/sarkanais/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/sarkanais/beigas.mp4'
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 180 },        // ⬅️ Mainīt sekundes
+                        sakums: { start: 0, end: 60 },
+                        vidus: { start: 60, end: 120 },
+                        beigas: { start: 120, end: 180 }
+                    }
                 },
                 keywords: ['sarkanais', 'sarkano', 'baltais']
             },
+            
+            // ========================================
+            // 9️⃣ ŽĪGA (Family Jig)
+            // ========================================
             'žīga': {
                 name: 'family jig',
                 fragments: {
@@ -362,18 +317,19 @@ class AudioManager {
                     'pilnā': 'MUSIC/kadrilas/family_jig/Family Jig.mp3'
                 },
                 video: {
-                    'pilnā': 'VIDEO/kadrilas/family_jig/family_jig.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/family_jig/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/family_jig/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/family_jig/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/family_jig/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/family_jig/beigas.mp4'
+                    youtube_id: "IEVADI_VIDEO_ID",  // ⬅️ Ievadi YouTube ID
+                    fragments: {
+                        pilna: { start: 0, end: 240 },          // ⬅️ Mainīt sekundes
+                        darzins: { start: 0, end: 48 },
+                        sakums: { start: 48, end: 96 },
+                        vidus: { start: 96, end: 144 },
+                        otra_puse: { start: 144, end: 192 },
+                        beigas: { start: 192, end: 240 }
+                    }
                 },
                 keywords: ['family jig', 'džīga', 'žīga', 'brambergas']
-            },
-            
+            }
         };
-        
     }
 
     handleCommand(command) {
