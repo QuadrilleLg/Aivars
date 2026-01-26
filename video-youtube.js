@@ -1,117 +1,185 @@
-// video-youtube.js - GATAVS AR VISIEM LABOJUMIEM
-// Error 153 fix + origin parameter
+// video-youtube.js - AR MINŪTES:SEKUNDES FORMĀTU
+// Pieņem GAN 204 GAN "3:24"!
 
 console.log('🎬 YouTube video player...');
 
 let currentVideoKadril = null;
+let youtubePlayer = null;
+let currentFragmentEnd = null;
+let fragmentCheckInterval = null;
+let timerInterval = null;
 
 const videoModal = document.getElementById('videoModal');
 const videoBtn = document.getElementById('videoBtn');
 const closeVideo = document.getElementById('closeVideo');
 const videoFragmentsList = document.getElementById('videoFragmentsList');
 const currentVideoTitle = document.getElementById('currentVideoTitle');
+const videoTimer = document.getElementById('videoTimer');
 
 // ========================================
-// HELPER
+// HELPER: Pārveido "3:24" → 204 sekundes
 // ========================================
 function parseTimeToSeconds(time) {
-    if (typeof time === 'number') return time;
+    // Ja jau ir skaitlis, atgriež to
+    if (typeof time === 'number') {
+        return time;
+    }
     
+    // Ja ir string "3:24"
     if (typeof time === 'string' && time.includes(':')) {
         const parts = time.split(':');
+        
         if (parts.length === 2) {
-            return (parseInt(parts[0], 10) * 60) + parseInt(parts[1], 10);
+            // Formāts "M:SS" vai "MM:SS"
+            const mins = parseInt(parts[0], 10);
+            const secs = parseInt(parts[1], 10);
+            return (mins * 60) + secs;
         }
+        
         if (parts.length === 3) {
-            return (parseInt(parts[0], 10) * 3600) + (parseInt(parts[1], 10) * 60) + parseInt(parts[2], 10);
+            // Formāts "H:MM:SS"
+            const hours = parseInt(parts[0], 10);
+            const mins = parseInt(parts[1], 10);
+            const secs = parseInt(parts[2], 10);
+            return (hours * 3600) + (mins * 60) + secs;
         }
     }
     
+    // Ja ir string skaitlis "204"
     const parsed = parseFloat(time);
-    return !isNaN(parsed) ? parsed : 0;
-}
-
-function formatTime(seconds) {
-    if (isNaN(seconds) || !isFinite(seconds)) return '00:00';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
-}
-
-// ========================================
-// IFRAME CREATION - AR ORIGIN FIX!
-// ========================================
-function createSimpleIframe(videoId, startTime) {
-    const container = document.getElementById('youtubePlayer');
-    if (!container) {
-        console.error('❌ youtubePlayer container nav atrasts!');
-        return;
+    if (!isNaN(parsed)) {
+        return parsed;
     }
     
-    container.innerHTML = '';
-    
-    // ✅ AR ORIGIN PARAMETRU (Error 153 fix)
-    const origin = encodeURIComponent(window.location.origin);
-    const iframeUrl = 'https://www.youtube.com/embed/' + videoId + 
-                      '?start=' + Math.floor(startTime) +
-                      '&autoplay=1' +
-                      '&rel=0' +
-                      '&modestbranding=1' +
-                      '&origin=' + origin;
-    
-    const iframe = document.createElement('iframe');
-    iframe.src = iframeUrl;
-    iframe.width = '100%';
-    iframe.height = '100%';
-    iframe.frameBorder = '0';
-    iframe.allow = 'autoplay; encrypted-media';
-    iframe.allowFullscreen = true;
-    
-    container.appendChild(iframe);
-    
-    console.log('✅ Iframe izveidots:', videoId);
-    console.log('📍 Origin:', window.location.origin);
-    console.log('🔗 URL:', iframeUrl);
+    // Fallback
+    console.warn('Neizdevās konvertēt laiku:', time);
+    return 0;
 }
 
 // ========================================
-// MODAL
+// YOUTUBE API LOADING
 // ========================================
+function loadYouTubeAPI() {
+    if (window.YT && window.YT.Player) {
+        return Promise.resolve();
+    }
+    
+    return new Promise(function(resolve, reject) {
+        const timeout = setTimeout(function() {
+            reject(new Error('YouTube API timeout (10s)'));
+        }, 10000);
+        
+        window.onYouTubeIframeAPIReady = function() {
+            clearTimeout(timeout);
+            resolve();
+        };
+        
+        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+        }
+    });
+}
+
+function initVideoPlayer() {
+    loadYouTubeAPI().catch(function(err) {
+        console.error('API kļūda:', err);
+    });
+    
+    if (videoBtn) {
+        videoBtn.addEventListener('click', openVideoModal);
+    }
+    
+    if (closeVideo) {
+        closeVideo.addEventListener('click', closeVideoModal);
+    }
+    
+    // Click uz fonu aizvēr modal
+    window.addEventListener('click', function(e) {
+        if (e.target === videoModal) {
+            closeVideoModal();
+        }
+    });
+    
+    // ESC taustiņš aizvēr modal
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && videoModal && videoModal.classList.contains('active')) {
+            closeVideoModal();
+        }
+    });
+}
+
+function createYouTubePlayer(videoId) {
+    return new Promise(function(resolve, reject) {
+        if (!window.YT || !window.YT.Player) {
+            reject(new Error('YouTube API nav pieejams'));
+            return;
+        }
+        
+        const container = document.getElementById('youtubePlayer');
+        if (!container) {
+            reject(new Error('Container nav atrasts'));
+            return;
+        }
+        
+        if (youtubePlayer) {
+            try {
+                youtubePlayer.destroy();
+            } catch (e) {}
+        }
+        
+        container.innerHTML = '';
+        
+        try {
+            youtubePlayer = new YT.Player('youtubePlayer', {
+                videoId: videoId,
+                playerVars: {
+                    playsinline: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                    mute: 1,  // Autoplay pieprasa muted video
+                    origin: window.location.origin
+                },
+                events: {
+                    onReady: function(event) {
+                        startTimerUpdate();
+                        resolve(event.target);
+                    },
+                    onError: function(event) {
+                        let msg = 'Kļūda';
+                        if (event.data === 2) msg = 'Nederīgs video ID';
+                        if (event.data === 100) msg = 'Video nav atrasts';
+                        if (event.data === 101 || event.data === 150) {
+                            msg = 'Video nav embeddable! Iestatījumos: Allow embedding ON';
+                        }
+                        reject(new Error(msg));
+                    },
+                    onStateChange: function(event) {
+                        if (event.data === 0) { // Video beidzies
+                            stopFragmentCheck();
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 function openVideoModal() {
-    console.log('🎬 Atver video modal...');
-    
-    // Pārbauda vai audioManager eksistē
-    if (!window.audioManager) {
-        console.error('❌ window.audioManager nav pieejams!');
-        alert('Kļūda: audioManager nav ielādēts!');
-        return;
-    }
-    
-    const currentKadril = window.audioManager.getCurrentKadril();
+    const currentKadril = window.audioManager && window.audioManager.getCurrentKadril();
     
     if (!currentKadril) {
-        console.warn('⚠️ Nav izvēlēta dziesma');
-        alert('Izvēlies dziesmu!');
+        alert('Izvēlieties dziesmu!');
         return;
     }
-    
-    console.log('✅ Dziesma:', currentKadril.key);
     
     if (!currentKadril.data.video || !currentKadril.data.video.youtube_id) {
-        console.error('❌ Nav YouTube video!');
-        alert('Šai dziesmai nav YouTube video!');
+        alert('Nav YouTube video!');
         return;
     }
-    
-    const youtubeId = currentKadril.data.video.youtube_id;
-    
-    if (youtubeId === 'IEVADI_VIDEO_ID') {
-        console.error('❌ YouTube ID ir placeholder!');
-        alert('YouTube ID nav ievadīts! Vajag īstu video ID.');
-        return;
-    }
-    
-    console.log('✅ YouTube ID:', youtubeId);
     
     currentVideoKadril = currentKadril;
     
@@ -122,18 +190,25 @@ function openVideoModal() {
     if (videoModal) {
         videoModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        console.log('✅ Modal atvērts');
     }
     
     // ✅ AUTO-PAUZE AUDIO!
     const mainAudio = document.getElementById('mainAudio');
     if (mainAudio && !mainAudio.paused) {
         mainAudio.pause();
-        console.log('⏸️ Audio nopauzēts');
     }
     
-    createSimpleIframe(youtubeId, 0);
-    loadVideoFragments();
+    loadYouTubeAPI()
+        .then(function() {
+            return createYouTubePlayer(currentKadril.data.video.youtube_id);
+        })
+        .then(function() {
+            loadVideoFragments();
+        })
+        .catch(function(error) {
+            alert('Kļūda: ' + error.message);
+            closeVideoModal();
+        });
 }
 
 function closeVideoModal() {
@@ -142,22 +217,21 @@ function closeVideoModal() {
         document.body.style.overflow = 'auto';
     }
     
-    // ✅ Ja gribi lai audio turpinās pēc video aizvēršanas, noņem komentārus:
-    // const mainAudio = document.getElementById('mainAudio');
-    // if (mainAudio && mainAudio.paused) {
-    //     mainAudio.play();
-    //     console.log('▶️ Audio atsākts');
-    // }
+    if (youtubePlayer && youtubePlayer.pauseVideo) {
+        try {
+            youtubePlayer.pauseVideo();
+        } catch (e) {}
+    }
     
+    stopFragmentCheck();
+    stopTimerUpdate();
     currentVideoKadril = null;
-    console.log('🔒 Modal aizvērts');
 }
 
-// ========================================
-// FRAGMENTS
-// ========================================
 function loadVideoFragments() {
-    if (!videoFragmentsList || !currentVideoKadril) return;
+    if (!videoFragmentsList || !currentVideoKadril) {
+        return;
+    }
     
     videoFragmentsList.innerHTML = '';
     
@@ -172,6 +246,7 @@ function loadVideoFragments() {
         const btn = document.createElement('button');
         btn.className = 'video-fragment-btn';
         
+        // Konvertē laiku uz sekundēm ⬅️ SVARĪGI!
         const startSec = parseTimeToSeconds(frag.start);
         const endSec = parseTimeToSeconds(frag.end);
         
@@ -180,6 +255,7 @@ function loadVideoFragments() {
         
         btn.addEventListener('click', function() {
             playVideoFragment(key);
+            
             videoFragmentsList.querySelectorAll('.video-fragment-btn').forEach(function(b) {
                 b.classList.remove('active');
             });
@@ -188,55 +264,71 @@ function loadVideoFragments() {
         
         videoFragmentsList.appendChild(btn);
     });
-    
-    console.log('✅ Fragmenti ielādēti:', Object.keys(fragments).length);
 }
 
 function playVideoFragment(fragmentKey) {
-    if (!currentVideoKadril) return;
+    if (!youtubePlayer || !currentVideoKadril) return;
     
     const fragment = currentVideoKadril.data.video.fragments[fragmentKey];
     if (!fragment) return;
     
-    const startSec = parseTimeToSeconds(fragment.start);
-    console.log('▶️ Fragments:', fragmentKey, 'no', startSec, 'sek');
+    stopFragmentCheck();
     
-    createSimpleIframe(currentVideoKadril.data.video.youtube_id, startSec);
+    // Konvertē laiku uz sekundēm ⬅️ SVARĪGI!
+    const startSec = parseTimeToSeconds(fragment.start);
+    const endSec = parseTimeToSeconds(fragment.end);
+    
+    currentFragmentEnd = endSec;
+    
+    youtubePlayer.seekTo(startSec, true);
+    youtubePlayer.playVideo();
+    startFragmentCheck();
 }
 
-// ========================================
-// INIT
-// ========================================
-function initVideoPlayer() {
-    console.log('🔧 Init video player...');
-    console.log('📍 Domain:', window.location.hostname);
-    console.log('🔗 Origin:', window.location.origin);
-    console.log('🔒 Protocol:', window.location.protocol);
-    
-    if (videoBtn) {
-        videoBtn.addEventListener('click', openVideoModal);
-        console.log('✅ VIDEO button listener pievienots');
-    } else {
-        console.error('❌ VIDEO button nav atrasts!');
-    }
-    
-    if (closeVideo) {
-        closeVideo.addEventListener('click', closeVideoModal);
-    }
-    
-    window.addEventListener('click', function(e) {
-        if (e.target === videoModal) {
-            closeVideoModal();
+function startFragmentCheck() {
+    fragmentCheckInterval = setInterval(function() {
+        if (!youtubePlayer || !currentFragmentEnd) return;
+        
+        if (youtubePlayer.getCurrentTime() >= currentFragmentEnd) {
+            youtubePlayer.pauseVideo();
+            stopFragmentCheck();
         }
-    });
-    
-    window.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && videoModal && videoModal.classList.contains('active')) {
-            closeVideoModal();
-        }
-    });
-    
-    console.log('✅ Video player gatavs');
+    }, 100);
+}
+
+function stopFragmentCheck() {
+    if (fragmentCheckInterval) {
+        clearInterval(fragmentCheckInterval);
+        fragmentCheckInterval = null;
+        currentFragmentEnd = null;
+    }
+}
+
+function startTimerUpdate() {
+    stopTimerUpdate();
+    timerInterval = setInterval(function() {
+        if (!youtubePlayer || !videoTimer) return;
+        
+        try {
+            const current = formatTime(youtubePlayer.getCurrentTime());
+            const duration = formatTime(youtubePlayer.getDuration());
+            videoTimer.textContent = current + ' / ' + duration;
+        } catch (e) {}
+    }, 500);
+}
+
+function stopTimerUpdate() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+function formatTime(seconds) {
+    if (isNaN(seconds) || !isFinite(seconds)) return '00:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
 }
 
 window.videoPlayer = {
@@ -251,4 +343,4 @@ if (document.readyState === 'loading') {
     initVideoPlayer();
 }
 
-console.log('✅ video-youtube.js ielādēts');
+console.log('✅ Ready');
