@@ -147,6 +147,49 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 });
 
 // ============================================
+// GOOGLE LOG IN (tikai ielogošanās)
+// ============================================
+document.getElementById('googleLoginBtn').addEventListener('click', async function() {
+    try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        
+        // Pārbaudām vai lietotājs ir sistēmā un apstiprināts
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            
+            if (userData.approved) {
+                // Apstiprinātam lietotājam - pārvadām uz pareizo lapu
+                if (userData.role === 'admin') {
+                    window.location.href = 'firebase-admin.html';
+                } else {
+                    window.location.href = 'music-index-youtube.html';
+                }
+            } else {
+                // Konts nav apstiprināts
+                alert('Jūsu konts vēl nav apstiprināts. Lūdzu, gaidiet administratora apstiprinājumu.');
+                await auth.signOut();
+            }
+        } else {
+            // Lietotājs nav reģistrēts
+            alert('Jūs neesat reģistrēts sistēmā! Lūdzu, vispirms reģistrējieties.');
+            await auth.signOut();
+        }
+        
+    } catch (error) {
+        console.error('Google Log In kļūda:', error);
+        if (error.code === 'auth/popup-closed-by-user') {
+            // Lietotājs aizvēra popup - nav jārāda kļūda
+            return;
+        }
+        alert('Kļūda ar Google ielogošanos: ' + error.message);
+    }
+});
+
+// ============================================
 // GOOGLE SIGN-IN
 // ============================================
 document.getElementById('googleSignInBtn').addEventListener('click', async function() {
@@ -162,8 +205,8 @@ document.getElementById('googleSignInBtn').addEventListener('click', async funct
             const userData = userDoc.data();
             
             if (userData.approved) {
-                // Jau apstiprināts - iet uz music-index
-                window.location.href = 'music-index.html';
+                // Jau apstiprināts - iet uz music-index-youtube
+                window.location.href = 'music-index-youtube.html';
             } else {
                 // Gaida apstiprinājumu
                 alert('Jūsu konts gaida administratora apstiprinājumu.');
