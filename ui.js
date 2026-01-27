@@ -1,4 +1,4 @@
-// ui.js - Fixed version with proper mobile support and video modal integration
+// ui.js - Fixed version with proper mobile support
 class UIManager {
     constructor() {
         console.log('🎬 UIManager constructor started');
@@ -439,6 +439,15 @@ class UIManager {
         mainAudio.addEventListener('ended', () => {
             if (playPauseBtn) playPauseBtn.textContent = '▶️';
             if (progressBar) progressBar.style.width = '0%';
+        });
+        
+        // ✅ SINHRONIZĀCIJA - klausās audio play/pause no VISĀM vietām!
+        mainAudio.addEventListener('play', () => {
+            if (playPauseBtn) playPauseBtn.textContent = '⏸️';
+        });
+        
+        mainAudio.addEventListener('pause', () => {
+            if (playPauseBtn) playPauseBtn.textContent = '▶️';
         });
     }
 
