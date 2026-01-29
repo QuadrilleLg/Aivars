@@ -1212,7 +1212,7 @@ body {
     width: 90%;
     max-width: 900px;
     max-height: 92vh;
-    overflow-y: auto;
+    overflow-y: hidden;
     display: flex;
     flex-direction: column;
 }
