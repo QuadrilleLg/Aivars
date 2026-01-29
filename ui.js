@@ -243,23 +243,15 @@ class UIManager {
                 const videoModal = document.getElementById('videoModal');
                 const isVideoOpen = videoModal && videoModal.classList.contains('active');
                 
-                if (isVideoOpen && kadril.video && kadril.video.pilnā) {
-                    // Ja video ir atvērts - atskaņot jaunās dziesmas video
+                if (isVideoOpen) {
+                    // ✅ LABOTS: Izmanto YouTube API
                     if (window.videoPlayer && window.videoPlayer.playFragment) {
                         // Atjaunot video kadriļu
                         const currentVideoTitle = document.getElementById('currentVideoTitle');
                         if (currentVideoTitle) currentVideoTitle.textContent = kadril.name;
                         
-                        // Atjaunot video fragmentu sarakstu
-                        this.updateVideoFragments(kadrilKey);
-                        
-                        // Atskaņot pilno video
-                        const videoPlayerEl = document.getElementById('videoPlayer');
-                        if (videoPlayerEl && kadril.video.pilnā) {
-                            videoPlayerEl.src = kadril.video.pilnā;
-                            videoPlayerEl.load();
-                            videoPlayerEl.play().catch(err => console.error('Video kļūda:', err));
-                        }
+                        // Atskaņot pilno fragmentu caur YouTube API
+                        window.videoPlayer.playFragment('pilnā');
                     }
                     this.updateSystemLog(`Video: ${kadril.name}`);
                 } else {
@@ -303,40 +295,6 @@ class UIManager {
     }
     
     // Atjaunot video fragmentu sarakstu
-    updateVideoFragments(kadrilKey) {
-        const videoFragmentsList = document.getElementById('videoFragmentsList');
-        if (!videoFragmentsList) return;
-        
-        const kadril = window.audioManager?.kadrils[kadrilKey];
-        if (!kadril || !kadril.video) return;
-        
-        videoFragmentsList.innerHTML = '';
-        
-        Object.keys(kadril.video).forEach(fragmentKey => {
-            const btn = document.createElement('button');
-            btn.className = 'video-fragment-btn';
-            btn.textContent = fragmentKey.charAt(0).toUpperCase() + fragmentKey.slice(1);
-            btn.dataset.fragmentKey = fragmentKey;
-            
-            // Pirmais fragments aktīvs
-            if (fragmentKey === 'pilnā') btn.classList.add('active');
-            
-            btn.addEventListener('click', () => {
-                const videoPlayerEl = document.getElementById('videoPlayer');
-                if (videoPlayerEl) {
-                    videoPlayerEl.src = kadril.video[fragmentKey];
-                    videoPlayerEl.load();
-                    videoPlayerEl.play().catch(err => console.error('Video kļūda:', err));
-                }
-                
-                videoFragmentsList.querySelectorAll('.video-fragment-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-            
-            videoFragmentsList.appendChild(btn);
-        });
-    }
-
     // Ielādē audio fragmentus vidējā daļā
     loadFragments(kadrilKey) {
         console.log('🎼 loadFragments() called for:', kadrilKey);
