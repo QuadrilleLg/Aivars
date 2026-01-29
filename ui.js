@@ -1,4 +1,4 @@
-// ui.js - Fixed version with proper mobile support
+// ui.js - Fixed version with proper mobile support and video modal integration
 class UIManager {
     constructor() {
         console.log('🎬 UIManager constructor started');
@@ -145,6 +145,7 @@ class UIManager {
         const minutes = now.getMinutes();
         const hours = now.getHours();
 
+        // Aprēķinām grādus (0° ir pulksten 12)
         const secondDegrees = ((seconds / 60) * 360);
         const minuteDegrees = ((minutes + seconds/60) / 60) * 360;
         const hourDegrees = ((hours % 12 + minutes/60) / 12) * 360;
@@ -153,9 +154,10 @@ class UIManager {
         const minuteHand = document.querySelector('.minute-hand');
         const hourHand = document.querySelector('.hour-hand');
 
-        if (secondHand) secondHand.style.transform = `translateX(-50%) rotate(${secondDegrees}deg)`;
-        if (minuteHand) minuteHand.style.transform = `translateX(-50%) rotate(${minuteDegrees}deg)`;
-        if (hourHand) hourHand.style.transform = `translateX(-50%) rotate(${hourDegrees}deg)`;
+        // ✅ LABOTS: Pareiza transform ar translateX, translateY un rotate
+        if (secondHand) secondHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${secondDegrees}deg)`;
+        if (minuteHand) minuteHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${minuteDegrees}deg)`;
+        if (hourHand) hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${hourDegrees}deg)`;
     }
 
     async handleResponse(response) {
@@ -234,6 +236,9 @@ class UIManager {
                 // Ielādēt fragmentus
                 this.loadFragments(kadrilKey);
                 
+                // ✅ LABOJUMS: Ielādēt dejas soļus uzreiz!
+                this.loadDanceSteps(kadrilKey, 'pilnā');
+                
                 // Pārbaudīt vai video modālis ir atvērts
                 const videoModal = document.getElementById('videoModal');
                 const isVideoOpen = videoModal && videoModal.classList.contains('active');
@@ -261,6 +266,9 @@ class UIManager {
                     // Ja video nav atvērts - atskaņot audio kā parasti
                     if (kadril.fragments.pilnā) {
                         window.audioManager.playFragment(kadril.fragments.pilnā);
+                        
+                        // ✅ LABOJUMS: Sākt dejas soļu sekošanu PĒC audio!
+                        this.startDanceStepTracking(kadrilKey, 'pilnā');
                     }
                     this.updateSystemLog(`Izvēlēta dziesma: ${kadril.name}`);
                 }
@@ -435,19 +443,19 @@ class UIManager {
             });
         }
         
-        // Kad dziesma beidzas
-        mainAudio.addEventListener('ended', () => {
-            if (playPauseBtn) playPauseBtn.textContent = '▶️';
-            if (progressBar) progressBar.style.width = '0%';
-        });
-        
-        // ✅ SINHRONIZĀCIJA - klausās audio play/pause no VISĀM vietām!
+        // ✅ LABOJUMS: Auto-update play/pause button
         mainAudio.addEventListener('play', () => {
             if (playPauseBtn) playPauseBtn.textContent = '⏸️';
         });
         
         mainAudio.addEventListener('pause', () => {
             if (playPauseBtn) playPauseBtn.textContent = '▶️';
+        });
+        
+        // Kad dziesma beidzas
+        mainAudio.addEventListener('ended', () => {
+            if (playPauseBtn) playPauseBtn.textContent = '▶️';
+            if (progressBar) progressBar.style.width = '0%';
         });
     }
 
@@ -573,15 +581,28 @@ class UIManager {
         const steps = document.querySelectorAll('.dance-step');
         
         steps.forEach((step, i) => {
+            // Noņemam visas klases
+            step.classList.remove('active', 'completed', 'upcoming', 'next-up');
+            
             if (i === index) {
+                // AKTĪVAIS solis
                 step.classList.add('active');
-                // Scroll to active step
-                step.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // ✅ UZLABOJUMS: Scroll uz CENTRU (nevis 'nearest')
+                step.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center',      // ← PA VIDU!
+                    inline: 'nearest' 
+                });
             } else if (i < index) {
+                // Pabeigti soļi
                 step.classList.add('completed');
-                step.classList.remove('active');
-            } else {
-                step.classList.remove('active', 'completed');
+            } else if (i === index + 1) {
+                // NĀKAMAIS solis (īpaši highlight)
+                step.classList.add('next-up');
+            } else if (i > index && i <= index + 3) {
+                // Tuvākie 2-3 soļi pēc nākamā
+                step.classList.add('upcoming');
             }
         });
     }

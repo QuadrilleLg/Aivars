@@ -7,6 +7,15 @@
     font-display: swap;
 }
 
+/* Great Victorian font for dance steps */
+@font-face {
+    font-family: 'Great-Victorian';
+    src: url('great-victorian.swashed.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Pamata stili */
 body {
     margin: 0;
@@ -457,9 +466,9 @@ body {
 
 .hour-hand, .minute-hand, .second-hand {
     position: absolute;
-    bottom: 50%;
+    top: 50%;
     left: 50%;
-    transform-origin: bottom center;
+    transform-origin: 50% 100%;  /* Rotē ap apakšējo galu */
     background: #e6ff00;
     border-radius: 2px 2px 0 0;
 }
@@ -944,6 +953,59 @@ body {
     background: rgba(230, 255, 0, 0.2);
     border-color: #e6ff00;
     border-width: 2px;
+    box-shadow: 0 0 15px rgba(230, 255, 0, 0.4);
+}
+
+/* ✅ PABEIGTI SOĻI - pelēki, necaurspīdīgi */
+.dance-step.completed {
+    background: rgba(230, 255, 0, 0.02);
+    border-color: rgba(230, 255, 0, 0.15);
+    opacity: 0.5;
+}
+
+.dance-step.completed .step-time {
+    color: rgba(230, 255, 0, 0.4);
+}
+
+.dance-step.completed .step-text {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ✅ NĀKAMAIS SOLIS - oranžs highlight */
+.dance-step.next-up {
+    background: rgba(255, 165, 0, 0.15);
+    border-color: rgba(255, 165, 0, 0.6);
+    border-width: 2px;
+    animation: pulse-next 1.5s ease-in-out infinite;
+}
+
+.dance-step.next-up .step-time {
+    color: #ffa500;
+}
+
+.dance-step.next-up .step-text {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* ✅ TUVĀKIE SOĻI - viegli highlight */
+.dance-step.upcoming {
+    background: rgba(230, 255, 0, 0.08);
+    border-color: rgba(230, 255, 0, 0.4);
+}
+
+.dance-step.upcoming .step-time {
+    color: rgba(230, 255, 0, 0.7);
+}
+
+/* Pulse animācija nākamajam solim */
+@keyframes pulse-next {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
+    }
 }
 
 .step-time {
@@ -955,7 +1017,10 @@ body {
 
 .step-text {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 22px;
+    font-family: 'Great-Victorian', Georgia, serif;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
 }
 
 /* MOBILE ELEMENTS - HIDDEN BY DEFAULT */
@@ -1087,10 +1152,10 @@ body {
     }
     
     .song-list-container .song-list li {
-        padding: 14px 12px;
+        padding: 12px 10px;
         margin-bottom: 4px;
-        font-size: 18px;
-        min-height: 44px;
+        font-size: 15px;  /* ← Samazināts no 18px */
+        min-height: 40px;  /* ← Samazināts no 44px */
         display: flex;
         align-items: center;
         -webkit-tap-highlight-color: rgba(230, 255, 0, 0.3);
@@ -1319,7 +1384,7 @@ body {
     }
     
     .video-fragments h3 {
-        font-size: 14px;
+        font-size: 12px;  /* ← Samazināts no 14px */
         margin-bottom: 6px;
     }
 }
