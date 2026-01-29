@@ -1,4 +1,5 @@
-// audio.js
+// audio.js - Refactored versija (TIKAI LOĢIKA)
+// Dati tiek ielādēti no kadrils-data.json
 
 class AudioManager {
     constructor() {
@@ -6,309 +7,76 @@ class AudioManager {
         this.mainAudio = document.getElementById('mainAudio');
         this.mainVideo = document.getElementById('mainVideo');
         
-        // Definējam vadības komandas
-        this.controlCommands = {
-            stop: ['stop', 'apstāties', 'beidz', 'beigt', 'pietiek', 'pārtrauc'],
-            pause: ['pauze', 'pauzt', 'nopauze', 'nopauzēt', 'pagaidi'],
-            resume: ['turpini', 'turpināt', 'atsākt', 'atsāc']
-        };
+        // Datu konteineri (tiks ielādēti no JSON)
+        this.controlCommands = {};
+        this.wakeWords = {};
+        this.kadrils = {};
         
-        // Definējam wake word audio atbildes
-        this.wakeWords = {
-            'ada': 'MUSIC/voice_responses/greetings/sei.mp3',
-            'adi': 'AUDIO/responses/adi_response.mp3',
-            'adelaida': 'MUSIC/voice_responses/greetings/palidze.mp3'
-        };
-
-        // Definējam deju struktūru ar atsevišķu VIDEO objektu
-        this.kadrils = {
-            'rusiņš': {
-                name: 'Kadriļa Rusiņš',
-                fragments: {
-                    'sākums': 'MUSIC/kadrilas/ada/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/ada/parts/vidus.mp3',
-                    'beigas': 'MUSIC/kadrilas/ada/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/rusins/rusinsfull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/rusins/rusins.mp4',
-                    'sākums': 'VIDEO/kadrilas/rusins/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/rusins/vidus.mp4',
-                    'beigas': 'VIDEO/kadrilas/rusins/beigas.mp4'
-                },
-                timemarks: {
-                    'sākums': [
-                        { time: 0, text: "Sākuma nostāšanās - četri pāri kvadrātā" },
-                        { time: 8, text: "Visi soļo uz priekšu, tad atpakaļ" },
-                        { time: 16, text: "Dāmas paiet uz vidū, plaukšķina" },
-                        { time: 24, text: "Kungi paiet uz vidū, plaukšķina" }
-                    ],
-                    'vidus': [
-                        { time: 0, text: "Partneru maiņa - dāmas rotē pa labi" },
-                        { time: 12, text: "Grieziens ar jauno partneri" },
-                        { time: 24, text: "Atgriešanās pie sava partnera" },
-                        { time: 36, text: "Visi kopā ķēdē - zvaigzne" }
-                    ],
-                    'beigas': [
-                        { time: 0, text: "Noslēguma rītis - promenāde" },
-                        { time: 10, text: "Pāri rotē ap sevi" },
-                        { time: 20, text: "Visi paceļ rokas - loks" },
-                        { time: 28, text: "Noslēguma paklanīšanās" }
-                    ]
-                },
-                keywords: ['rusiņš', 'rusiņu', 'russu']
-            },
-            
-            'padespaņs': {
-                name: 'Padespaņs',
-                fragments: {
-                    'sākums': 'MUSIC/kadrilas/adi/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/adi/parts/vidus.mp3', 
-                    'beigas': 'MUSIC/kadrilas/adi/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/padespans/Padespaanfull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/padespans/padespans.mp4',
-                    'sākums': 'VIDEO/kadrilas/padespans/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/padespans/vidus.mp4',
-                    'beigas': 'VIDEO/kadrilas/padespans/beigas.mp4'
-                },
-                keywords: ['padespaņs', 'spainis', 'bada spains']
-            },
-            'narečenka': {
-                name: 'Narečenka!',
-                fragments: {
-                    'sākums': 'MUSIC/kadrilas/adelaida/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/adelaida/parts/vidus.mp3',
-                    'beigas': 'MUSIC/kadrilas/adelaida/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/narechenka/Narechenka - a folk dance..mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/narecenka/narecenka.mp4',
-                    'sākums': 'VIDEO/kadrilas/narecenka/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/narecenka/vidus.mp4',
-                    'beigas': 'VIDEO/kadrilas/narecenka/beigas.mp4'
-                },
-                keywords: ['narečenku', 'uz upi', 'uz upīti']
-            },
-            'bērzgali': {
-                name: 'Bērzgales kadriļa',
-                fragments: {
-                    'pirmais gabals': 'MUSIC/kadrilas/Berzgale/parts/pirmais.mp3',
-                    'otrais gabals': 'MUSIC/kadrilas/Berzgale/parts/otrais.mp3',
-                    'trešais gabals': 'MUSIC/kadrilas/Berzgale/parts/trešais.mp3',
-                    'ceturtais gabals': 'MUSIC/kadrilas/Berzgale/parts/ceturtais.mp3',
-                    'piektais gabals': 'MUSIC/kadrilas/Berzgale/parts/piektais.mp3',
-                    'sestais gabals': 'MUSIC/kadrilas/Berzgale/parts/sestais.mp3',
-                    'pilnā': 'MUSIC/kadrilas/Berzgale/berzgalefull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/berzgale/berzgale.mp4',
-                    'pirmais gabals': 'VIDEO/kadrilas/berzgale/pirmais.mp4',
-                    'otrais gabals': 'VIDEO/kadrilas/berzgale/otrais.mp4',
-                    'trešais gabals': 'VIDEO/kadrilas/berzgale/tresais.mp4',
-                    'ceturtais gabals': 'VIDEO/kadrilas/berzgale/ceturtais.mp4',
-                    'piektais gabals': 'VIDEO/kadrilas/berzgale/piektais.mp4',
-                    'sestais gabals': 'VIDEO/kadrilas/berzgale/sestais.mp4'
-                },
-                timemarks: {
-                    'pirmais gabals': [
-                        { time: 0, text: "Pirmais gabals - sākuma nostāšanās" },
-                        { time: 6, text: "Soļi uz priekšu un atpakaļ" },
-                        { time: 12, text: "Dāmas maiņa pa labi" },
-                        { time: 18, text: "Atgriešanās pie partnera" }
-                    ],
-                    'otrais gabals': [
-                        { time: 0, text: "Otrais gabals - griezieni" },
-                        { time: 8, text: "Grieziens ar partneri" },
-                        { time: 16, text: "Grieziens ar pretējo" },
-                        { time: 22, text: "Atpakaļ pie sava" }
-                    ],
-                    'trešais gabals': [
-                        { time: 0, text: "Trešais gabals - zvaigzne" },
-                        { time: 8, text: "Visi veido zvaigzni" },
-                        { time: 16, text: "Rotācija pa labi" },
-                        { time: 24, text: "Iziet no zvaigznes" }
-                    ],
-                    'ceturtais gabals': [
-                        { time: 0, text: "Ceturtais gabals - ķēde" },
-                        { time: 8, text: "Visi saķeras ķēdē" },
-                        { time: 16, text: "Ķēde kustas pa aploksni" },
-                        { time: 24, text: "Atgriešanās sākuma pozīcijās" }
-                    ],
-                    'piektais gabals': [
-                        { time: 0, text: "Piektais gabals - tilts" },
-                        { time: 8, text: "Divi pāri veido tiltu" },
-                        { time: 16, text: "Citi pāri iet zem tilta" },
-                        { time: 24, text: "Maiņa - jauni pāri veido tiltu" }
-                    ],
-                    'sestais gabals': [
-                        { time: 0, text: "Sestais gabals - noslēgums" },
-                        { time: 8, text: "Visi kopā promenāde" },
-                        { time: 16, text: "Liels loks ar visiem" },
-                        { time: 24, text: "Noslēguma paklanīšanās" }
-                    ]
-                },
-                keywords: ['bērzgale', 'bērzgali', 'bērzgales']
-            },
-            'berlins': {
-                name: 'Bramberģes Berliņš',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/berlins/berlinsfull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/berlins/berlins.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/berlins/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/berlins/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/berlins/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/berlins/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/berlins/beigas.mp4'
-                },
-                timemarks: {
-                    'dārziņš': [
-                        { time: 0, text: "Dārziņš - lēns ievads" },
-                        { time: 8, text: "Pāri soļo pa lēnam" },
-                        { time: 16, text: "Roku kustības" },
-                        { time: 24, text: "Sagatavošanās galvenai daļai" }
-                    ],
-                    'sākums': [
-                        { time: 0, text: "Sākums - aktīvā daļa sākas" },
-                        { time: 8, text: "Soļi uz priekšu-atpakaļ" },
-                        { time: 16, text: "Partneru satikšanās centrā" },
-                        { time: 24, text: "Atgriešanās vietās" }
-                    ],
-                    'vidus': [
-                        { time: 0, text: "Vidus - dāmu maiņa" },
-                        { time: 10, text: "Dāmas rotē pa kreisi" },
-                        { time: 20, text: "Grieziens ar jauno partneri" },
-                        { time: 30, text: "Vēl viena maiņa" }
-                    ],
-                    'otra puse': [
-                        { time: 0, text: "Otra puse - kungu maiņa" },
-                        { time: 10, text: "Kungi rotē pretēji" },
-                        { time: 20, text: "Sastapu ar pretējo dāmu" },
-                        { time: 30, text: "Visi atgriežas pie savējiem" }
-                    ],
-                    'beigas': [
-                        { time: 0, text: "Beigas - noslēguma figūra" },
-                        { time: 8, text: "Visi kopā promenāde" },
-                        { time: 16, text: "Liels riņķis" },
-                        { time: 24, text: "Paklanīšanās noslēgumā" }
-                    ]
-                },
-                keywords: ['berliņš', 'berliņu', 'berliņa', 'brambergas']
-            },
-            'kvadrats': {
-                name: 'Kvadrāts', 
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/kvadrats/kvadrat_full.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/kvadrats/kvadrats.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/kvadrats/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/kvadrats/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/kvadrats/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/kvadrats/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/kvadrats/beigas.mp4'
-                },
-                keywords: ['kvadrāts', 'kvadrātu', 'karēļu kvadrātu', 'karēļu kvadrāts']
-            },
-            'ciganovskis': {
-                name: 'Ciganovskis',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/ciganovskis/Ciganovskisfull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/ciganovskis/ciganovskis.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/ciganovskis/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/ciganovskis/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/ciganovskis/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/ciganovskis/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/ciganovskis/beigas.mp4'
-                },
-                keywords: ['ciganovskis', 'ciganovski', 'cigi']
-            },
-            'rikava': {
-                name: 'Rikavas kadriļs',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/ciganovskis/rikavafull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/rikava/rikava.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/rikava/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/rikava/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/rikava/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/rikava/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/rikava/beigas.mp4'
-                },
-                keywords: ['rikavu', 'rikava', 'rika']
-            },
-            'sarkano': {
-                name: 'Sarkanbaltsarkanais',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/sarkanaisfull.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/sarkanais/sarkanais.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/sarkanais/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/sarkanais/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/sarkanais/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/sarkanais/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/sarkanais/beigas.mp4'
-                },
-                keywords: ['sarkanais', 'sarkano', 'baltais']
-            },
-            'žīga': {
-                name: 'Family jig',
-                fragments: {
-                    'dārziņš': 'MUSIC/kadrilas/berlins/parts/darzins.mp3',
-                    'sākums': 'MUSIC/kadrilas/berlins/parts/sakums.mp3',
-                    'vidus': 'MUSIC/kadrilas/berlins/parts/vidus.mp3',
-                    'otra puse': 'MUSIC/kadrilas/berlins/parts/otra_puse.mp3',
-                    'beigas': 'MUSIC/kadrilas/berlins/parts/beigas.mp3',
-                    'pilnā': 'MUSIC/kadrilas/family_jig/Family Jig.mp3'
-                },
-                video: {
-                    'pilnā': 'VIDEO/kadrilas/family_jig/family_jig.mp4',
-                    'dārziņš': 'VIDEO/kadrilas/family_jig/darzins.mp4',
-                    'sākums': 'VIDEO/kadrilas/family_jig/sakums.mp4',
-                    'vidus': 'VIDEO/kadrilas/family_jig/vidus.mp4',
-                    'otra puse': 'VIDEO/kadrilas/family_jig/otra_puse.mp4',
-                    'beigas': 'VIDEO/kadrilas/family_jig/beigas.mp4'
-                },
-                keywords: ['family jig', 'džīga', 'žīga', 'brambergas']
-            },
-            
-        };
+        // Data loading state
+        this.isDataLoaded = false;
+        this.dataLoadPromise = null;
         
+        // Ielādējam datus
+        this.dataLoadPromise = this.loadData();
     }
 
+    // ========================================
+    // DATU IELĀDE
+    // ========================================
+    
+    async loadData() {
+        try {
+            const response = await fetch('kadrils-data.json');
+            const data = await response.json();
+            
+            this.controlCommands = data.controlCommands;
+            this.wakeWords = data.wakeWords;
+            this.kadrils = data.kadrils;
+            
+            this.isDataLoaded = true;
+            
+            console.log('✅ Kadriļu dati veiksmīgi ielādēti:', Object.keys(this.kadrils).length, 'kadriļas');
+            
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog(
+                    `Ielādētas ${Object.keys(this.kadrils).length} kadriļas`
+                );
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Kļūda ielādējot kadriļu datus:', error);
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog(`Kļūda ielādējot datus: ${error.message}`);
+            }
+            throw error;
+        }
+    }
+
+    // Gaidīt, kamēr dati ir ielādēti
+    async waitForData() {
+        if (this.isDataLoaded) {
+            return true;
+        }
+        return await this.dataLoadPromise;
+    }
+    
+    // Pārbaudīt, vai dati ir gatavi
+    isReady() {
+        return this.isDataLoaded;
+    }
+
+    // ========================================
+    // KOMANDU APSTRĀDES METODES
+    // ========================================
+
     handleCommand(command) {
+        // Pārbaudām, vai dati ir ielādēti
+        if (!this.isDataLoaded) {
+            console.warn('⚠️ Dati vēl nav ielādēti, komanda tiks ignorēta');
+            return 'Lūdzu uzgaidiet, dati vēl ielādējas...';
+        }
+        
         command = command.toLowerCase().trim();
 
         // Pārbaudam wake words un atskaņojam atbildes
@@ -318,17 +86,17 @@ class AudioManager {
         }
         
         // Pārbaudam vadības komandas
-        if (this.controlCommands.stop.some(cmd => command.includes(cmd))) {
+        if (this.controlCommands.stop?.some(cmd => command.includes(cmd))) {
             this.stopPlayback();
             return 'Apturēju atskaņošanu';
         }
 
-        if (this.controlCommands.pause.some(cmd => command.includes(cmd))) {
+        if (this.controlCommands.pause?.some(cmd => command.includes(cmd))) {
             this.pausePlayback();
             return 'Nopauzēju atskaņošanu';
         }
 
-        if (this.controlCommands.resume.some(cmd => command.includes(cmd))) {
+        if (this.controlCommands.resume?.some(cmd => command.includes(cmd))) {
             this.resumePlayback();
             return 'Turpinu atskaņošanu';
         }
@@ -340,7 +108,7 @@ class AudioManager {
                 
                 // Pārbaudam vai prasīts video
                 if (command.includes('video')) {
-                    this.playVideo(kadril.video.pilnā);
+                    this.playVideo(kadril.video.youtube_id);
                     return `Rādu ${kadril.name} video`;
                 }
                 
@@ -378,27 +146,44 @@ class AudioManager {
         return null;
     }
 
+    // ========================================
+    // ATSKAŅOŠANAS METODES
+    // ========================================
+
     async playFragment(fragmentPath) {
         try {
             this.mainAudio.src = fragmentPath;
             await this.mainAudio.load();
             await this.mainAudio.play();
-            window.uiManager.updateSystemLog(`Atskaņoju: ${fragmentPath}`);
+            
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog(`Atskaņoju: ${fragmentPath}`);
+            }
         } catch (error) {
             console.error('Kļūda atskaņojot:', error);
-            window.uiManager.updateSystemLog(`Kļūda atskaņojot: ${error.message}`);
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog(`Kļūda atskaņojot: ${error.message}`);
+            }
         }
     }
 
-    async playVideo(videoPath) {
+    async playVideo(youtubeId) {
         try {
-            this.mainVideo.src = videoPath;
-            await this.mainVideo.load();
-            await this.mainVideo.play();
-            window.uiManager.updateSystemLog(`Rādu video: ${videoPath}`);
+            // YouTube video iegulšana vai pārslēgšanās
+            const videoUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+            
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog(`Rādu video: ${videoUrl}`);
+            }
+            
+            // Šeit varētu būt loģika video rādīšanai
+            // Piemēram:
+            // this.mainVideo.src = videoUrl;
         } catch (error) {
             console.error('Kļūda rādot video:', error);
-            window.uiManager.updateSystemLog(`Kļūda rādot video: ${error.message}`);
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog(`Kļūda rādot video: ${error.message}`);
+            }
         }
     }
 
@@ -406,40 +191,44 @@ class AudioManager {
         if (this.mainAudio) {
             this.mainAudio.pause();
             this.mainAudio.currentTime = 0;
-            window.uiManager.updateSystemLog('Atskaņošana apturēta');
-        }
-        if (this.mainVideo) {
-            this.mainVideo.pause();
-            this.mainVideo.currentTime = 0;
-            window.uiManager.updateSystemLog('Video apturēts');
+            
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog('Atskaņošana apturēta');
+            }
         }
     }
 
     pausePlayback() {
         if (this.mainAudio) {
             this.mainAudio.pause();
-            window.uiManager.updateSystemLog('Atskaņošana nopauzēta');
-        }
-        if (this.mainVideo) {
-            this.mainVideo.pause();
-            window.uiManager.updateSystemLog('Video nopauzēts');
+            
+            if (window.uiManager) {
+                window.uiManager.updateSystemLog('Atskaņošana nopauzēta');
+            }
         }
     }
 
     resumePlayback() {
         if (this.mainAudio) {
             this.mainAudio.play()
-                .then(() => window.uiManager.updateSystemLog('Atskaņošana turpināta'))
-                .catch(error => window.uiManager.updateSystemLog(`Kļūda turpinot: ${error.message}`));
-        }
-        if (this.mainVideo) {
-            this.mainVideo.play()
-                .then(() => window.uiManager.updateSystemLog('Video turpināts'))
-                .catch(error => window.uiManager.updateSystemLog(`Kļūda turpinot video: ${error.message}`));
+                .then(() => {
+                    if (window.uiManager) {
+                        window.uiManager.updateSystemLog('Atskaņošana turpināta');
+                    }
+                })
+                .catch(error => {
+                    if (window.uiManager) {
+                        window.uiManager.updateSystemLog(`Kļūda turpinot: ${error.message}`);
+                    }
+                });
         }
     }
     
-    // Jauna metode - atgriež pašreizējo kadriļu ar video datiem
+    // ========================================
+    // KADRIĻU INFORMĀCIJAS METODES
+    // ========================================
+    
+    // Atgriež pašreizējo kadriļu ar visiem datiem
     getCurrentKadril() {
         if (this.currentKadril && this.kadrils[this.currentKadril]) {
             return {
@@ -450,7 +239,7 @@ class AudioManager {
         return null;
     }
     
-    // Jauna metode - iestatīt aktīvo kadriļu
+    // Iestatīt aktīvo kadriļu
     setCurrentKadril(kadrilKey) {
         if (this.kadrils[kadrilKey]) {
             this.currentKadril = kadrilKey;
@@ -458,6 +247,43 @@ class AudioManager {
         }
         return false;
     }
+
+    // Iegūt timemarks konkrētam fragmentam
+    getTimemarks(kadrilKey, fragmentKey) {
+        const kadril = this.kadrils[kadrilKey];
+        if (kadril && kadril.timemarks && kadril.timemarks[fragmentKey]) {
+            return kadril.timemarks[fragmentKey];
+        }
+        return [];
+    }
+    
+    // Iegūt visas pieejamās kadriļas
+    getAllKadrils() {
+        return Object.keys(this.kadrils).map(key => ({
+            key: key,
+            name: this.kadrils[key].name,
+            keywords: this.kadrils[key].keywords
+        }));
+    }
+    
+    // Iegūt konkrētas kadriļas fragmentus
+    getFragments(kadrilKey) {
+        const kadril = this.kadrils[kadrilKey];
+        if (kadril && kadril.fragments) {
+            return Object.keys(kadril.fragments);
+        }
+        return [];
+    }
+    
+    // Iegūt video informāciju
+    getVideoInfo(kadrilKey) {
+        const kadril = this.kadrils[kadrilKey];
+        if (kadril && kadril.video) {
+            return kadril.video;
+        }
+        return null;
+    }
 }
 
+// Eksportējam instanci
 export const audioManager = new AudioManager();
