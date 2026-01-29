@@ -2,7 +2,7 @@
 <html lang="lv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Admin Panelis - Firebase</title>
     <link rel="stylesheet" href="style.css">
     
@@ -12,15 +12,42 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
+        /* Mobile Responsive Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            background: #0a0a0a;
+            color: #d4af37;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px 10px;
+            overflow-y: auto;
+        }
+        
         .admin-container {
+            width: 100%;
             max-width: 1000px;
-            margin: 50px auto;
+            margin: 20px auto;
             padding: 30px;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
             position: relative;
-            z-index: 100; /* LABOJUMS: Lai būtu virs SVG background */
+            z-index: 100;
         }
 
         .admin-header {
@@ -43,6 +70,7 @@
             cursor: pointer;
             font-size: 14px;
             margin-top: 10px;
+            transition: all 0.3s;
         }
 
         .logout-btn:hover {
@@ -89,8 +117,9 @@
         .users-table {
             background: rgba(255,255,255,0.05);
             border-radius: 10px;
-            overflow: hidden;
+            overflow: visible;
             margin-top: 20px;
+            margin-bottom: 30px;
         }
 
         .user-item {
@@ -144,15 +173,19 @@
         .user-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 10px 18px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             transition: all 0.3s;
+            min-width: 100px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn-approve {
@@ -160,7 +193,7 @@
             color: white;
         }
 
-        .btn-approve:hover {
+        .btn-approve:hover, .btn-approve:active {
             background: #45a049;
         }
 
@@ -169,7 +202,7 @@
             color: white;
         }
 
-        .btn-reject:hover {
+        .btn-reject:hover, .btn-reject:active {
             background: #d32f2f;
         }
 
@@ -178,7 +211,7 @@
             color: white;
         }
 
-        .btn-delete:hover {
+        .btn-delete:hover, .btn-delete:active {
             background: #555;
         }
 
@@ -193,24 +226,105 @@
             margin-bottom: 10px;
         }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            body {
+                padding: 10px 5px;
+            }
+            
+            .admin-container {
+                padding: 20px 15px;
+                margin: 10px auto;
+            }
+            
+            .admin-header h1 {
+                font-size: 1.5em;
+            }
+            
+            .admin-header p {
+                font-size: 0.9em;
+            }
+            
+            .stats {
+                gap: 10px;
+            }
+            
+            .stat-card {
+                min-width: calc(50% - 5px);
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.5em;
+            }
+            
+            .section-title {
+                font-size: 1.2em;
+                margin: 20px 0 10px 0;
+            }
+            
             .user-item {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .user-info {
+                width: 100%;
+            }
+            
+            .user-info h3 {
+                font-size: 1em;
+            }
+            
+            .user-info p {
+                font-size: 0.85em;
             }
 
             .user-actions {
                 width: 100%;
-                flex-wrap: wrap;
+                flex-direction: column;
+                gap: 8px;
             }
 
             .btn {
-                flex: 1;
+                width: 100%;
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .logout-btn {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-container {
+                padding: 15px 10px;
+                border-radius: 10px;
+            }
+            
+            .admin-header h1 {
+                font-size: 1.3em;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
+            
+            .user-item {
+                padding: 12px;
+            }
+            
+            .empty-state {
+                padding: 40px 15px;
             }
         }
     </style>
 </head>
-<body style="background: #0a0a0a; color: #d4af37;">
+<body>
     <div class="admin-container">
         <div class="admin-header">
             <h1>👨‍💼 Admin Panelis (Firebase)</h1>
@@ -271,7 +385,7 @@
         // Iziet
         async function logout() {
             await auth.signOut();
-            window.location.href = 'index.html';
+            window.location.href = 'music-index-youtube.html';
         }
 
         // ⭐ JAUNA LOĢIKA: Apstiprināt lietotāju (BEZ paroles ievades!)
