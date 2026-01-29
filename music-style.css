@@ -752,8 +752,7 @@ body {
 .video-modal.active {
     display: flex;
     justify-content: center;
-    align-items: flex-start;  /* ← Labots no center */
-    padding-top: 20px;         /* ← Pievienots top padding */
+    align-items: center;
 }
 
 .video-modal-content {
@@ -763,10 +762,9 @@ body {
     padding: 30px;
     width: 95%;
     max-width: 1400px;
-    max-height: 90vh;          /* ← Samazināts no 95vh */
+    max-height: 95vh;
     overflow-y: auto;
     position: relative;
-    margin-bottom: 20px;       /* ← Pievienots bottom margin */
 }
 
 .video-header {
@@ -774,14 +772,12 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    position: sticky;          /* ← Labots no relative */
-    top: 0;                    /* ← Pievienots */
-    z-index: 10;               /* ← Palielināts no 1 */
-    background: rgba(18, 26, 24, 0.98);  /* ← Tumšāks */
-    padding: 10px 15px;        /* ← Palielināts padding */
+    position: relative;
+    z-index: 1;
+    background: rgba(18, 26, 24, 0.9);
+    padding: 8px 12px;
     border-radius: 5px;
-    border: 2px solid #e6ff00;  /* ← Biezāka border */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);  /* ← Pievienota ēna */
+    border: 1px solid #e6ff00;
 }
 
 .video-header h2 {
@@ -1150,6 +1146,6 @@ body {
     }
     
     .video-container {
-        max-height: 20vh;
+        max-height: 35vh;
     }
 }
