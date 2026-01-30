@@ -211,6 +211,50 @@ function openVideoModal() {
         });
 }
 
+// ✅ JAUNA FUNKCIJA: Nomaina video bez modāla aizvēršanas
+function updateVideoInModal() {
+    if (!videoModal || !videoModal.classList.contains('active')) {
+        return; // Modal nav atvērts, neko nedarām
+    }
+    
+    const currentKadril = window.audioManager && window.audioManager.getCurrentKadril();
+    
+    if (!currentKadril) {
+        return;
+    }
+    
+    if (!currentKadril.data.video || !currentKadril.data.video.youtube_id) {
+        alert('Šai dziesmai nav video!');
+        closeVideoModal();
+        return;
+    }
+    
+    // Ja tā pati dziesma, neko nedarām
+    if (currentVideoKadril && currentVideoKadril.key === currentKadril.key) {
+        return;
+    }
+    
+    console.log('🔄 Mainam video uz:', currentKadril.data.name);
+    
+    currentVideoKadril = currentKadril;
+    
+    if (currentVideoTitle) {
+        currentVideoTitle.textContent = currentKadril.data.name;
+    }
+    
+    // Pārlādējam video
+    loadYouTubeAPI()
+        .then(function() {
+            return createYouTubePlayer(currentKadril.data.video.youtube_id);
+        })
+        .then(function() {
+            loadVideoFragments();
+        })
+        .catch(function(error) {
+            console.error('Kļūda mainot video:', error);
+        });
+}
+
 function closeVideoModal() {
     if (videoModal) {
         videoModal.classList.remove('active');
@@ -283,6 +327,18 @@ function playVideoFragment(fragmentKey) {
     youtubePlayer.seekTo(startSec, true);
     youtubePlayer.playVideo();
     startFragmentCheck();
+    
+    // ✅ SCROLL UZ AKTĪVO FRAGMENTU
+    const fragmentButtons = document.querySelectorAll('.video-fragment-btn');
+    fragmentButtons.forEach(function(btn) {
+        if (btn.textContent.toLowerCase().includes(fragmentKey.toLowerCase())) {
+            btn.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center',
+                inline: 'nearest' 
+            });
+        }
+    });
 }
 
 function startFragmentCheck() {
@@ -334,8 +390,17 @@ function formatTime(seconds) {
 window.videoPlayer = {
     open: openVideoModal,
     close: closeVideoModal,
-    playFragment: playVideoFragment
+    playFragment: playVideoFragment,
+    updateVideo: updateVideoInModal  // ✅ JAUNA eksportētā funkcija
 };
+
+// ✅ Klausāmies uz dziesmas maiņu no UI
+if (window.addEventListener) {
+    window.addEventListener('songChanged', function() {
+        console.log('🎵 Dziesma mainījās, atjaunojam video...');
+        updateVideoInModal();
+    });
+}
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initVideoPlayer);

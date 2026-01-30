@@ -244,14 +244,10 @@ class UIManager {
                 const isVideoOpen = videoModal && videoModal.classList.contains('active');
                 
                 if (isVideoOpen) {
-                    // ✅ LABOTS: Izmanto YouTube API
-                    if (window.videoPlayer && window.videoPlayer.playFragment) {
-                        // Atjaunot video kadriļu
-                        const currentVideoTitle = document.getElementById('currentVideoTitle');
-                        if (currentVideoTitle) currentVideoTitle.textContent = kadril.name;
-                        
-                        // Atskaņot pilno fragmentu caur YouTube API
-                        window.videoPlayer.playFragment('pilnā');
+                    // ✅ LABOTS: Izmanto updateVideo funkciju lai nomainītu video
+                    if (window.videoPlayer && window.videoPlayer.updateVideo) {
+                        console.log('🔄 Atjaunojam video uz:', kadril.name);
+                        window.videoPlayer.updateVideo();
                     }
                     this.updateSystemLog(`Video: ${kadril.name}`);
                 } else {
