@@ -155,7 +155,7 @@ body {
     text-shadow: 0 0 5px #e6ff00;
     position: relative;
     z-index: 1;
-    font-size: 35px;
+    font-size: 40px;
     font-weight: 300;
     font-family: 'Great-Victorian', Georgia, serif;
 }
@@ -174,7 +174,7 @@ body {
     border-radius: 3px;
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 18px;
+    font-size: 30px;
     font-family: 'Great-Victorian', Georgia, serif;
 }
 
@@ -856,7 +856,7 @@ body {
     color: #e6ff00;
     margin: 5px 0;
     text-shadow: 0 0 8px #e6ff00;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
     font-family: 'Great-Victorian', Georgia, serif;
 }
@@ -909,7 +909,7 @@ body {
     text-align: center;
     margin: 0 0 8px 0;
     text-shadow: 0 0 8px #e6ff00;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     font-family: 'Great-Victorian', Georgia, serif;
 }
@@ -1211,7 +1211,7 @@ body {
     .song-list-container .song-list li {
         padding: 12px 10px;
         margin-bottom: 4px;
-        font-size: 20px;
+        font-size: 30px;
         min-height: 40px;
         display: flex;
         align-items: center;
@@ -1246,7 +1246,7 @@ body {
     }
     
     .video-header h2 {
-        font-size: 16px;
+        font-size: 24px;
     }
     
     .video-container {
@@ -1255,11 +1255,11 @@ body {
     }
     
     .video-info h3 {
-        font-size: 18px;
+        font-size: 24px;
     }
     
     .video-fragments h3 {
-        font-size: 16px;
+        font-size: 24px;
     }
     
     .video-fragment-btn {

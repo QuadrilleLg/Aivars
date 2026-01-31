@@ -11,7 +11,7 @@
   },
   "kadrils": {
     "rusiņš": {
-      "name": "Kadriļa RuseņŠ",
+      "name": "Kadriļa Rusiņš",
       "fragments": {
         "sveicināšanās": "MUSIC/kadrilas/ada/parts/sakums.mp3",
         "grieziens": "MUSIC/kadrilas/ada/parts/grieziens.mp3",
@@ -247,8 +247,8 @@
       },
       "keywords": ["bērzgali", "bērzgale", "berzgali"]
     },
-    "kučers": {
-      "name": "Kučers",
+    "balabaska": {
+      "name": "Balabaska",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/kucers/kucersfull.mp3",
         "sākums": "MUSIC/kadrilas/kucers/parts/sakums.mp3",
@@ -256,12 +256,18 @@
         "beigas": "MUSIC/kadrilas/kucers/parts/beigas.mp3"
       },
       "video": {
-        "youtube_id": "VIDEO_ID_KUCERS",
+        "youtube_id": "RQQeFO3qBto",
         "fragments": {
           "pilna": { "start": "0:00", "end": "3:00" },
-          "sakums": { "start": "0:00", "end": "1:00" },
-          "vidus": { "start": "1:00", "end": "2:00" },
-          "beigas": { "start": "2:00", "end": "3:00" }
+          "1. sveicināšanās": { "start": "0:00", "end": "0:20" },
+          "1. vija": { "start": "0:20", "end": "2:00" },
+          "1. mazie dārziņi": { "start": "2:00", "end": "3:00" },
+          "1. diognāles": { "start": "1:00", "end": "2:00" },
+          "2. mazie dārziņi": { "start": "1:00", "end": "2:00" },
+          "2. diognāles": { "start": "1:00", "end": "2:00" },
+          "dzirnavas": { "start": "1:00", "end": "2:00" },
+          "2. sveicināšanās": { "start": "1:00", "end": "2:00" },
+          "Lielais dārziņš": { "start": "1:00", "end": "2:00" }
         }
       },
       "timemarks": {
