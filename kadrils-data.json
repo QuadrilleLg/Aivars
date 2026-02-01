@@ -54,7 +54,7 @@
     "padespaņs": {
       "name": "Padespaņs",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/padespans/Paespaan_v1.mp3",
+        "pilnā": "MUSIC/kadrilas/padespans/Padespaan_v1.mp3",
         "pirmais gājiens": "MUSIC/kadrilas/padespans/parts/pirmais.mp3",
         "otrais gājiens": "MUSIC/kadrilas/padespans/parts/otrais.mp3",
         "trešais gājiens": "MUSIC/kadrilas/padespans/parts/tresais.mp3"
@@ -247,8 +247,8 @@
       },
       "keywords": ["bērzgali", "bērzgale", "berzgali"]
     },
-    "balabaska": {
-      "name": "Balabaska",
+    "Bukmuižas kadriļa": {
+      "name": "Bukmuižas kadriļa",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/kucers/kucersfull.mp3",
         "sākums": "MUSIC/kadrilas/kucers/parts/sakums.mp3",
@@ -256,18 +256,12 @@
         "beigas": "MUSIC/kadrilas/kucers/parts/beigas.mp3"
       },
       "video": {
-        "youtube_id": "RQQeFO3qBto",
+        "youtube_id": "aMp7L1IEPrA",
         "fragments": {
           "pilna": { "start": "0:00", "end": "3:00" },
-          "1. sveicināšanās": { "start": "0:00", "end": "0:20" },
-          "1. vija": { "start": "0:20", "end": "2:00" },
-          "1. mazie dārziņi": { "start": "2:00", "end": "3:00" },
-          "1. diognāles": { "start": "1:00", "end": "2:00" },
-          "2. mazie dārziņi": { "start": "1:00", "end": "2:00" },
-          "2. diognāles": { "start": "1:00", "end": "2:00" },
-          "dzirnavas": { "start": "1:00", "end": "2:00" },
-          "2. sveicināšanās": { "start": "1:00", "end": "2:00" },
-          "Lielais dārziņš": { "start": "1:00", "end": "2:00" }
+          "sakums": { "start": "0:00", "end": "1:00" },
+          "vidus": { "start": "1:00", "end": "2:00" },
+          "beigas": { "start": "2:00", "end": "3:00" }
         }
       },
       "timemarks": {
@@ -303,15 +297,15 @@
       },
       "keywords": ["kučers", "kučeru", "kucers"]
     },
-    "polka": {
-      "name": "Polka",
+    "Krusta kazāks": {
+      "name": "Krusta kazāks",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/polka/polkafull.mp3",
         "lēnā daļa": "MUSIC/kadrilas/polka/parts/lena.mp3",
         "ātrā daļa": "MUSIC/kadrilas/polka/parts/atra.mp3"
       },
       "video": {
-        "youtube_id": "VIDEO_ID_POLKA",
+        "youtube_id": "x5pUXsCoOLQ",
         "fragments": {
           "pilna": { "start": "0:00", "end": "2:30" },
           "lena": { "start": "0:00", "end": "1:15" },
@@ -344,8 +338,8 @@
       },
       "keywords": ["polka", "polku", "polkas"]
     },
-    "francmanis": {
-      "name": "Francmanis",
+    "Bulamuskis": {
+      "name": "Bulamuskis",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/francmanis/francmanisfull.mp3",
         "ievads": "MUSIC/kadrilas/francmanis/parts/ievads.mp3",
@@ -353,7 +347,7 @@
         "finālais": "MUSIC/kadrilas/francmanis/parts/finals.mp3"
       },
       "video": {
-        "youtube_id": "VIDEO_ID_FRANCMANIS",
+        "youtube_id": "pbC7hRDRHAY",
         "fragments": {
           "pilna": { "start": "0:00", "end": "3:45" },
           "ievads": { "start": "0:00", "end": "0:45" },
@@ -395,8 +389,8 @@
       },
       "keywords": ["francmanis", "francmaņi", "francmaņa"]
     },
-    "lancīe": {
-      "name": "Lancīe",
+    "Lancejots": {
+      "name": "Lancejots",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/lancie/lanciefull.mp3",
         "1. daļa": "MUSIC/kadrilas/lancie/parts/dala1.mp3",
@@ -404,7 +398,7 @@
         "3. daļa": "MUSIC/kadrilas/lancie/parts/dala3.mp3"
       },
       "video": {
-        "youtube_id": "VIDEO_ID_LANCIE",
+        "youtube_id": "LCMxQ3DbaDg",
         "fragments": {
           "pilna": { "start": "0:00", "end": "4:00" },
           "dala1": { "start": "0:00", "end": "1:20" },
@@ -445,32 +439,39 @@
       },
       "keywords": ["lancīe", "lancie", "lancje"]
     },
-    "mazurka": {
-      "name": "Mazurka",
+    "Rikavas kadriļa": {
+      "name": "Rikavas kadriļa",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/mazurka/mazurkafull.mp3",
-        "lēnā": "MUSIC/kadrilas/mazurka/parts/lena.mp3",
-        "ātrā": "MUSIC/kadrilas/mazurka/parts/atra.mp3"
+        "pilnā": "MUSIC/kadrilas/rikavas/rikavas_full.mp3",
+        "domāšanas gabals": "MUSIC/kadrilas/rikavas/parts/pirmā.mp3",
+        "spārdīšanas gabals": "MUSIC/kadrilas/rikavas/parts/otrā.mp3",
+        "dancošanas gabals": "MUSIC/kadrilas/rikavas/parts/trešā.mp3",
+        "kumeļa gabals": "MUSIC/kadrilas/rikavas/parts/ceturtā.mp3",
+        "cīruļa gabals": "MUSIC/kadrilas/rikavas/parts/piektā.mp3"
+        
       },
       "video": {
-        "youtube_id": "VIDEO_ID_MAZURKA",
+        "youtube_id": "r6Z29XEi0Gc",
         "fragments": {
-          "pilna": { "start": "0:00", "end": "3:15" },
-          "lena": { "start": "0:00", "end": "1:35" },
-          "atra": { "start": "1:35", "end": "3:15" }
+          "pilna": { "start": "0:00", "end": "4:51" },
+          "pirmā kaļena": { "start": "0:00", "end": "1:00" },
+          "otrā kaļena": { "start": "1:00", "end": "1:50" },
+          "trešā kaļena": { "start": "1:50", "end": "2:53" },
+          "ceturtā kaļena": { "start": "2:54", "end": "3:43" },
+          "piektā kaļena": { "start": "3:43", "end": "4:51" }
         }
       },
       "timemarks": {
         "pilnā": [
-          { "time": 0, "text": "Mazurkas ievads" },
-          { "time": 12, "text": "Lēnā daļa sākas" },
-          { "time": 30, "text": "Grieziens pa labi" },
-          { "time": 50, "text": "Grieziens pa kreisi" },
-          { "time": 75, "text": "Maiņa" },
-          { "time": 95, "text": "Ātrā daļa sākas" },
-          { "time": 125, "text": "Intensīvs grieziens" },
-          { "time": 155, "text": "Finālā daļa" },
-          { "time": 185, "text": "Noslēgums" }
+          { "time": 0, "text": "Pirmā kaļena - domāšanas gabals " },
+          { "time": 7, "text": "Meitu gājiens pie svešiem puišiem" },
+          { "time": 21, "text": "Meitu gājiens pie saviem puišiem" },
+          { "time": 33, "text": "Puišu gājiens pie svešām meitām" },
+          { "time": 47, "text": "Puišu gājiens pie savām meitām" },
+
+          { "time": 60, "text": "Otrā kaļena - spārdīšanas gabals" },
+          { "time": 65, "text": "---" },
+          { "time": 110, "text": "---" }
         ],
         "lēnā": [
           { "time": 0, "text": "Lēnās daļas ievads" },
