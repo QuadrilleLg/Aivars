@@ -250,7 +250,7 @@
     "Bukmuižas kadriļa": {
       "name": "Bukmuižas kadriļa",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/kucers/kucersfull.mp3",
+        "pilnā": "MUSIC/kadrilas/bukmuizas/bukmuizasfull_v1.mp3",
         "sākums": "MUSIC/kadrilas/kucers/parts/sakums.mp3",
         "vidus": "MUSIC/kadrilas/kucers/parts/vidus.mp3",
         "beigas": "MUSIC/kadrilas/kucers/parts/beigas.mp3"
@@ -265,7 +265,7 @@
         }
       },
       "timemarks": {
-        "pilnā": [
+        "---": [
           { "time": 0, "text": "Kučera ievads" },
           { "time": 12, "text": "Pāri sāk kustēties" },
           { "time": 25, "text": "Pirmā maiņa" },
@@ -276,19 +276,19 @@
           { "time": 150, "text": "Finālā daļa" },
           { "time": 170, "text": "Noslēgums" }
         ],
-        "sākums": [
+        "--": [
           { "time": 0, "text": "Ievads" },
           { "time": 15, "text": "Nostāšanās" },
           { "time": 30, "text": "Pirmā kustība" },
           { "time": 50, "text": "Sasveicināšanās" }
         ],
-        "vidus": [
+        "-": [
           { "time": 0, "text": "Ķēde" },
           { "time": 20, "text": "Rotācija" },
           { "time": 40, "text": "Maiņa" },
           { "time": 55, "text": "Grieziens" }
         ],
-        "beigas": [
+        "----": [
           { "time": 0, "text": "Finālā daļa" },
           { "time": 20, "text": "Ātrais grieziens" },
           { "time": 40, "text": "Visi kopā" },
@@ -300,9 +300,10 @@
     "Krusta kazāks": {
       "name": "Krusta kazāks",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/polka/polkafull.mp3",
-        "lēnā daļa": "MUSIC/kadrilas/polka/parts/lena.mp3",
-        "ātrā daļa": "MUSIC/kadrilas/polka/parts/atra.mp3"
+        "pilnā": "MUSIC/kadrilas/polka/kazaks_1.mp3",
+        "sākums": "MUSIC/kadrilas/polka/parts/lena.mp3",
+        "vidus": "MUSIC/kadrilas/polka/parts/lena.mp3",
+        "beigas": "MUSIC/kadrilas/polka/parts/atra.mp3"
       },
       "video": {
         "youtube_id": "x5pUXsCoOLQ",
@@ -313,7 +314,7 @@
         }
       },
       "timemarks": {
-        "pilnā": [
+        "-": [
           { "time": 0, "text": "Polkas sākums" },
           { "time": 10, "text": "Lēnā daļa sākas" },
           { "time": 30, "text": "Grieziens pa labi" },
@@ -323,13 +324,13 @@
           { "time": 120, "text": "Finālā ātrā daļa" },
           { "time": 140, "text": "Noslēgums" }
         ],
-        "lēnā daļa": [
+        "--": [
           { "time": 0, "text": "Lēnās daļas ievads" },
           { "time": 15, "text": "Grieziens pa labi" },
           { "time": 35, "text": "Grieziens pa kreisi" },
           { "time": 60, "text": "Lēnās daļas beigas" }
         ],
-        "ātrā daļa": [
+        "---": [
           { "time": 0, "text": "Ātrās daļas sākums" },
           { "time": 15, "text": "Intensīvs grieziens" },
           { "time": 35, "text": "Finālā daļa" },
@@ -341,7 +342,7 @@
     "Bulamuskis": {
       "name": "Bulamuskis",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/francmanis/francmanisfull.mp3",
+        "pilnā": "MUSIC/kadrilas/bulamuskis/bulamuskisfull.mp3",
         "ievads": "MUSIC/kadrilas/francmanis/parts/ievads.mp3",
         "galvenā daļa": "MUSIC/kadrilas/francmanis/parts/galvena.mp3",
         "finālais": "MUSIC/kadrilas/francmanis/parts/finals.mp3"
@@ -367,20 +368,20 @@
           { "time": 180, "text": "Ātrais grieziens" },
           { "time": 215, "text": "Noslēgums" }
         ],
-        "ievads": [
+        "sākums": [
           { "time": 0, "text": "Ievada melodija" },
           { "time": 10, "text": "Pāri nostājas" },
           { "time": 25, "text": "Sākas kustība" },
           { "time": 40, "text": "Ievada beigas" }
         ],
-        "galvenā daļa": [
+        "vidus": [
           { "time": 0, "text": "1. figūra" },
           { "time": 30, "text": "2. figūra" },
           { "time": 60, "text": "3. figūra" },
           { "time": 90, "text": "4. figūra" },
           { "time": 115, "text": "Galvenās daļas beigas" }
         ],
-        "finālais": [
+        "beigas": [
           { "time": 0, "text": "Finālā daļa sākas" },
           { "time": 20, "text": "Ātrais grieziens" },
           { "time": 45, "text": "Visi kopā" },
@@ -392,7 +393,7 @@
     "Lancejots": {
       "name": "Lancejots",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/lancie/lanciefull.mp3",
+        "pilnā": "MUSIC/kadrilas/lancejots/lancjots.mp3",
         "1. daļa": "MUSIC/kadrilas/lancie/parts/dala1.mp3",
         "2. daļa": "MUSIC/kadrilas/lancie/parts/dala2.mp3",
         "3. daļa": "MUSIC/kadrilas/lancie/parts/dala3.mp3"
@@ -401,9 +402,9 @@
         "youtube_id": "LCMxQ3DbaDg",
         "fragments": {
           "pilna": { "start": "0:00", "end": "4:00" },
-          "dala1": { "start": "0:00", "end": "1:20" },
-          "dala2": { "start": "1:20", "end": "2:40" },
-          "dala3": { "start": "2:40", "end": "4:00" }
+          "sākums": { "start": "0:00", "end": "1:20" },
+          "vidus": { "start": "1:20", "end": "2:40" },
+          "beigas": { "start": "2:40", "end": "4:00" }
         }
       },
       "timemarks": {
@@ -418,19 +419,19 @@
           { "time": 185, "text": "Trešā daļa - finālā" },
           { "time": 220, "text": "Noslēgums" }
         ],
-        "1. daļa": [
+        "-": [
           { "time": 0, "text": "1. daļas ievads" },
           { "time": 15, "text": "1. figūra" },
           { "time": 45, "text": "2. figūra" },
           { "time": 75, "text": "1. daļas beigas" }
         ],
-        "2. daļa": [
+        "--": [
           { "time": 0, "text": "2. daļas sākums" },
           { "time": 20, "text": "3. figūra" },
           { "time": 50, "text": "4. figūra" },
           { "time": 75, "text": "2. daļas beigas" }
         ],
-        "3. daļa": [
+        "---": [
           { "time": 0, "text": "Finālā daļa" },
           { "time": 25, "text": "Ātrais grieziens" },
           { "time": 55, "text": "Visi kopā" },
@@ -488,8 +489,8 @@
       },
       "keywords": ["mazurka", "mazurku", "mazurkas"]
     },
-    "priecīgās dienas": {
-      "name": "Priecīgās dienas",
+    "...": {
+      "name": "...",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/priecigas/priecigasfull.mp3",
         "sākums": "MUSIC/kadrilas/priecigas/parts/sakums.mp3",
@@ -538,8 +539,8 @@
       },
       "keywords": ["priecīgās dienas", "priecīgās", "priecigas"]
     },
-    "vecs dancis": {
-      "name": "Vecs dancis",
+    "....": {
+      "name": "...",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/vecsdancis/vecsdancisfull.mp3",
         "ievads": "MUSIC/kadrilas/vecsdancis/parts/ievads.mp3",
@@ -590,8 +591,8 @@
       },
       "keywords": ["vecs dancis", "vecais dancis", "vecs dančiš"]
     },
-    "setinš": {
-      "name": "Setiņš",
+    ".....": {
+      "name": "...",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/setins/setinsfull.mp3",
         "sākums": "MUSIC/kadrilas/setins/parts/sakums.mp3",
