@@ -138,11 +138,14 @@ function createYouTubePlayer(videoId) {
                     playsinline: 1,
                     rel: 0,
                     modestbranding: 1,
-                    mute: 1,  // Autoplay pieprasa muted video
+                    controls: 1,
                     origin: window.location.origin
                 },
                 events: {
                     onReady: function(event) {
+                        // ✅ UNMUTE pēc ielādes!
+                        event.target.unMute();
+                        event.target.setVolume(100);
                         startTimerUpdate();
                         resolve(event.target);
                     },
