@@ -300,7 +300,7 @@
     "Krusta kazāks": {
       "name": "Krusta kazāks",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/polka/kazaks_1.mp3",
+        "pilnā": "MUSIC/kadrilas/kazaks/kazaks_1.mp3",
         "sākums": "MUSIC/kadrilas/polka/parts/lena.mp3",
         "vidus": "MUSIC/kadrilas/polka/parts/lena.mp3",
         "beigas": "MUSIC/kadrilas/polka/parts/atra.mp3"
@@ -342,7 +342,7 @@
     "Bulamuskis": {
       "name": "Bulamuskis",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/bulamuskis/bulamuskisfull.mp3",
+        "pilnā": "MUSIC/kadrilas/bulamuskis/bulamuskis.mp3",
         "ievads": "MUSIC/kadrilas/francmanis/parts/ievads.mp3",
         "galvenā daļa": "MUSIC/kadrilas/francmanis/parts/galvena.mp3",
         "finālais": "MUSIC/kadrilas/francmanis/parts/finals.mp3"
@@ -393,7 +393,7 @@
     "Lancejots": {
       "name": "Lancejots",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/lancejots/lancjots.mp3",
+        "pilnā": "MUSIC/kadrilas/lancejots/lancejots.mp3",
         "1. daļa": "MUSIC/kadrilas/lancie/parts/dala1.mp3",
         "2. daļa": "MUSIC/kadrilas/lancie/parts/dala2.mp3",
         "3. daļa": "MUSIC/kadrilas/lancie/parts/dala3.mp3"
