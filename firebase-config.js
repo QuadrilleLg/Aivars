@@ -1,25 +1,22 @@
 // ============================================
-// FIREBASE KONFIGURĀCIJA
-// ============================================
-// AIZPILDI AR SAVIEM DATIEM no Firebase Console!
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSy...",                    // ← Tavs API Key
-    authDomain: "tavs-projekts.firebaseapp.com",  // ← Tavs Auth Domain
-    projectId: "tavs-projekts",                   // ← Tavs Project ID
-    storageBucket: "tavs-projekts.appspot.com",   // ← Tavs Storage Bucket
-    messagingSenderId: "123456789",               // ← Tavs Sender ID
-    appId: "1:123456789:web:abc123..."           // ← Tavs App ID
+  apiKey: "AIzaSyDZSqwa06UpBkvpHYK0VTGvkQvZvjE-QCk",
+  authDomain: "kadrilas-app.firebaseapp.com",
+  projectId: "kadrilas-app",
+  storageBucket: "kadrilas-app.firebasestorage.app",
+  messagingSenderId: "830702928679",
+  appId: "1:830702928679:web:ee5d528d5432fcd8ca5f02",
+  measurementId: "G-Q3BD0MCBQ0"
 };
 
-// Inicializē Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Eksportē servisa references
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-// Firestore timestamp helper
-const timestamp = firebase.firestore.FieldValue.serverTimestamp;
-
-console.log('✅ Firebase inicializēts!');
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
