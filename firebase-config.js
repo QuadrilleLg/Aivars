@@ -1,14 +1,9 @@
+// // FIREBASE KONFIGURĀCIJA
 // ============================================
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// AIZPILDI AR SAVIEM DATIEM no Firebase Console!
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDZSqwa06UpBkvpHYK0VTGvkQvZvjE-QCk",
+    apiKey: "AIzaSyDZSqwa06UpBkvpHYK0VTGvkQvZvjE-QCk",
   authDomain: "kadrilas-app.firebaseapp.com",
   projectId: "kadrilas-app",
   storageBucket: "kadrilas-app.firebasestorage.app",
@@ -17,6 +12,14 @@ const firebaseConfig = {
   measurementId: "G-Q3BD0MCBQ0"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Inicializē Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Eksportē servisa references
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// Firestore timestamp helper
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+
+console.log('✅ Firebase inicializēts!');
