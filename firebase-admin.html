@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panelis | Lietotāju Pārvaldība</title>
     
+    <!-- Galvenais stils -->
+    <link rel="stylesheet" href="style.css">
+    
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -14,20 +17,14 @@
     <script src="firebase-config.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* Admin-specifiskais stils */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
         
-        .container {
+        .admin-container {
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -162,12 +159,6 @@
             background: #c82333;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-        }
-        
         .loading {
             text-align: center;
             padding: 40px;
@@ -177,7 +168,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="admin-container">
         <!-- Header -->
         <div class="header">
             <h1>🔐 Admin Panelis</h1>
@@ -220,8 +211,11 @@
 
     // Ielādē lietotājus no Firestore
     async function loadUsers() {
+        console.log('🔄 Sāk ielādēt lietotājus...');
+        
         try {
-            const snapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
+            const snapshot = await db.collection('users').get();
+            console.log('📊 Atrasti', snapshot.size, 'lietotāji');
             
             const pendingList = document.getElementById('pending-users');
             const activeList = document.getElementById('active-users');
@@ -235,6 +229,8 @@
             snapshot.forEach(doc => {
                 const user = doc.data();
                 const userId = doc.id;
+                
+                console.log('👤 Lietotājs:', userId, user.email, user.status);
                 
                 const userCard = createUserCard(userId, user);
                 
@@ -259,25 +255,25 @@
                 activeList.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">Nav aktīvo lietotāju</p>';
             }
             
+            console.log('✅ Lietotāji ielādēti: Pending=' + pendingCount + ', Active=' + activeCount);
+            
         } catch (error) {
-            console.error('Kļūda ielādējot lietotājus:', error);
+            console.error('❌ Kļūda ielādējot lietotājus:', error);
             alert('Neizdevās ielādēt lietotājus: ' + error.message);
         }
     }
 
-    // Izveido lietotāja kartīti
+    // Izveido lietotāja kartīti (BEZ datumu formatēšanas)
     function createUserCard(userId, user) {
         const card = document.createElement('div');
         card.className = 'user-card';
         
-        const createdDate = user.createdAt ? new Date(user.createdAt.toDate()).toLocaleString('lv-LV') : 'Nav zināms';
-        
         if (user.status === 'pending') {
             card.innerHTML = `
                 <div>
-                    <strong>${user.email}</strong>
+                    <strong>${user.email || 'Nav e-pasta'}</strong>
                     <br>
-                    <small>Reģistrējies: ${createdDate}</small>
+                    <small>ID: ${userId.substring(0, 8)}...</small>
                 </div>
                 <div>
                     <button onclick="approveUser('${userId}')" class="btn-approve">✓ Apstiprināt</button>
@@ -285,12 +281,11 @@
                 </div>
             `;
         } else {
-            const approvedDate = user.approvedAt ? new Date(user.approvedAt.toDate()).toLocaleString('lv-LV') : 'Nav zināms';
             card.innerHTML = `
                 <div>
-                    <strong>${user.email}</strong>
+                    <strong>${user.email || 'Nav e-pasta'}</strong>
                     <br>
-                    <small>Apstiprināts: ${approvedDate}</small>
+                    <small>Apstiprināts ${user.approvedBy ? 'ar ' + user.approvedBy : ''}</small>
                 </div>
                 <div>
                     <button onclick="revokeAccess('${userId}')" class="btn-reject">Atsaukt piekļuvi</button>
@@ -357,18 +352,36 @@
 
     // Pārbauda admin pieeju un ielādē datus
     auth.onAuthStateChanged(user => {
+        console.log('🔐 Auth state changed:', user?.email);
+        
         if (user) {
             // Pārbauda vai ir admin
             db.collection('users').doc(user.uid).get()
                 .then(doc => {
-                    if (doc.exists && doc.data().role === 'admin') {
-                        loadUsers(); // Ielādē lietotājus
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        console.log('👤 User data:', userData);
+                        
+                        if (userData.role === 'admin') {
+                            console.log('✅ Admin tiesības apstiprinātas');
+                            loadUsers(); // Ielādē lietotājus
+                        } else {
+                            console.log('❌ Nav admin tiesību');
+                            alert('❌ Nav admin tiesību!');
+                            window.location.href = 'index.html';
+                        }
                     } else {
-                        alert('❌ Nav admin tiesību!');
+                        console.log('❌ Lietotāja dokuments neeksistē');
+                        alert('❌ Lietotāja dati nav atrasti!');
                         window.location.href = 'index.html';
                     }
+                })
+                .catch(error => {
+                    console.error('❌ Kļūda pārbaudot lietotāju:', error);
+                    alert('❌ Kļūda: ' + error.message);
                 });
         } else {
+            console.log('❌ Nav autorizēts');
             window.location.href = 'index.html';
         }
     });
