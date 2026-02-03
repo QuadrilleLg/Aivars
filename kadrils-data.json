@@ -443,7 +443,7 @@
     "Rikavas kadriļa": {
       "name": "Rikavas kadriļa",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/rikavas/rikavas_full.mp3",
+        "pilnā": "MUSIC/kadrilas/Rikava/Rikava.mp3",
         "domāšanas gabals": "MUSIC/kadrilas/rikavas/parts/pirmā.mp3",
         "spārdīšanas gabals": "MUSIC/kadrilas/rikavas/parts/otrā.mp3",
         "dancošanas gabals": "MUSIC/kadrilas/rikavas/parts/trešā.mp3",
@@ -470,17 +470,22 @@
           { "time": 33, "text": "Puišu gājiens pie svešām meitām" },
           { "time": 47, "text": "Puišu gājiens pie savām meitām" },
 
-          { "time": 60, "text": "Otrā kaļena - spārdīšanas gabals" },
-          { "time": 65, "text": "---" },
-          { "time": 110, "text": "---" }
+          { "time": 60, "text": "Otrā kaļena - dancošanas gabals - aizmuguriskais krustiskais satvēriens" },
+          { "time": 65, "text": "" },
+          { "time": 65, "text": " Trešā kaļena - spārdīšanas gabals-priekšējais krustiskais satvēriens" },
+          { "time": 65, "text": "Ceturtā kaļena - kumeļa gabals-lēnais" },
+          { "time": 65, "text": " pēdējā kaļena - cīruļa gabals-..." },
+          
+          { "time": 65, "text": "polka" },
+          { "time": 110, "text": "beigas" }
         ],
-        "lēnā": [
+        "domāšanas gabals": [
           { "time": 0, "text": "Lēnās daļas ievads" },
           { "time": 15, "text": "Grieziens pa labi" },
           { "time": 40, "text": "Grieziens pa kreisi" },
           { "time": 70, "text": "Lēnās daļas beigas" }
         ],
-        "ātrā": [
+        "dancošanas gabals": [
           { "time": 0, "text": "Ātrās daļas sākums" },
           { "time": 20, "text": "Intensīvs grieziens" },
           { "time": 50, "text": "Finālā daļa" },
@@ -489,34 +494,82 @@
       },
       "keywords": ["mazurka", "mazurku", "mazurkas"]
     },
-    "...": {
-      "name": "...",
+    "Kertinis Jonkelis": {
+      "name": "Kertinis Jonkelis",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/priecigas/priecigasfull.mp3",
+        "pilnā": "MUSIC/kadrilas/Jonkelis/jonkelis.mp3",
         "sākums": "MUSIC/kadrilas/priecigas/parts/sakums.mp3",
         "vidus": "MUSIC/kadrilas/priecigas/parts/vidus.mp3",
         "finālais": "MUSIC/kadrilas/priecigas/parts/finals.mp3"
       },
       "video": {
-        "youtube_id": "VIDEO_ID_PRIECIGAS",
+        "youtube_id": "OVabHdjG2FU",
         "fragments": {
           "pilna": { "start": "0:00", "end": "3:30" },
-          "sakums": { "start": "0:00", "end": "1:10" },
+          "sākums": { "start": "0:00", "end": "1:10" },
           "vidus": { "start": "1:10", "end": "2:20" },
           "finals": { "start": "2:20", "end": "3:30" }
         }
       },
       "timemarks": {
         "pilnā": [
-          { "time": 0, "text": "Priecīgo dienu ievads" },
-          { "time": 15, "text": "Pirmā figūra" },
-          { "time": 35, "text": "Otrā figūra" },
-          { "time": 60, "text": "Trešā figūra" },
-          { "time": 90, "text": "Ceturtā figūra" },
-          { "time": 120, "text": "Piektā figūra" },
-          { "time": 150, "text": "Finālā daļa" },
-          { "time": 185, "text": "Ātrais grieziens" },
-          { "time": 205, "text": "Noslēgums" }
+          { "time": 0, "text": "Sākums" },
+          { "time": 4, "text": "Dārziņš pret dejas ceļu" },
+          { "time": 11, "text": "Dārziņš pa dejas ceļu" },
+          { "time": 18, "text": " 1.meitas ved puišus uz pretējām vietām" },
+          { "time": 21, "text": "2. meitas ved puišus uz pretējām vietām" },
+          { "time": 25, "text": "1. meitas ved uz savām vietām" },
+          { "time": 28, "text": "2. meitas ved uz savām vietām" },
+          { "time": 31, "text": "1. Puišu solo - satikšanās" },
+          { "time": 35, "text": "1. puišu solo - do-za-do" },
+          { "time": 38, "text": "pie svešās meitas un atpakaļ" },
+          { "time": 40, "text": "2. puišu solo - satikšanās" },
+         { "time": 42, "text": "2. puišu solo - do-za-do" },
+         { "time": 43, "text": "2. puišu solo - pie svešām meitām un atpakaļ" },
+         
+         { "time": 35, "text": "1. puišu solo - 1. diognāles" },
+         { "time": 31, "text": "1. Puišu solo - satikšanās" },
+          { "time": 35, "text": "1. puišu solo - do-za-do" },
+          { "time": 38, "text": "pie svešās meitas un atpakaļ" },
+          { "time": 40, "text": "2. puišu solo - satikšanās" },
+         { "time": 42, "text": "2. puišu solo - do-za-do" },
+         { "time": 43, "text": "2. puišu solo - pie svešām meitām un atpakaļ" },
+         
+         { "time": 35, "text": "1. puišu solo - 2. diognāles" },
+         { "time": 31, "text": "1. Puišu solo - satikšanās" },
+          { "time": 35, "text": "1. puišu solo - do-za-do" },
+          { "time": 38, "text": "1. puišu solo - pie svešās meitas un atpakaļ" },
+          { "time": 40, "text": "2. puišu solo - satikšanās" },
+         { "time": 42, "text": "2. puišu solo - do-za-do" },
+         { "time": 43, "text": "2. puišu solo - pie svešām meitām un atpakaļ" },
+         
+         { "time": 4, "text": "Dārziņš pret dejas ceļu" },
+          { "time": 11, "text": "Dārziņš pa dejas ceļu" },
+
+
+          { "time": 18, "text": " 1. puiši ved meitas uz pretējām vietām" },
+          { "time": 21, "text": "2. puiši ved meitas uz pretējām vietām" },
+          { "time": 25, "text": "1. puiši ved uz savām vietām" },
+          { "time": 28, "text": "2. puiši ved uz savām vietām" },
+          { "time": 31, "text": "1. Meitu solo - satikšanās" },
+          { "time": 35, "text": "1. Meitu solo - do-za-do" },
+          { "time": 38, "text": "pie svešā puiša un atpakaļ" },
+          { "time": 40, "text": "2. Meitu solo - satikšanās" },
+         { "time": 42, "text": "2. Meitu solo - do-za-do" },
+         { "time": 43, "text": "2. meitu solo - pie svešā puiša un atpakaļ" },
+         { "time": 35, "text": "1. meitu solo - 1. diognāles" },
+         { "time": 31, "text": " meitu solo - satikšanās" },
+          { "time": 35, "text": " meitu solo - do-za-do" },
+          { "time": 38, "text": "meitu solo - pie svešā puiša un atpakaļ" },
+          { "time": 35, "text": " meitu solo - 2. diognāles" },
+         { "time": 31, "text": "meitu solo - satikšanās" },
+          { "time": 35, "text": "meitu solo - do-za-do" },
+          { "time": 38, "text": "meitu solo - pie svešā puiša un atpakaļ" },
+         
+          { "time": 4, "text": "Dārziņš pret dejas ceļu" },
+          { "time": 11, "text": "Dārziņš pa dejas ceļu" }
+
+
         ],
         "sākums": [
           { "time": 0, "text": "Ievads" },
@@ -537,7 +590,7 @@
           { "time": 65, "text": "Noslēgums" }
         ]
       },
-      "keywords": ["priecīgās dienas", "priecīgās", "priecigas"]
+      "keywords": ["jankelis", "jankels", "jonkelis"]
     },
     "....": {
       "name": "...",

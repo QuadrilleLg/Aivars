@@ -424,11 +424,21 @@ class UIManager {
 
     // Dejas norises apraksta panelis
     setupDanceDescriptionPanel() {
+        console.log('🎭 setupDanceDescriptionPanel() called');
+        
+        // Pārbaudām, vai panelis jau eksistē HTML
+        const existingPanel = document.getElementById('danceDescriptionPanel');
+        if (existingPanel) {
+            console.log('✅ danceDescriptionPanel already exists in HTML, skipping creation');
+            return;
+        }
+        
         const fragmentsContainer = document.querySelector('.fragments-container');
         if (!fragmentsContainer) {
             console.warn('⚠️ fragments-container not found');
             return;
         }
+        console.log('✅ fragments-container found:', fragmentsContainer);
 
         // Izveidojam dejas norises paneli
         const dancePanel = document.createElement('div');
@@ -444,7 +454,7 @@ class UIManager {
         // Pievienojam pēc fragmentu saraksta
         fragmentsContainer.appendChild(dancePanel);
         
-        console.log('✅ Dance description panel created');
+        console.log('✅ Dance description panel created and appended');
     }
 
     // Ielādē un parāda dejas soļus
