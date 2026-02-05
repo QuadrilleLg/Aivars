@@ -206,12 +206,37 @@ class RecognitionManager {
             // ========================================
             console.log('🎵 Active mode - processing command:', text);
             
+            // ✅ Parādīt user komandu
+            if (window.assistantUI) {
+                window.assistantUI.showUserCommand(text);
+            }
+            
             if (window.uiManager) {
                 window.uiManager.updateChatLog(`Jūs: ${text}`);
             }
             
             if (window.audioManager) {
-                const response = window.audioManager.handleCommand(text);
+                // ✅ PĀRBAUDA VAI IR FRAGMENTA KOMANDA
+                const isFragmentCommand = this.commands.parts.some(part => text.includes(part));
+                
+                let response;
+                
+                if (isFragmentCommand && this.lastActiveSong) {
+                    // ✅ Ja fragments + atceras dziesmu → pievieno dziesmu
+                    const fullCommand = `${this.lastActiveSong} ${text}`;
+                    console.log(`🎵 Fragmenta komanda ar atmiņu: "${fullCommand}"`);
+                    response = window.audioManager.handleCommand(fullCommand);
+                } else {
+                    // ✅ Parasta komanda
+                    response = window.audioManager.handleCommand(text);
+                    
+                    // ✅ Ja bija dziesmas komanda, atceras to
+                    const isDanceCommand = this.commands.dances.some(dance => text.includes(dance));
+                    if (isDanceCommand) {
+                        this.lastActiveSong = text;
+                        console.log(`💾 Atceros dziesmu: "${this.lastActiveSong}"`);
+                    }
+                }
                 
                 if (response) {
                     console.log('📝 Response from audioManager:', response);
