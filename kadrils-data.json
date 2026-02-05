@@ -3,12 +3,12 @@
     "aivar": {
       "pairs": [
         {
-          "audio": "MUSIC/voice_responses/greetings/sei.mp3",
-          "text": "Klausos!"
+          "audio": "MUSIC/voice_responses/esmupatiuzmaniba.mp3",
+          "text": "Esmu pati uzmanība!"
         },
         {
-          "audio": "MUSIC/voice_responses/greetings/sei.mp3",
-          "text": "Esmu šeit!"
+          "audio": "MUSIC/voice_responses/gatavsdarbam.mp3",
+          "text": "Gatavs darbam!"
         },
         {
           "audio": "MUSIC/voice_responses/greetings/sei.mp3",
