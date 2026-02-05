@@ -1,0 +1,741 @@
+/* ========================================
+   VOICE ASSISTANT - KADRIĻU DIZAINS
+   Matching music-style.css
+   ======================================== */
+
+/* Font imports - Great Victorian + Runethia */
+@font-face {
+    font-family: 'Great-Victorian';
+    src: url('great-victorian.swashed.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Runethia';
+    src: url('Runethia.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ========================================
+   GALVENAIS KONTEINERS
+   ======================================== */
+
+.assistant-container {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 99998; /* Zem corner ornamentiem (99999) */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ========================================
+   AVATAR BUTTON - MATCHING KADRIĻU STILS
+   ======================================== */
+
+.assistant-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a2724 0%, #233024 100%);
+    box-shadow: 0 6px 30px rgba(230, 255, 0, 0.6);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    border: 3px solid #e6ff00; /* Dzeltenzaļš rāmis */
+}
+
+.assistant-avatar:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 40px rgba(230, 255, 0, 0.9);
+    border-color: #ffffff;
+}
+
+.assistant-avatar:active {
+    transform: scale(0.95);
+}
+
+/* Avatar profila bilde */
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    color: #e6ff00;
+    text-shadow: 0 0 15px rgba(230, 255, 0, 0.9);
+}
+
+/* Mikrofona ikona - PASLĒPTA */
+.mic-icon {
+    display: none !important;
+}
+
+/* Status indicator - matching music-style.css */
+.status-indicator {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #95a5a6;
+    border: 4px solid #1a2724;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* ========================================
+   AVATAR STATES - MATCHING KADRIĻU KRĀSAS
+   ======================================== */
+
+/* State: OFF (izslēgts) - pelēks */
+.assistant-avatar.state-off {
+    background: linear-gradient(135deg, #3d3d3d 0%, #2a2a2a 100%);
+    box-shadow: 0 4px 20px rgba(149, 165, 166, 0.4);
+    border-color: rgba(230, 255, 0, 0.3);
+}
+
+.assistant-avatar.state-off .status-indicator {
+    background: #7f8c8d;
+    box-shadow: 0 0 8px rgba(127, 140, 141, 0.4);
+}
+
+/* State: LISTENING (klausās wake word) - zaļš */
+.assistant-avatar.state-listening {
+    background: linear-gradient(135deg, #b8d600 0%, #8aa600 100%);
+    box-shadow: 0 6px 35px rgba(230, 255, 0, 0.7);
+    border-color: #e6ff00;
+    animation: breathe 2s ease-in-out infinite;
+}
+
+.assistant-avatar.state-listening .status-indicator {
+    background: #e6ff00;
+    box-shadow: 0 0 15px rgba(230, 255, 0, 0.9);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% {
+        box-shadow: 0 6px 35px rgba(230, 255, 0, 0.7);
+    }
+    50% {
+        box-shadow: 0 8px 50px rgba(230, 255, 0, 1);
+    }
+}
+
+/* State: ACTIVE (pēc wake word) - spilgti dzeltens */
+.assistant-avatar.state-active {
+    background: linear-gradient(135deg, #e6ff00 0%, #b8d600 100%);
+    box-shadow: 0 6px 40px rgba(230, 255, 0, 1);
+    border-color: #ffffff;
+    animation: activeGlow 2s ease-in-out infinite;
+}
+
+.assistant-avatar.state-active .status-indicator {
+    background: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
+}
+
+.assistant-avatar.state-active .avatar-image {
+    color: #1a2724; /* Tumšs teksts uz gaiša fona */
+    text-shadow: none;
+}
+
+@keyframes activeGlow {
+    0%, 100% {
+        box-shadow: 0 6px 40px rgba(230, 255, 0, 1);
+    }
+    50% {
+        box-shadow: 0 10px 60px rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* ========================================
+   PULSE ANIMĀCIJA
+   ======================================== */
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.6;
+    }
+}
+
+.status-indicator.pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Vienreizējs pulse */
+@keyframes pulseOnce {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.assistant-avatar.pulse-once {
+    animation: pulseOnce 0.6s ease-in-out;
+}
+
+/* ========================================
+   SPEECH BUBBLE - MATCHING KADRIĻU DIZAINS
+   ======================================== */
+
+.speech-bubble {
+    position: relative;
+    max-width: 420px;
+    min-width: 300px;
+    background: rgba(18, 26, 24, 0.98);
+    border: 3px solid #e6ff00;
+    border-radius: 15px;
+    padding: 25px 30px;
+    box-shadow: 0 8px 40px rgba(230, 255, 0, 0.6);
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 20px;
+}
+
+/* SVG līnija augšā bubble - MATCHING MUSIC-STYLE */
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 35px;
+    background-image: url('linija_03_maza.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* Bubble arrow - matching krāsa */
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    right: 35px;
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 14px solid #e6ff00;
+}
+
+/* Inner arrow - solid fill */
+.speech-bubble .bubble-content::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    right: 38px;
+    width: 0;
+    height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 11px solid rgba(18, 26, 24, 0.98);
+}
+
+/* Hidden state */
+.speech-bubble.hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    display: none;
+}
+
+/* Fade out animācija */
+.speech-bubble.fade-out {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+}
+
+/* Typing animācija */
+@keyframes typing {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.speech-bubble.typing {
+    animation: typing 0.8s ease-in-out;
+}
+
+/* ========================================
+   BUBBLE SATURS - MATCHING FONTS
+   ======================================== */
+
+.bubble-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    position: relative;
+}
+
+.bubble-avatar {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #e6ff00;
+    border: 3px solid #b8d600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #1a2724;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(230, 255, 0, 0.5);
+}
+
+/* Folk pattern - MATCHING MUSIC-STYLE */
+.bubble-avatar .folk-pattern {
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        #1a2724,
+        #1a2724 2px,
+        #e6ff00 2px,
+        #e6ff00 4px
+    );
+}
+
+.bubble-message {
+    flex: 1;
+    font-size: 20px;
+    line-height: 1.6;
+    color: #e6ff00;
+    font-family: 'Great-Victorian', Georgia, serif; /* MATCHING FONT! */
+    white-space: pre-line;
+    text-shadow: 0 0 10px rgba(230, 255, 0, 0.5);
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   BUBBLE TYPES - MATCHING KRĀSAS
+   ======================================== */
+
+/* Greeting (sveiciens) */
+.speech-bubble.type-greeting {
+    border-color: #e6ff00;
+    box-shadow: 0 8px 40px rgba(230, 255, 0, 0.7);
+}
+
+.speech-bubble.type-greeting .bubble-message {
+    color: #e6ff00;
+}
+
+/* Song (dziesma) */
+.speech-bubble.type-song {
+    border-color: #b8d600;
+    box-shadow: 0 8px 40px rgba(184, 214, 0, 0.6);
+}
+
+.speech-bubble.type-song .bubble-message {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Control (kontroles) */
+.speech-bubble.type-control {
+    border-color: #ffffff;
+    box-shadow: 0 8px 40px rgba(255, 255, 255, 0.4);
+}
+
+.speech-bubble.type-control .bubble-message {
+    color: #ffffff;
+}
+
+/* Info (info) */
+.speech-bubble.type-info {
+    border-color: rgba(230, 255, 0, 0.7);
+    box-shadow: 0 6px 30px rgba(230, 255, 0, 0.4);
+}
+
+.speech-bubble.type-info .bubble-message {
+    color: rgba(230, 255, 0, 0.85);
+}
+
+/* ========================================
+   HOVER EFFECTS - PC ONLY
+   ======================================== */
+
+.speech-bubble:hover {
+    box-shadow: 0 10px 50px rgba(230, 255, 0, 0.8);
+    transform: translateY(-3px);
+    border-color: #ffffff;
+}
+
+.assistant-avatar:hover .status-indicator {
+    transform: scale(1.2);
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+.assistant-avatar:focus {
+    outline: 3px solid #e6ff00;
+    outline-offset: 5px;
+}
+
+.assistant-avatar:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 5px;
+}
+
+/* ========================================
+   SMOOTH SCROLLBAR - MATCHING MUSIC-STYLE
+   ======================================== */
+
+.bubble-message::-webkit-scrollbar {
+    width: 8px;
+}
+
+.bubble-message::-webkit-scrollbar-track {
+    background: rgba(18, 26, 24, 0.9);
+    border-radius: 4px;
+}
+
+.bubble-message::-webkit-scrollbar-thumb {
+    background: linear-gradient(360deg, #b8d600 0%, #8aa600 100%);
+    border-radius: 4px;
+}
+
+.bubble-message::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #e6ff00 0%, #b8d600 100%);
+}
+
+/* Firefox */
+.bubble-message {
+    scrollbar-width: thin;
+    scrollbar-color: #b8d600 rgba(18, 26, 24, 0.9);
+}
+
+/* ========================================
+   RESPONSIVE (tikai ja nepieciešams)
+   ======================================== */
+
+@media (max-width: 768px) {
+    .assistant-container {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .assistant-avatar {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .avatar-image {
+        font-size: 38px;
+    }
+    
+    .speech-bubble {
+        max-width: 280px;
+        min-width: 240px;
+        padding: 18px 22px;
+    }
+    
+    .bubble-message {
+        font-size: 18px;
+    }
+    
+    .bubble-avatar {
+        width: 42px;
+        height: 42px;
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .assistant-container {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .assistant-avatar {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .avatar-image {
+        font-size: 32px;
+    }
+    
+    .speech-bubble {
+        max-width: 240px;
+        min-width: 200px;
+        padding: 15px 18px;
+    }
+    
+    .bubble-message {
+        font-size: 16px;
+    }
+}
+
+/* ========================================
+   DEJAS NORISE STILI - FROM MUSIC-STYLE.CSS
+   ======================================== */
+
+/* Dance description panel - MATCHING */
+.dance-description-panel {
+    background: rgba(18, 26, 24, 0.95);
+    border: 2px solid #e6ff00;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Scrollbar stili dance-description-panel - MATCHING */
+.dance-description-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dance-description-panel::-webkit-scrollbar-track {
+    background: rgba(18, 26, 24, 0.9);
+    border-radius: 4px;
+}
+
+.dance-description-panel::-webkit-scrollbar-thumb {
+    background: linear-gradient(360deg, #b8d600 0%, #8aa600 100%);
+    border-radius: 4px;
+}
+
+.dance-description-panel::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #e6ff00 0%, #b8d600 100%);
+}
+
+/* Firefox scrollbar */
+.dance-description-panel {
+    scrollbar-width: thin;
+    scrollbar-color: #b8d600 rgba(18, 26, 24, 0.9);
+}
+
+/* SVG līnija augšā dance-description-panel - MATCHING */
+.dance-description-panel::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 40px;
+    background-image: url('linija_03_maza.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* "Dejas norise" virsraksts - MATCHING */
+.dance-description-panel h4 {
+    color: #e6ff00;
+    text-align: center;
+    margin: 0 0 8px 0;
+    text-shadow: 0 0 5px #e6ff00;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Great-Victorian', Georgia, serif;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: sticky !important;
+    top: 0 !important;
+    background: rgba(18, 26, 24, 0.95) !important;
+    z-index: 10 !important;
+    padding: 10px 0 20px 0 !important;
+}
+
+/* SVG līnija zem "Dejas norise" virsraksta - MATCHING */
+.dance-description-panel h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 25px;
+    background-image: url('linija_02_videja.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* "Nav pieejami dejas soļi" teksts */
+.no-dance-text {
+    text-align: center;
+    color: rgba(230, 255, 0, 0.6);
+    font-style: italic;
+    padding: 15px;
+    font-family: 'Great-Victorian', Georgia, serif;
+    font-size: 18px;
+}
+
+/* Steps timeline konteiners */
+.steps-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 15px;
+}
+
+/* Dance step elements - MATCHING */
+.dance-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    background: rgba(230, 255, 0, 0.05);
+    border: 1px solid rgba(230, 255, 0, 0.3);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Active step (pašreizējais solis) - MATCHING */
+.dance-step.active {
+    background: rgba(230, 255, 0, 0.2);
+    border-color: #e6ff00;
+    border-width: 2px;
+    box-shadow: 0 0 15px rgba(230, 255, 0, 0.4);
+    animation: pulse-active 1s ease-in-out infinite;
+}
+
+@keyframes pulse-active {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(230, 255, 0, 0.6);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(230, 255, 0, 1);
+        transform: scale(1.02);
+    }
+}
+
+/* Completed step (pabeigts) - MATCHING */
+.dance-step.completed {
+    background: rgba(230, 255, 0, 0.02);
+    border-color: rgba(230, 255, 0, 0.15);
+    opacity: 0.5;
+}
+
+.dance-step.completed .step-time {
+    color: rgba(230, 255, 0, 0.4);
+}
+
+.dance-step.completed .step-text {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Next-up step (nākamais) - MATCHING */
+.dance-step.next-up {
+    background: rgba(255, 165, 0, 0.1);
+    border-color: rgba(255, 165, 0, 0.5);
+    border-width: 2px;
+}
+
+.dance-step.next-up .step-time {
+    color: #ffa500;
+}
+
+.dance-step.next-up .step-text {
+    color: #fff;
+    font-weight: 400;
+}
+
+/* Upcoming step (gaidāms) - MATCHING */
+.dance-step.upcoming {
+    background: rgba(230, 255, 0, 0.08);
+    border-color: rgba(230, 255, 0, 0.4);
+}
+
+.dance-step.upcoming .step-time {
+    color: rgba(230, 255, 0, 0.7);
+}
+
+/* Step laiks - MATCHING */
+.step-time {
+    color: #e6ff00;
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 55px;
+    font-family: 'Consolas', 'Courier New', 'Lucida Console', monospace; /* ⬅️ Consolas prioritāte! */
+    letter-spacing: 1px;
+}
+
+/* Step teksts - MATCHING */
+.step-text {
+    color: #ffffff;
+    font-size: 22px;
+    font-family: 'Great-Victorian', Georgia, serif;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   MOBILE - PASLĒPT VOICE ASSISTANT
+   ======================================== */
+
+@media (max-width: 768px) {
+    .assistant-container {
+        display: none !important; /* ⬅️ PC ONLY! */
+    }
+}
+
+@media (max-width: 480px) {
+    .assistant-container {
+        display: none !important; /* ⬅️ PC ONLY! */
+    }
+}

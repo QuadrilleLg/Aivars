@@ -106,6 +106,30 @@ class AudioManager {
             if (kadril.keywords.some(keyword => command.includes(keyword))) {
                 this.currentKadril = kadrilKey;
                 
+                // ✅ ATJAUNINA UI - tāpat kā ar klikšķi!
+                if (window.uiManager) {
+                    // Atjaunina aktīvās dziesmas nosaukumu
+                    const titleEl = document.getElementById('activeSongTitle');
+                    if (titleEl) titleEl.textContent = kadril.name;
+                    
+                    // Ielādē fragmentus
+                    window.uiManager.loadFragments(kadrilKey);
+                    
+                    // Ielādē dejas soļus
+                    window.uiManager.loadDanceSteps(kadrilKey, 'pilnā');
+                    
+                    // Atzīmē dziesmu sarakstā
+                    const songList = document.getElementById('songList');
+                    if (songList) {
+                        songList.querySelectorAll('li').forEach(li => {
+                            li.classList.remove('active');
+                            if (li.dataset.kadrilKey === kadrilKey) {
+                                li.classList.add('active');
+                            }
+                        });
+                    }
+                }
+                
                 // Pārbaudam vai prasīts video
                 if (command.includes('video')) {
                     this.playVideo(kadril.video.youtube_id);
@@ -115,6 +139,12 @@ class AudioManager {
                 // Ja pieminēta pilnā deja
                 if (command.includes('pilno') || command.includes('visu')) {
                     this.playFragment(kadril.fragments.pilnā);
+                    
+                    // ✅ Sāk dejas soļu sekošanu
+                    if (window.uiManager) {
+                        window.uiManager.startDanceStepTracking(kadrilKey, 'pilnā');
+                    }
+                    
                     return `Atskaņoju ${kadril.name} pilnībā`;
                 }
 
@@ -122,12 +152,25 @@ class AudioManager {
                 for (const [fragmentKey, fragmentPath] of Object.entries(kadril.fragments)) {
                     if (command.includes(fragmentKey)) {
                         this.playFragment(fragmentPath);
+                        
+                        // ✅ Atjaunina dejas soļus konkrētajam fragmentam
+                        if (window.uiManager) {
+                            window.uiManager.loadDanceSteps(kadrilKey, fragmentKey);
+                            window.uiManager.startDanceStepTracking(kadrilKey, fragmentKey);
+                        }
+                        
                         return `Atskaņoju ${kadril.name} - ${fragmentKey}`;
                     }
                 }
 
                 // Ja fragments nav norādīts, atskaņojam pilno
                 this.playFragment(kadril.fragments.pilnā);
+                
+                // ✅ Sāk dejas soļu sekošanu pilnai dejai
+                if (window.uiManager) {
+                    window.uiManager.startDanceStepTracking(kadrilKey, 'pilnā');
+                }
+                
                 return `Atskaņoju ${kadril.name}`;
             }
         }
@@ -138,6 +181,24 @@ class AudioManager {
             for (const [fragmentKey, fragmentPath] of Object.entries(currentKadrilData.fragments)) {
                 if (command.includes(fragmentKey)) {
                     this.playFragment(fragmentPath);
+                    
+                    // ✅ Atjaunina UI kad maina fragmentu
+                    if (window.uiManager) {
+                        window.uiManager.loadDanceSteps(this.currentKadril, fragmentKey);
+                        window.uiManager.startDanceStepTracking(this.currentKadril, fragmentKey);
+                        
+                        // Atzīmē fragmenta pogu
+                        const fragmentsList = document.getElementById('fragmentsList');
+                        if (fragmentsList) {
+                            fragmentsList.querySelectorAll('.fragment-btn').forEach(btn => {
+                                btn.classList.remove('active');
+                                if (btn.dataset.fragmentKey === fragmentKey) {
+                                    btn.classList.add('active');
+                                }
+                            });
+                        }
+                    }
+                    
                     return `Atskaņoju ${currentKadrilData.name} - ${fragmentKey}`;
                 }
             }

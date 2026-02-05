@@ -521,7 +521,10 @@ class UIManager {
         if (this.currentDanceInterval) {
             clearInterval(this.currentDanceInterval);
             this.currentDanceInterval = null;
-            console.log('⏸️ Stopped dance step tracking');
+            console.log('⏸️ Stopped dance step tracking (scroll pozīcija saglabāta)');
+            
+            // ⬅️ SVARĪGI: NENOTĪRA active klasi!
+            // Lai scroll paliek pie pašreizējā soļa
         }
     }
 
@@ -543,6 +546,7 @@ class UIManager {
     // Atjaunina aktīvo soli vizualizācijā
     updateActiveStep(index) {
         const steps = document.querySelectorAll('.dance-step');
+        const mainAudio = document.getElementById('mainAudio');
         
         steps.forEach((step, i) => {
             // Noņemam visas klases
@@ -552,12 +556,14 @@ class UIManager {
                 // AKTĪVAIS solis
                 step.classList.add('active');
                 
-                // ✅ UZLABOJUMS: Scroll uz CENTRU (nevis 'nearest')
-                step.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center',      // ← PA VIDU!
-                    inline: 'nearest' 
-                });
+                // ✅ SCROLL uz centru TIKAI ja audio atskaņojas (nevis pause)
+                if (mainAudio && !mainAudio.paused) {
+                    step.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center',      // ← PA VIDU!
+                        inline: 'nearest' 
+                    });
+                }
             } else if (i < index) {
                 // Pabeigti soļi
                 step.classList.add('completed');

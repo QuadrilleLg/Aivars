@@ -7,6 +7,7 @@ class RecognitionManager {
         this.currentDevice = null;
         this.devices = [];
         this.isRestartPending = false; // Jauns flags, lai izsekotu restartus
+        this.lastActiveSong = null; // ⬅️ ATCERAS AKTĪVO DZIESMU!
         
         this.commands = {
             wakeWords: ['aivar', 'ada', 'dj', 'adi'],
@@ -156,12 +157,36 @@ class RecognitionManager {
             }
             
             if (window.audioManager) {
-                const response = window.audioManager.handleCommand(text);
+                // ✅ Pārbaudam vai ir fragmenta komanda
+                const isFragmentCommand = this.commands.parts.some(part => text.includes(part));
                 
-                if (response && window.uiManager) {
-                    this.isWakeWordActivated = false;
-                    window.uiManager.updateStatusText('Gaidu aktivizāciju...');
-                    window.uiManager.handleResponse(response);
+                if (isFragmentCommand && this.lastActiveSong) {
+                    // ✅ Ja fragments + atceras dziesmu → pievieno dziesmu
+                    const fullCommand = `${this.lastActiveSong} ${text}`;
+                    console.log(`🎵 Fragmenta komanda ar atmiņu: "${fullCommand}"`);
+                    const response = window.audioManager.handleCommand(fullCommand);
+                    
+                    if (response && window.uiManager) {
+                        this.isWakeWordActivated = false;
+                        window.uiManager.updateStatusText('Gaidu aktivizāciju...');
+                        window.uiManager.handleResponse(response);
+                    }
+                } else {
+                    // ✅ Parasta komanda
+                    const response = window.audioManager.handleCommand(text);
+                    
+                    // ✅ Ja bija dziesmas komanda, atceras to
+                    const isDanceCommand = this.commands.dances.some(dance => text.includes(dance));
+                    if (isDanceCommand) {
+                        this.lastActiveSong = text;
+                        console.log(`💾 Atceros dziesmu: "${this.lastActiveSong}"`);
+                    }
+                    
+                    if (response && window.uiManager) {
+                        this.isWakeWordActivated = false;
+                        window.uiManager.updateStatusText('Gaidu aktivizāciju...');
+                        window.uiManager.handleResponse(response);
+                    }
                 }
             }
             
@@ -394,8 +419,15 @@ class RecognitionManager {
                 micBtn.classList.add('active');
             }
             
+            // ✅ ĪSĀ INSTRUKCIJA!
             if (window.uiManager) {
-                window.uiManager.updateStatusText('Klausos...');
+                window.uiManager.updateStatusText('🎤 Klausos wake word...');
+            }
+            
+            // ✅ Parādīt instrukciju assistantUI
+            if (window.assistantUI) {
+                window.assistantUI.setState('listening');
+                window.assistantUI.showMessage('Sakiet "Aivar"!\nNosauciet dziesmu', 'info');
             }
             
             try {
