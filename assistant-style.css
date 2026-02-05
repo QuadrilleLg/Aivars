@@ -317,19 +317,9 @@
 }
 
 .bubble-avatar {
-    flex-shrink: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #e6ff00;
-    border: 3px solid #b8d600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    color: #1a2724;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(230, 255, 0, 0.5);
+    background-image: url('avatar.png'); /* ⬅️ TAVA BILDE */
+    background-size: cover;
+    font-size: 0; /* Paslēpj emoji */
 }
 
 /* Folk pattern - MATCHING MUSIC-STYLE */
