@@ -84,7 +84,7 @@ class RecognitionManager {
 
         this.recognition.grammars = speechRecognitionList;
         this.recognition.lang = 'lv-LV';
-        this.recognition.continuous = false;  // Mainām uz false ātrākai reakcijai
+        this.recognition.continuous = true;  // Mainām uz false ātrākai reakcijai
         this.recognition.interimResults = true;  // Ieslēdzam interim rezultātus
         this.recognition.maxAlternatives = 3;
                 
