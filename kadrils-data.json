@@ -3,16 +3,16 @@
     "aivar": {
       "pairs": [
         {
-          "audio": "MUSIC/voice_responses/esmupatiuzmaniba.mp3",
-          "text": "Esmu pati uzmanība!"
+          "audio": "MUSIC/voice_responses/greetings/sei.mp3",
+          "text": "Klausos!"
         },
         {
-          "audio": "MUSIC/voice_responses/gatavsdarbam.mp3",
-          "text": "Gatavs darbam!"
+          "audio": "MUSIC/voice_responses/greetings/sei.mp3",
+          "text": "Esmu šeit!"
         },
         {
-          "audio": "MUSIC/voice_responses/uzmanigiklausos.mp3",
-          "text": "Uzmanīgi klausos!"
+          "audio": "MUSIC/voice_responses/greetings/sei.mp3",
+          "text": "Jā?"
         }
       ]
     },
@@ -426,7 +426,7 @@
         "uz upīti"
       ]
     },
-    "bērzgale": {
+    "bērzgali": {
       "name": "Bērzgales kadriļa",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/berzgale/berzgalefull_v1.mp3",
@@ -816,9 +816,9 @@
         ]
       },
       "keywords": [
-        "bukmiuža",
-        "bukmuižas",
-        "buku"
+        "kučers",
+        "kučeru",
+        "kucers"
       ]
     },
     "Krusta kazāks": {
@@ -847,83 +847,129 @@
         }
       },
       "timemarks": {
-        "-": [
+        "full": [
           {
             "time": 0,
-            "text": "Polkas sākums"
+            "text": "gatavojamies"
           },
           {
-            "time": 10,
-            "text": "Lēnā daļa sākas"
+            "time": 5,
+            "text": "Dārziņš - papulksteni"
+          },
+          {
+            "time": 13,
+            "text": "Dārziņš - pretpulksteni"
+          },
+          {
+            "time": 22,
+            "text": "Pirmie pāri - zig-zags"
           },
           {
             "time": 30,
-            "text": "Grieziens pa labi"
+            "text": "Pirmie pāri - zig-zags atpakaļ"
           },
           {
-            "time": 50,
-            "text": "Grieziens pa kreisi"
+            "time": 38,
+            "text": "Otrie pāri - zig-zags"
           },
           {
-            "time": 75,
-            "text": "Ātrā daļa sākas"
+            "time": 47,
+            "text": "Otrie pāri - zig-zags atpakaļ"
+          },
+          {
+            "time": 55,
+            "text": "Pirmās diognāles - zig-zags"
+          },
+          {
+            "time": 63,
+            "text": "Pirmās diognāles - zig-zags atpakaļ"
+          },
+          {
+            "time": 71,
+            "text": "Ortās diognākes - zig-zags"
+          },
+          {
+            "time": 79,
+            "text": "Otrās diognāles - zig-zags atpakaļ"
+          },
+          {
+            "time": 88,
+            "text": "Vija"
           },
           {
             "time": 95,
-            "text": "Intensīvs grieziens"
+            "text": "Grieziens kreisajos elkoņos"
+          },
+          {
+            "time": 99,
+            "text": "Grieziens labajos elkoņos"
+          },
+          {
+            "time": 104,
+            "text": "Puišu dzirnaviņas papulksteni"
+          },
+          {
+            "time": 112,
+            "text": "Puišu dzirnaviņas pretpulksteni"
           },
           {
             "time": 120,
-            "text": "Finālā ātrā daļa"
+            "text": "Pirmie pāri - zig-zags"
           },
           {
-            "time": 140,
-            "text": "Noslēgums"
-          }
-        ],
-        "--": [
-          {
-            "time": 0,
-            "text": "Lēnās daļas ievads"
+            "time": 128,
+            "text": "Pirmie pāri - zig-zags atpakaļ"
           },
           {
-            "time": 15,
-            "text": "Grieziens pa labi"
+            "time": 136,
+            "text": "Otrie pāri - zig-zags"
           },
           {
-            "time": 35,
-            "text": "Grieziens pa kreisi"
+            "time": 144,
+            "text": "Otrie pāri - zig-zags atpakaļ"
           },
           {
-            "time": 60,
-            "text": "Lēnās daļas beigas"
-          }
-        ],
-        "---": [
-          {
-            "time": 0,
-            "text": "Ātrās daļas sākums"
+            "time": 152,
+            "text": "Pirmās diognāles - zig-zags"
           },
           {
-            "time": 15,
-            "text": "Intensīvs grieziens"
+            "time": 160,
+            "text": "Pirmās diognāles - zig-zags atpakaļ"
           },
           {
-            "time": 35,
-            "text": "Finālā daļa"
+            "time": 168,
+            "text": "Otrās diognākes - zig-zags"
           },
           {
-            "time": 60,
-            "text": "Noslēgums"
+            "time": 176,
+            "text": "Otrās diognāles - zig-zags atpakaļ"
+          },
+          {
+            "time": 184,
+            "text": "Meiteņu dzirnaviņas papulksteni"
+          },
+          {
+            "time": 192,
+            "text": "Meiteņu dzirnaviņas pretpulksteni"
+          },
+          {
+            "time": 200,
+            "text": "Vija"
+          },
+          {
+            "time": 208,
+            "text": "Grieziens kreisajos elkoņos"
+          },
+          {
+            "time": 212,
+            "text": "Grieziens labajos elkoņos"
           }
         ]
       },
       "keywords": [
-        "krusta kazaks",
-        "kazāks",
-        "kazaku",
-        "krusta kazaku",
-        "krusta"
+        "polka",
+        "polku",
+        "polkas"
       ]
     },
     "Bulamuskis": {
@@ -956,107 +1002,133 @@
         }
       },
       "timemarks": {
-        "pilnā": [
+        "full": [
           {
             "time": 0,
-            "text": "Francmaņa ievads"
+            "text": "Sākums - gatavojamies"
           },
           {
-            "time": 15,
-            "text": "Pāri nostājas"
+            "time": 5,
+            "text": "Dārziņš - pretpulksteni"
           },
           {
-            "time": 30,
-            "text": "Pirmā figūra"
+            "time": 14,
+            "text": "Dārziņš - papulksteni"
           },
           {
-            "time": 55,
-            "text": "Otrā figūra"
+            "time": 23,
+            "text": "Pirmie pāri - do-za-do"
           },
           {
-            "time": 85,
-            "text": "Trešā figūra"
+            "time": 32,
+            "text": "Otrie pāri - do-za-do"
           },
           {
-            "time": 115,
-            "text": "Ceturtā figūra"
+            "time": 41,
+            "text": "Pirmie pāri - zaķīši"
           },
           {
-            "time": 145,
-            "text": "Finālā daļa"
+            "time": 48,
+            "text": "Pirmie pāri - sasit plaukstas ar svešu partneri"
           },
           {
-            "time": 180,
-            "text": "Ātrais grieziens"
+            "time": 49,
+            "text": "Pirmie pāri atpakaļ uz savām vietām"
           },
           {
-            "time": 215,
-            "text": "Noslēgums"
-          }
-        ],
-        "sākums": [
-          {
-            "time": 0,
-            "text": "Ievada melodija"
+            "time": 57,
+            "text": "Pirmie pāri sasit plaukstas ar savu partneri"
           },
           {
-            "time": 10,
-            "text": "Pāri nostājas"
+            "time": 58,
+            "text": "Pirmie pāri - zaķīši"
           },
           {
-            "time": 25,
-            "text": "Sākas kustība"
+            "time": 65,
+            "text": "Pirmie pāri sasit plaukstas ar svešu partneri"
           },
           {
-            "time": 40,
-            "text": "Ievada beigas"
-          }
-        ],
-        "vidus": [
-          {
-            "time": 0,
-            "text": "1. figūra"
+            "time": 66,
+            "text": "Abi pāri - Slinkā polka ar vietu maiņu"
           },
           {
-            "time": 30,
-            "text": "2. figūra"
+            "time": 73,
+            "text": "Pirmie pāri ar griezienu pamainās partneriem"
           },
           {
-            "time": 60,
-            "text": "3. figūra"
+            "time": 74,
+            "text": "Pirmie pāri - Slinkā polka ar vietu maiņu"
+          },
+          {
+            "time": 83,
+            "text": "Otrie pāri - zaķīši"
           },
           {
             "time": 90,
-            "text": "4. figūra"
+            "text": "Otrie  pāri - sasit plaukstas ar svešu partneri"
+          },
+          {
+            "time": 91,
+            "text": "Otrie pāri atpakaļ uz savām vietām"
+          },
+          {
+            "time": 98,
+            "text": "Otrie pāri sasit plaukstas ar savu partneri"
+          },
+          {
+            "time": 99,
+            "text": "Otrie pāri - zaķīši"
+          },
+          {
+            "time": 106,
+            "text": "Otrie pāri sasit plaukstas ar svešu partneri"
+          },
+          {
+            "time": 107,
+            "text": "Abi pāri - Slinkā polka ar vietu maiņu"
           },
           {
             "time": 115,
-            "text": "Galvenās daļas beigas"
-          }
-        ],
-        "beigas": [
-          {
-            "time": 0,
-            "text": "Finālā daļa sākas"
+            "text": "Otrie pāri ar griezienu pamainās partneriem"
           },
           {
-            "time": 20,
-            "text": "Ātrais grieziens"
+            "time": 124,
+            "text": "Lēnā vija"
           },
           {
-            "time": 45,
-            "text": "Visi kopā"
+            "time": 152,
+            "text": "Pirmo pāru puišu dzirnavas ar partneru maiņu"
           },
           {
-            "time": 55,
-            "text": "Noslēguma poza"
+            "time": 161,
+            "text": "Pirmo pāru meitu dzirnavas ar partneru maiņu"
+          },
+          {
+            "time": 169,
+            "text": "Otro pāru puišu dzirnavas ar partneru maiņu"
+          },
+          {
+            "time": 178,
+            "text": "Pirmo pāru meitu dzirnavas ar partneru maiņu"
+          },
+          {
+            "time": 186,
+            "text": "Pēdējais dārziņš pretpulksteni"
+          },
+          {
+            "time": 195,
+            "text": "Pēdējais dārziņš papulksteni"
+          },
+          {
+            "time": 203,
+            "text": "BEIGAS"
           }
         ]
       },
       "keywords": [
-        "bula",
-        "bulamuskis",
-        "bulamuski"
+        "francmanis",
+        "francmaņi",
+        "francmaņa"
       ]
     },
     "Lancejots": {
@@ -1089,109 +1161,219 @@
         }
       },
       "timemarks": {
-        "pilnā": [
+        "full": [
           {
             "time": 0,
-            "text": "Lancīe ievads"
+            "text": "Sākums"
+          },
+          {
+            "time": 3,
+            "text": "Dārziņš uz centru"
+          },
+          {
+            "time": 11,
+            "text": "Pagriež svešu meitu"
           },
           {
             "time": 15,
-            "text": "Pirmā daļa sākas"
+            "text": "Pagriež savu meitu"
           },
           {
-            "time": 40,
-            "text": "1. figūra"
+            "time": 19,
+            "text": "Dārziņš uz centru"
           },
           {
-            "time": 70,
-            "text": "2. figūra"
+            "time": 27,
+            "text": "Pagriež svešu meitu"
           },
           {
-            "time": 95,
-            "text": "Otrā daļa sākas"
+            "time": 31,
+            "text": "Pagriež savu meitu"
           },
           {
-            "time": 125,
-            "text": "3. figūra"
+            "time": 35,
+            "text": "Pirmā pāra solo"
           },
           {
-            "time": 155,
-            "text": "4. figūra"
+            "time": 39,
+            "text": "Pagriež svešu meitu"
           },
           {
-            "time": 185,
-            "text": "Trešā daļa - finālā"
+            "time": 43,
+            "text": "Pagriež savu meitu"
           },
           {
-            "time": 220,
-            "text": "Noslēgums"
-          }
-        ],
-        "-": [
-          {
-            "time": 0,
-            "text": "1. daļas ievads"
+            "time": 47,
+            "text": "Otrā pāra solo"
           },
           {
-            "time": 15,
-            "text": "1. figūra"
-          },
-          {
-            "time": 45,
-            "text": "2. figūra"
-          },
-          {
-            "time": 75,
-            "text": "1. daļas beigas"
-          }
-        ],
-        "--": [
-          {
-            "time": 0,
-            "text": "2. daļas sākums"
-          },
-          {
-            "time": 20,
-            "text": "3. figūra"
-          },
-          {
-            "time": 50,
-            "text": "4. figūra"
-          },
-          {
-            "time": 75,
-            "text": "2. daļas beigas"
-          }
-        ],
-        "---": [
-          {
-            "time": 0,
-            "text": "Finālā daļa"
-          },
-          {
-            "time": 25,
-            "text": "Ātrais grieziens"
+            "time": 51,
+            "text": "Pagriež svešu meitu"
           },
           {
             "time": 55,
-            "text": "Visi kopā"
+            "text": "Pagriež savu meitu"
           },
           {
-            "time": 75,
-            "text": "Noslēgums"
+            "time": 58,
+            "text": "Trešā pāra solo"
+          },
+          {
+            "time": 62,
+            "text": "Pagriež svešu meitu"
+          },
+          {
+            "time": 66,
+            "text": "Pagriež savu meitu"
+          },
+          {
+            "time": 69,
+            "text": "Ceturtā pāra solo"
+          },
+          {
+            "time": 73,
+            "text": "Puiši pagriež svešu meitu"
+          },
+          {
+            "time": 77,
+            "text": "Puiši pagriež savu meitu"
+          },
+          {
+            "time": 81,
+            "text": "Pirmo pāru maiņa (!puiši pa vidu!)"
+          },
+          {
+            "time": 85,
+            "text": "Otro pāru maiņa (!puiši pa vidu!)"
+          },
+          {
+            "time": 89,
+            "text": "Pirmo pāru maiņa uz savām vietām (!puiši pa vidu!)"
+          },
+          {
+            "time": 93,
+            "text": "Otro pāru maiņa uz savām vietām (!puiši pa vidu!)"
+          },
+          {
+            "time": 96,
+            "text": "Pirmo pāru vārtiņi"
+          },
+          {
+            "time": 101,
+            "text": "Otro pāru vārtiņi"
+          },
+          {
+            "time": 104,
+            "text": "Pirmo pāru vārtiņi uz savām vietām"
+          },
+          {
+            "time": 108,
+            "text": "Otro pāru vārtiņi uz savām vietām"
+          },
+          {
+            "time": 112,
+            "text": "Meitu dārziņš"
+          },
+          {
+            "time": 120,
+            "text": "Puiši pagriež svešo meitu"
+          },
+          {
+            "time": 124,
+            "text": "Puiši pagriež savu meitu"
+          },
+          {
+            "time": 127,
+            "text": "Puišu dārziņš"
+          },
+          {
+            "time": 135,
+            "text": "Puiši pagriež svešo meitu"
+          },
+          {
+            "time": 139,
+            "text": "Puiši pagriež savu meitu"
+          },
+          {
+            "time": 133,
+            "text": "Meitu dzirnavas"
+          },
+          {
+            "time": 151,
+            "text": "Puiši pagriež svešo meitu"
+          },
+          {
+            "time": 155,
+            "text": "Puiši pagriež savu meitu"
+          },
+          {
+            "time": 159,
+            "text": "Puišu dzirnavas"
+          },
+          {
+            "time": 166,
+            "text": "Puiši pagriež svešo meitu"
+          },
+          {
+            "time": 170,
+            "text": "Puiši pagriež savu meitu"
+          },
+          {
+            "time": 174,
+            "text": "Vija"
+          },
+          {
+            "time": 174,
+            "text": "!!! 1. !!!"
+          },
+          {
+            "time": 175,
+            "text": "!!! 2. !!!"
+          },
+          {
+            "time": 176,
+            "text": "!!! 3. !!!"
+          },
+          {
+            "time": 177,
+            "text": "!!! 4. !!!"
+          },
+          {
+            "time": 178,
+            "text": "!!! 5. !!!"
+          },
+          {
+            "time": 179,
+            "text": "!!! 6. !!!"
+          },
+          {
+            "time": 180,
+            "text": "!!! 7. !!!"
+          },
+          {
+            "time": 181,
+            "text": "8. meitu pagriež"
+          },
+          {
+            "time": 186,
+            "text": "Pagriež 9. meitu"
+          },
+          {
+            "time": 190,
+            "text": "BEIGAS"
           }
         ]
       },
       "keywords": [
-        "lancis",
-        "lancejots",
-        "lancejotu"
+        "lancīe",
+        "lancie",
+        "lancje"
       ]
     },
     "Rikavas kadriļa": {
       "name": "Rikavas kadriļa",
       "fragments": {
-        "pilnā": "MUSIC/kadrilas/rikavas/rikavas_full.mp3",
+        "pilnā": "MUSIC/kadrilas/Rikavas/rikavas_full.mp3",
         "domāšanas gabals": "MUSIC/kadrilas/rikavas/parts/pirmā.mp3",
         "spārdīšanas gabals": "MUSIC/kadrilas/rikavas/parts/otrā.mp3",
         "dancošanas gabals": "MUSIC/kadrilas/rikavas/parts/trešā.mp3",
@@ -1231,7 +1413,7 @@
         "pilnā": [
           {
             "time": 0,
-            "text": "Pirmā kaļena - domāšanas gabals "
+            "text": "Pirmā kaļena - Domāšanas gabals"
           },
           {
             "time": 7,
@@ -1251,74 +1433,74 @@
           },
           {
             "time": 60,
-            "text": "Otrā kaļena - dancošanas gabals - aizmuguriskais krustiskais satvēriens"
+            "text": "Otrā kaļena - Dancošanas gabals"
           },
           {
-            "time": 65,
-            "text": ""
+            "time": 68,
+            "text": "Dancojam!"
           },
           {
-            "time": 65,
-            "text": " Trešā kaļena - spārdīšanas gabals-priekšējais krustiskais satvēriens"
+            "time": 90,
+            "text": "Trešā kaļena - Spārdīšanas gabals"
           },
           {
-            "time": 65,
-            "text": "Ceturtā kaļena - kumeļa gabals-lēnais"
+            "time": 98,
+            "text": "Spārdāmies!"
           },
           {
-            "time": 65,
-            "text": " pēdējā kaļena - cīruļa gabals-..."
+            "time": 128,
+            "text": "Ceturtā kaļena - Kumeļa gabals"
           },
           {
-            "time": 65,
-            "text": "polka"
+            "time": 136,
+            "text": "Puiši ved meitas pie svešiem puišiem"
           },
           {
-            "time": 110,
-            "text": "beigas"
-          }
-        ],
-        "domāšanas gabals": [
-          {
-            "time": 0,
-            "text": "Lēnās daļas ievads"
+            "time": 142,
+            "text": "Puiši paņem svešās meitas un ved uz savām vietām"
           },
           {
-            "time": 15,
-            "text": "Grieziens pa labi"
+            "time": 150,
+            "text": "galops ar pāru vietu maiņu"
           },
           {
-            "time": 40,
-            "text": "Grieziens pa kreisi"
+            "time": 158,
+            "text": "Puiši ved svešās meitas pie otra puiša"
           },
           {
-            "time": 70,
-            "text": "Lēnās daļas beigas"
-          }
-        ],
-        "dancošanas gabals": [
-          {
-            "time": 0,
-            "text": "Ātrās daļas sākums"
+            "time": 165,
+            "text": "Puiši ve savas meitas uz savām vietām"
           },
           {
-            "time": 20,
-            "text": "Intensīvs grieziens"
+            "time": 171,
+            "text": "galops ar pāru vietu maiņu"
           },
           {
-            "time": 50,
-            "text": "Finālā daļa"
+            "time": 181,
+            "text": "Pēdējā kaļena - Cīruļa gabals"
           },
           {
-            "time": 75,
-            "text": "Noslēgums"
+            "time": 185,
+            "text": "Meitu dzirnavas"
+          },
+          {
+            "time": 196,
+            "text": "puišu dzirnavas"
+          },
+          {
+            "time": 207,
+            "text": "Dārziņš"
+          },
+          {
+            "time": 217,
+            "text": "POLKA"
           }
         ]
       },
       "keywords": [
-        "rikavu",
-        "rikava",
-        "rikavas kadriļa"
+        "mazurka",
+        "mazurku",
+        "mazurkas"
       ]
     },
     "Kertinis Jonkelis": {
@@ -1357,7 +1539,7 @@
             "text": "Sākums"
           },
           {
-            "time": 4,
+            "time": 5,
             "text": "Dārziņš pret dejas ceļu"
           },
           {
@@ -1366,7 +1548,7 @@
           },
           {
             "time": 18,
-            "text": " 1.meitas ved puišus uz pretējām vietām"
+            "text": "1.meitas ved puišus uz pretējām vietām"
           },
           {
             "time": 21,
@@ -1381,64 +1563,8 @@
             "text": "2. meitas ved uz savām vietām"
           },
           {
-            "time": 31,
-            "text": "1. Puišu solo - satikšanās"
-          },
-          {
-            "time": 35,
-            "text": "1. puišu solo - do-za-do"
-          },
-          {
-            "time": 38,
-            "text": "pie svešās meitas un atpakaļ"
-          },
-          {
-            "time": 40,
-            "text": "2. puišu solo - satikšanās"
-          },
-          {
-            "time": 42,
-            "text": "2. puišu solo - do-za-do"
-          },
-          {
-            "time": 43,
-            "text": "2. puišu solo - pie svešām meitām un atpakaļ"
-          },
-          {
-            "time": 35,
-            "text": "1. puišu solo - 1. diognāles"
-          },
-          {
-            "time": 31,
-            "text": "1. Puišu solo - satikšanās"
-          },
-          {
-            "time": 35,
-            "text": "1. puišu solo - do-za-do"
-          },
-          {
-            "time": 38,
-            "text": "pie svešās meitas un atpakaļ"
-          },
-          {
-            "time": 40,
-            "text": "2. puišu solo - satikšanās"
-          },
-          {
-            "time": 42,
-            "text": "2. puišu solo - do-za-do"
-          },
-          {
-            "time": 43,
-            "text": "2. puišu solo - pie svešām meitām un atpakaļ"
-          },
-          {
-            "time": 35,
-            "text": "1. puišu solo - 2. diognāles"
-          },
-          {
-            "time": 31,
-            "text": "1. Puišu solo - satikšanās"
+            "time": 32,
+            "text": "1. puišu solo - satikšanās"
           },
           {
             "time": 35,
@@ -1449,158 +1575,140 @@
             "text": "1. puišu solo - pie svešās meitas un atpakaļ"
           },
           {
-            "time": 40,
+            "time": 45,
             "text": "2. puišu solo - satikšanās"
           },
           {
-            "time": 42,
+            "time": 48,
             "text": "2. puišu solo - do-za-do"
           },
           {
-            "time": 43,
+            "time": 51,
             "text": "2. puišu solo - pie svešām meitām un atpakaļ"
           },
           {
-            "time": 4,
+            "time": 55,
+            "text": "Puišu solo - 1. diognāles"
+          },
+          {
+            "time": 58,
+            "text": "Puišu solo - satikšanās"
+          },
+          {
+            "time": 61,
+            "text": "Puišu solo - do-za-do"
+          },
+          {
+            "time": 65,
+            "text": "Puišu solo - pie svešās meitas un atpakaļ"
+          },
+          {
+            "time": 72,
+            "text": "Puišu solo - 2. diognāles"
+          },
+          {
+            "time": 75,
+            "text": "Puišu solo - satikšanās"
+          },
+          {
+            "time": 78,
+            "text": "Puišu solo - do-za-do"
+          },
+          {
+            "time": 85,
+            "text": "Puišu solo - pie svešām meitām un atpakaļ"
+          },
+          {
+            "time": 85,
             "text": "Dārziņš pret dejas ceļu"
           },
           {
-            "time": 11,
+            "time": 91,
             "text": "Dārziņš pa dejas ceļu"
           },
           {
-            "time": 18,
-            "text": " 1. puiši ved meitas uz pretējām vietām"
+            "time": 98,
+            "text": "1. puiši ved meitas uz pretējām vietām"
           },
           {
-            "time": 21,
+            "time": 101,
             "text": "2. puiši ved meitas uz pretējām vietām"
           },
           {
-            "time": 25,
+            "time": 105,
             "text": "1. puiši ved uz savām vietām"
           },
           {
-            "time": 28,
+            "time": 108,
             "text": "2. puiši ved uz savām vietām"
           },
           {
-            "time": 31,
+            "time": 111,
             "text": "1. Meitu solo - satikšanās"
           },
           {
-            "time": 35,
+            "time": 114,
             "text": "1. Meitu solo - do-za-do"
           },
           {
-            "time": 38,
-            "text": "pie svešā puiša un atpakaļ"
+            "time": 117,
+            "text": "1. Meitu solo - pie svešā puiša un atpakaļ"
           },
           {
-            "time": 40,
+            "time": 124,
             "text": "2. Meitu solo - satikšanās"
           },
           {
-            "time": 42,
+            "time": 127,
             "text": "2. Meitu solo - do-za-do"
           },
           {
-            "time": 43,
-            "text": "2. meitu solo - pie svešā puiša un atpakaļ"
+            "time": 131,
+            "text": "2. Meitu solo - pie svešā puiša un atpakaļ"
           },
           {
-            "time": 35,
-            "text": "1. meitu solo - 1. diognāles"
+            "time": 136,
+            "text": "1. Meitu solo - 1. diognāles"
           },
           {
-            "time": 31,
-            "text": " meitu solo - satikšanās"
-          },
-          {
-            "time": 35,
-            "text": " meitu solo - do-za-do"
-          },
-          {
-            "time": 38,
-            "text": "meitu solo - pie svešā puiša un atpakaļ"
-          },
-          {
-            "time": 35,
-            "text": " meitu solo - 2. diognāles"
-          },
-          {
-            "time": 31,
+            "time": 137,
             "text": "meitu solo - satikšanās"
           },
           {
-            "time": 35,
+            "time": 141,
             "text": "meitu solo - do-za-do"
           },
           {
-            "time": 38,
+            "time": 147,
             "text": "meitu solo - pie svešā puiša un atpakaļ"
           },
           {
-            "time": 4,
+            "time": 149,
+            "text": "meitu solo - 2. diognāles"
+          },
+          {
+            "time": 150,
+            "text": "meitu solo - satikšanās"
+          },
+          {
+            "time": 154,
+            "text": "meitu solo - do-za-do"
+          },
+          {
+            "time": 157,
+            "text": "meitu solo - pie svešā puiša un atpakaļ"
+          },
+          {
+            "time": 162,
             "text": "Dārziņš pret dejas ceļu"
           },
           {
-            "time": 11,
+            "time": 170,
             "text": "Dārziņš pa dejas ceļu"
-          }
-        ],
-        "sākums": [
-          {
-            "time": 0,
-            "text": "Ievads"
           },
           {
-            "time": 15,
-            "text": "1. figūra"
-          },
-          {
-            "time": 35,
-            "text": "2. figūra"
-          },
-          {
-            "time": 65,
-            "text": "Sākuma daļas beigas"
-          }
-        ],
-        "vidus": [
-          {
-            "time": 0,
-            "text": "Vidus daļa"
-          },
-          {
-            "time": 20,
-            "text": "3. figūra"
-          },
-          {
-            "time": 45,
-            "text": "4. figūra"
-          },
-          {
-            "time": 65,
-            "text": "Vidus daļas beigas"
-          }
-        ],
-        "finālais": [
-          {
-            "time": 0,
-            "text": "Finālā daļa sākas"
-          },
-          {
-            "time": 25,
-            "text": "5. figūra"
-          },
-          {
-            "time": 50,
-            "text": "Ātrais grieziens"
-          },
-          {
-            "time": 65,
-            "text": "Noslēgums"
+            "time": 177,
+            "text": "BEIGAS"
           }
         ]
       },
@@ -1882,6 +1990,246 @@
         "setinš",
         "setinu",
         "setiņš"
+      ]
+    },
+    "Igauņu kadriļa": {
+      "name": "Igauņu kadriļa",
+      "fragments": {
+        "pilnā": "MUSIC/kadrilas/igaunu/igaunufull.mp3",
+        "sākums": "MUSIC/kadrilas/setins/parts/sakums.mp3",
+        "vidus": "MUSIC/kadrilas/setins/parts/vidus.mp3",
+        "beigas": "MUSIC/kadrilas/setins/parts/beigas.mp3"
+      },
+      "video": {
+        "youtube_id": "PpVT6Ea8QbI",
+        "fragments": {
+          "pilna": {
+            "start": "0:00",
+            "end": "3:50"
+          },
+          "sakums": {
+            "start": "0:00",
+            "end": "1:15"
+          },
+          "vidus": {
+            "start": "1:15",
+            "end": "2:35"
+          },
+          "beigas": {
+            "start": "2:35",
+            "end": "3:50"
+          }
+        }
+      },
+
+      "timemarks": {
+        "pilnā": [
+          {
+            "time": 0,
+            "text": "Sākums"
+          },
+          {
+            "time": 10,
+            "text": "!!! 3!!!"
+          },
+          {
+            "time": 11,
+            "text": "!!! 2 !!!"
+          },
+          {
+            "time": 12,
+            "text": "!!! 1 !!!"
+          },
+          {
+            "time": 13,
+            "text": "Sākuma gājiens ar vietu maiņu"
+          },
+          {
+            "time": 16,
+            "text": "Sākuma gājiens uz savām vietām"
+          },
+          {
+            "time": 19,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 26,
+            "text": "Meitu gājiens ar kājas atmetienu"
+          },
+          {
+            "time": 29,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 32,
+            "text": "Meitu gājiens ar ielecienu"
+          },
+          {
+            "time": 35,
+            "text": "Meitas iet pie cita puiša"
+          },
+          {
+            "time": 39,
+            "text": "Meitas iet pie sava puiša"
+          },
+          {
+            "time": 42,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 44,
+            "text": "Puišu gājiens ar ielecienu"
+          },
+          {
+            "time": 48,
+            "text": "Puišu gājiens pie svešās meitas"
+          },
+          {
+            "time": 49,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 52,
+            "text": "Puišu gājiens pie savas meitas ar ielecienu"
+          },
+          {
+            "time": 55,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 58,
+            "text": "Dzirnavas"
+          },
+          {
+            "time": 65,
+            "text": "Gājiens uz savām vietām"
+          },
+          {
+            "time": 69,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 72,
+            "text": "Dzirnavas"
+          },
+          {
+            "time": 79,
+            "text": "Gājiens uz savām vietām"
+          },
+          {
+            "time": 82,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 84,
+            "text": "Pirmo puišu vezšana uz solo"
+          },
+          {
+            "time": 92,
+            "text": "Pirmo puišu solo"
+          },
+          {
+            "time": 98,
+            "text": "Pirmā meita skrien pie sava puiša"
+          },
+          {
+            "time": 100,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 104,
+            "text": "Otro puišu vezšana uz solo"
+          },
+          {
+            "time": 111,
+            "text": "Otro puišu solo"
+          },
+          {
+            "time": 117,
+            "text": "Otrā meita skrien pie sava puiša"
+          },
+          {
+            "time": 120,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 125,
+            "text": "Puiši iet pie svešām meitām - pa taisno"
+          },
+          {
+            "time": 126,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 131,
+            "text": "Puiši iet uz savām vietām - ar līkumu pa labi"
+          },
+          {
+            "time": 134,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 137,
+            "text": "Ved savu meitu uz pretējām vietām"
+          },
+          {
+            "time": 141,
+            "text": "Ved savu meitu uz savām vietām"
+          },
+          {
+            "time": 144,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 147,
+            "text": "Puiši iet pie pretējām meitām - ar līkumu pa labi"
+          },
+          {
+            "time": 150,
+            "text": "Puiši ved svešās meitas uz pretējām vietām"
+          },
+          {
+            "time": 154,
+            "text": "Puiši ved svešās meitas uz savām vietām"
+          },
+          {
+            "time": 154,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 160,
+            "text": "Puiši iet uz savām vietām"
+          },
+          {
+            "time": 163,
+            "text": "Puiši ved savas meitas uz pretējām vietām"
+          },
+          {
+            "time": 166,
+            "text": "Puiši ved savas meitas uz savām vietām"
+          },
+          {
+            "time": 169,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 176,
+            "text": "Sākuma gājiens"
+          },
+          {
+            "time": 183,
+            "text": "Griezieni uz vietas"
+          },
+          {
+            "time": 190,
+            "text": "BEIGAS"
+          }
+        ]
+      },
+      "aliases": [
+        "igauņu kadriļa",
+        "igaunu",
+        "igauņu"
       ]
     }
   }
