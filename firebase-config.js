@@ -1,15 +1,15 @@
 // ============================================
-// FIREBASE KONFIGURĀCIJA
+// FIREBASE KONFIGURĀCIJA (VECAIS)
 // ============================================
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBiPpwnhxiQQ16ujSVh0mNEB4UOdT0fWEw",
+    apiKey: "AIzaSyDZSqwa06UpBkvpHYK0VTGvkQvZvjE-QCk",
     authDomain: "kadrilas-app.firebaseapp.com",
     projectId: "kadrilas-app",
     storageBucket: "kadrilas-app.firebasestorage.app",
     messagingSenderId: "830702928679",
-    appId: "1:830702928679:web:12ca73ec3607f95cca5f02",
-    measurementId: "G-LNPWYFBR61"
+    appId: "1:830702928679:web:ee5d528d5432fcd8ca5f02",
+    measurementId: "G-Q3BD0MCBQ0"
 };
 
 // Inicializē Firebase
