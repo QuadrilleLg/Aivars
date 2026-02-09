@@ -1,0 +1,39 @@
+# ============================================
+# .gitignore - SVARĪGI FAILI, KAS NEDRĪKST BŪT GIT!
+# ============================================
+
+# Environment variables (SENSITĪVI DATI!)
+.env
+.env.local
+.env.production
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build faili
+dist/
+build/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# Logs
+logs/
+*.log
