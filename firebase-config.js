@@ -23,13 +23,5 @@ const db = firebase.firestore();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 console.log('✅ Firebase inicializēts!');
-firebase.initializeApp(firebaseConfig);
 
-// Eksportē servisa references
-const auth = firebase.auth();
-const db = firebase.firestore();
 
-// Firestore timestamp helper
-const timestamp = firebase.firestore.FieldValue.serverTimestamp;
-
-console.log('✅ Firebase inicializēts droši!');
