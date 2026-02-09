@@ -1,16 +1,23 @@
-// // FIREBASE KONFIGURĀCIJA
 // ============================================
-// AIZPILDI AR SAVIEM DATIEM no Firebase Console!
+// FIREBASE KONFIGURĀCIJA (DROŠA VERSIJA)
+// ============================================
+// Izmanto environment variables no .env faila
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDZSqwa06UpBkvpHYK0VTGvkQvZvjE-QCk",
-  authDomain: "kadrilas-app.firebaseapp.com",
-  projectId: "kadrilas-app",
-  storageBucket: "kadrilas-app.firebasestorage.app",
-  messagingSenderId: "830702928679",
-  appId: "1:830702928679:web:ee5d528d5432fcd8ca5f02",
-  measurementId: "G-Q3BD0MCBQ0"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
+
+// Pārbaude vai visi environment variables ir ielādēti
+if (!firebaseConfig.apiKey) {
+    console.error('❌ KĻŪDA: Firebase environment variables nav ielādēti!');
+    console.error('Pārbaudi vai .env fails eksistē un satur pareizos datus.');
+}
 
 // Inicializē Firebase
 firebase.initializeApp(firebaseConfig);
@@ -22,4 +29,4 @@ const db = firebase.firestore();
 // Firestore timestamp helper
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
-console.log('✅ Firebase inicializēts!');
+console.log('✅ Firebase inicializēts droši!');
