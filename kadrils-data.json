@@ -722,7 +722,7 @@
         }
       },
       "timemarks": {
-        "---": [
+        "Pilnā": [
           {
             "time": 0,
             "text": "Kučera ievads"
@@ -985,19 +985,31 @@
         "fragments": {
           "pilnā": {
             "start": "0:00",
-            "end": "3:45"
+            "end": "3:33"
           },
-          "ievads": {
-            "start": "0:00",
-            "end": "0:45"
+          "Dārziņš": {
+            "start": "0:04",
+            "end": "0:23"
           },
-          "galvena": {
-            "start": "0:45",
-            "end": "2:45"
+          "Pāru do-za-do": {
+            "start": "0:23",
+            "end": "0:41"
           },
-          "finals": {
-            "start": "2:45",
-            "end": "3:45"
+          "Zaķīši": {
+            "start": "0:41",
+            "end": "2:03"
+          },
+          "Lēnā vija": {
+            "start": "2:03",
+            "end": "2:32"
+          },
+          "pāru maiņa uzpretējām vietām": {
+            "start": "2:32",
+            "end": "3:06"
+          },
+          "Pēdējais dārziņš": {
+            "start": "3:06",
+            "end": "3:33"
           }
         }
       },
@@ -1126,9 +1138,9 @@
         ]
       },
       "keywords": [
-        "francmanis",
-        "francmaņi",
-        "francmaņa"
+        "bula",
+        "bulamuskis",
+        "bulamuski"
       ]
     },
     "Lancejots": {
@@ -1142,21 +1154,29 @@
       "video": {
         "youtube_id": "LCMxQ3DbaDg",
         "fragments": {
-          "pilna": {
+          "pilnā": {
             "start": "0:00",
-            "end": "4:00"
+            "end": "3:22"
           },
-          "sākums": {
-            "start": "0:00",
-            "end": "1:20"
+          "sākuma dārziņš": {
+            "start": "0:03",
+            "end": "0:34"
           },
-          "vidus": {
-            "start": "1:20",
-            "end": "2:40"
+          "SOLO": {
+            "start": "0:34",
+            "end": "1:21"
           },
-          "beigas": {
-            "start": "2:40",
-            "end": "4:00"
+          "Vietu maiņas": {
+            "start": "1:21",
+            "end": "1:52"
+          },
+          "Dārziņi-dzirnavas": {
+            "start": "1:52",
+            "end": "2:54"
+          },
+          "Vija": {
+            "start": "2:54",
+            "end": "3:11"
           }
         }
       },
@@ -1365,9 +1385,9 @@
         ]
       },
       "keywords": [
-        "lancīe",
-        "lancie",
-        "lancje"
+        "lancis",
+        "lancejots",
+        "lancelots"
       ]
     },
     "Rikavas kadriļa": {
@@ -1498,9 +1518,9 @@
         ]
       },
       "keywords": [
-        "mazurka",
-        "mazurku",
-        "mazurkas"
+        "rikava",
+        "rikavas",
+        "rikavu"
       ]
     },
     "Kertinis Jonkelis": {
@@ -1516,19 +1536,35 @@
         "fragments": {
           "pilna": {
             "start": "0:00",
-            "end": "3:30"
+            "end": "3:05"
           },
-          "sākums": {
-            "start": "0:00",
-            "end": "1:10"
+          "Pirmais dārziņš": {
+            "start": "0:03",
+            "end": "0:18"
           },
-          "vidus": {
-            "start": "1:10",
-            "end": "2:20"
+          "Meitas ved": {
+            "start": "0:18",
+            "end": "0:32"
           },
-          "finals": {
-            "start": "2:20",
-            "end": "3:30"
+          "Puišu solo": {
+            "start": "0:31",
+            "end": "1:25"
+          },
+          "Otrais dārziņš": {
+            "start": "1:25",
+            "end": "1:37"
+          },
+          "Puiši ved": {
+            "start": "1:37",
+            "end": "1:50"
+          },
+          "Meitu solo": {
+            "start": "1:50",
+            "end": "2:43"
+          },
+          "Pēdējais dārziņš": {
+            "start": "2:43",
+            "end": "2:57"
           }
         }
       },
@@ -1719,7 +1755,7 @@
       ]
     },
     "....": {
-      "name": "...",
+      "name": "Balabaska",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/vecsdancis/vecsdancisfull.mp3",
         "ievads": "MUSIC/kadrilas/vecsdancis/parts/ievads.mp3",
@@ -1855,143 +1891,7 @@
         "vecs dančiš"
       ]
     },
-    ".....": {
-      "name": "...",
-      "fragments": {
-        "pilnā": "MUSIC/kadrilas/setins/setinsfull.mp3",
-        "sākums": "MUSIC/kadrilas/setins/parts/sakums.mp3",
-        "vidus": "MUSIC/kadrilas/setins/parts/vidus.mp3",
-        "beigas": "MUSIC/kadrilas/setins/parts/beigas.mp3"
-      },
-      "video": {
-        "youtube_id": "VIDEO_ID_SETINS",
-        "fragments": {
-          "pilna": {
-            "start": "0:00",
-            "end": "3:50"
-          },
-          "sakums": {
-            "start": "0:00",
-            "end": "1:15"
-          },
-          "vidus": {
-            "start": "1:15",
-            "end": "2:35"
-          },
-          "beigas": {
-            "start": "2:35",
-            "end": "3:50"
-          }
-        }
-      },
-      "timemarks": {
-        "pilnā": [
-          {
-            "time": 0,
-            "text": "Setiņa ievads"
-          },
-          {
-            "time": 15,
-            "text": "Pirmais gājiens - maiņa"
-          },
-          {
-            "time": 35,
-            "text": "Otrais gājiens - sasveicināšanās"
-          },
-          {
-            "time": 60,
-            "text": "Trešais gājiens - ķēde"
-          },
-          {
-            "time": 85,
-            "text": "Ceturtais gājiens - loks"
-          },
-          {
-            "time": 115,
-            "text": "Piektais gājiens - rotācija"
-          },
-          {
-            "time": 135,
-            "text": "Sestais gājiens - grieziens"
-          },
-          {
-            "time": 150,
-            "text": "Finālā daļa"
-          },
-          {
-            "time": 170,
-            "text": "Ātrais grieziens"
-          },
-          {
-            "time": 195,
-            "text": "Visi kopā"
-          },
-          {
-            "time": 220,
-            "text": "Noslēguma paklanīšanās"
-          }
-        ],
-        "sākums": [
-          {
-            "time": 0,
-            "text": "Ievads"
-          },
-          {
-            "time": 15,
-            "text": "Nostāšanās"
-          },
-          {
-            "time": 30,
-            "text": "1. gājiens - maiņa"
-          },
-          {
-            "time": 50,
-            "text": "2. gājiens - sasveicināšanās"
-          }
-        ],
-        "vidus": [
-          {
-            "time": 0,
-            "text": "3. gājiens - ķēde"
-          },
-          {
-            "time": 20,
-            "text": "4. gājiens - loks"
-          },
-          {
-            "time": 40,
-            "text": "5. gājiens - rotācija"
-          },
-          {
-            "time": 60,
-            "text": "6. gājiens - grieziens"
-          }
-        ],
-        "beigas": [
-          {
-            "time": 0,
-            "text": "Finālā daļa"
-          },
-          {
-            "time": 25,
-            "text": "Ātrais grieziens"
-          },
-          {
-            "time": 50,
-            "text": "Visi kopā cieši"
-          },
-          {
-            "time": 73,
-            "text": "Noslēguma poza"
-          }
-        ]
-      },
-      "keywords": [
-        "setinš",
-        "setinu",
-        "setiņš"
-      ]
-    },
+    
     "Igauņu kadriļa": {
       "name": "Igauņu kadriļa",
       "fragments": {
@@ -2003,21 +1903,37 @@
       "video": {
         "youtube_id": "PpVT6Ea8QbI",
         "fragments": {
-          "pilna": {
+          "pilnā": {
             "start": "0:00",
-            "end": "3:50"
+            "end": "3:15"
           },
-          "sakums": {
-            "start": "0:00",
-            "end": "1:15"
+          "Sākums": {
+            "start": "0:13",
+            "end": "0:26"
           },
-          "vidus": {
-            "start": "1:15",
-            "end": "2:35"
+          "Meitu gājiens": {
+            "start": "0:26",
+            "end": "0:45"
+          },
+          "Puišu gājiens": {
+            "start": "0:45",
+            "end": "0:58"
+          },
+          "Dzirnavas": {
+            "start": "0:58",
+            "end": "1:24"
+          },
+          "SOLO": {
+            "start": "1:24",
+            "end": "2:03"
+          },
+          "Puiši pāri+zigzag+vešanas": {
+            "start": "2:03",
+            "end": "2:45"
           },
           "beigas": {
-            "start": "2:35",
-            "end": "3:50"
+            "start": "2:56",
+            "end": "3:15"
           }
         }
       },
@@ -2232,5 +2148,142 @@
         "igauņu"
       ]
     }
-  }
+  },
+  ".....": {
+      "name": "...",
+      "fragments": {
+        "pilnā": "MUSIC/kadrilas/setins/setinsfull.mp3",
+        "sākums": "MUSIC/kadrilas/setins/parts/sakums.mp3",
+        "vidus": "MUSIC/kadrilas/setins/parts/vidus.mp3",
+        "beigas": "MUSIC/kadrilas/setins/parts/beigas.mp3"
+      },
+      "video": {
+        "youtube_id": "VIDEO_ID_SETINS",
+        "fragments": {
+          "pilna": {
+            "start": "0:00",
+            "end": "3:50"
+          },
+          "sakums": {
+            "start": "0:00",
+            "end": "1:15"
+          },
+          "vidus": {
+            "start": "1:15",
+            "end": "2:35"
+          },
+          "beigas": {
+            "start": "2:35",
+            "end": "3:50"
+          }
+        }
+      },
+      "timemarks": {
+        "pilnā": [
+          {
+            "time": 0,
+            "text": "Setiņa ievads"
+          },
+          {
+            "time": 15,
+            "text": "Pirmais gājiens - maiņa"
+          },
+          {
+            "time": 35,
+            "text": "Otrais gājiens - sasveicināšanās"
+          },
+          {
+            "time": 60,
+            "text": "Trešais gājiens - ķēde"
+          },
+          {
+            "time": 85,
+            "text": "Ceturtais gājiens - loks"
+          },
+          {
+            "time": 115,
+            "text": "Piektais gājiens - rotācija"
+          },
+          {
+            "time": 135,
+            "text": "Sestais gājiens - grieziens"
+          },
+          {
+            "time": 150,
+            "text": "Finālā daļa"
+          },
+          {
+            "time": 170,
+            "text": "Ātrais grieziens"
+          },
+          {
+            "time": 195,
+            "text": "Visi kopā"
+          },
+          {
+            "time": 220,
+            "text": "Noslēguma paklanīšanās"
+          }
+        ],
+        "sākums": [
+          {
+            "time": 0,
+            "text": "Ievads"
+          },
+          {
+            "time": 15,
+            "text": "Nostāšanās"
+          },
+          {
+            "time": 30,
+            "text": "1. gājiens - maiņa"
+          },
+          {
+            "time": 50,
+            "text": "2. gājiens - sasveicināšanās"
+          }
+        ],
+        "vidus": [
+          {
+            "time": 0,
+            "text": "3. gājiens - ķēde"
+          },
+          {
+            "time": 20,
+            "text": "4. gājiens - loks"
+          },
+          {
+            "time": 40,
+            "text": "5. gājiens - rotācija"
+          },
+          {
+            "time": 60,
+            "text": "6. gājiens - grieziens"
+          }
+        ],
+        "beigas": [
+          {
+            "time": 0,
+            "text": "Finālā daļa"
+          },
+          {
+            "time": 25,
+            "text": "Ātrais grieziens"
+          },
+          {
+            "time": 50,
+            "text": "Visi kopā cieši"
+          },
+          {
+            "time": 73,
+            "text": "Noslēguma poza"
+          }
+        ]
+      },
+      "keywords": [
+        "setinš",
+        "setinu",
+        "setiņš"
+      ]
+    }
 }
