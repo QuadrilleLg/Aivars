@@ -1243,6 +1243,8 @@ body {
         z-index: 100003;
         transition: left 0.3s ease;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+        overflow-y: auto !important;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
         background: rgba(18, 26, 24, 1) !important;
@@ -1258,6 +1260,7 @@ body {
         position: relative;
         z-index: 10;
         pointer-events: auto !important;
+        padding-bottom: 80px;
     }
     
     .song-list-container .song-list li {
