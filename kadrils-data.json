@@ -722,7 +722,7 @@
         }
       },
       "timemarks": {
-        "Pilnā": [
+        "pilnā": [
           {
             "time": 0,
             "text": "Kučera ievads"
@@ -758,60 +758,6 @@
           {
             "time": 170,
             "text": "Noslēgums"
-          }
-        ],
-        "--": [
-          {
-            "time": 0,
-            "text": "Ievads"
-          },
-          {
-            "time": 15,
-            "text": "Nostāšanās"
-          },
-          {
-            "time": 30,
-            "text": "Pirmā kustība"
-          },
-          {
-            "time": 50,
-            "text": "Sasveicināšanās"
-          }
-        ],
-        "-": [
-          {
-            "time": 0,
-            "text": "Ķēde"
-          },
-          {
-            "time": 20,
-            "text": "Rotācija"
-          },
-          {
-            "time": 40,
-            "text": "Maiņa"
-          },
-          {
-            "time": 55,
-            "text": "Grieziens"
-          }
-        ],
-        "----": [
-          {
-            "time": 0,
-            "text": "Finālā daļa"
-          },
-          {
-            "time": 20,
-            "text": "Ātrais grieziens"
-          },
-          {
-            "time": 40,
-            "text": "Visi kopā"
-          },
-          {
-            "time": 55,
-            "text": "Noslēguma poza"
           }
         ]
       },
@@ -967,9 +913,9 @@
         ]
       },
       "keywords": [
-        "polka",
-        "polku",
-        "polkas"
+        "krusta kazāks",
+        "krusta kazāku",
+        "kazāks"
       ]
     },
     "Bulamuskis": {
@@ -1891,7 +1837,6 @@
         "vecs dančiš"
       ]
     },
-    
     "Igauņu kadriļa": {
       "name": "Igauņu kadriļa",
       "fragments": {
@@ -1937,7 +1882,6 @@
           }
         }
       },
-
       "timemarks": {
         "pilnā": [
           {
@@ -2146,10 +2090,14 @@
         "igauņu kadriļa",
         "igaunu",
         "igauņu"
+      ],
+      "keywords": [
+        "igauņu",
+        "igaunu",
+        "igauņu kadriļa"
       ]
-    }
-  },
-  "Family jig": {
+    },
+    "Family jig": {
       "name": "Family jig",
       "fragments": {
         "pilnā": "MUSIC/kadrilas/setins/setinsfull.mp3",
@@ -2281,9 +2229,11 @@
         ]
       },
       "keywords": [
-        "setinš",
-        "setinu",
-        "setiņš"
+        "family jig",
+        "džīga",
+        "žīga",
+        "jiga"
       ]
     }
+  }
 }
