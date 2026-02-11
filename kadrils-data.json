@@ -175,6 +175,108 @@
         "russu"
       ]
     },
+    "kvadrāts": {
+      "name": "Kvadrāts",
+      "fragments": {
+        "-": "MUSIC/kadrilas/ada/parts/sakums.mp3",
+        "--": "MUSIC/kadrilas/ada/parts/grieziens.mp3",
+        "pilnā": "MUSIC/kadrilas/kvadrat/kvadrat_v1.mp3"
+      },
+      "video": {
+        "youtube_id": "lLn66R0zL0Q",
+        "fragments": {
+          "pilnā": {
+            "start": "0:00",
+            "end": "3:26"
+          },
+          "-": {
+            "start": "0:00",
+            "end": "0:17"
+          },
+          "--": {
+            "start": "0:17",
+            "end": "0:26"
+          }
+        }
+      },
+      "timemarks": {
+        "---": [
+          {
+            "time": 0,
+            "text": "Sākuma nostāšanās - četri pāri kvadrātā"
+          },
+          {
+            "time": 8,
+            "text": "Visi soļo uz priekšu, tad atpakaļ"
+          },
+          {
+            "time": 16,
+            "text": "Dāmas paiet uz vidū, plaukšķina"
+          },
+          {
+            "time": 24,
+            "text": "Kungi paiet uz vidū, plaukšķina"
+          },
+          {
+            "time": 32,
+            "text": "Partneru maiņa sākas"
+          },
+          {
+            "time": 40,
+            "text": "Grieziens ar jauno partneri"
+          },
+          {
+            "time": 48,
+            "text": "Atgriešanās pie sava partnera"
+          },
+          {
+            "time": 56,
+            "text": "Noslēguma paklanīšanās"
+          }
+        ],
+        "-": [
+          {
+            "time": 0,
+            "text": "Partneru sveicināšanās sākas"
+          },
+          {
+            "time": 5,
+            "text": "Paklanīšanās viens otram"
+          },
+          {
+            "time": 10,
+            "text": "Roku sniegšana"
+          },
+          {
+            "time": 15,
+            "text": "Grieziens kopā"
+          }
+        ],
+        "--": [
+          {
+            "time": 0,
+            "text": "Grieziena sākums"
+          },
+          {
+            "time": 3,
+            "text": "Grieziens pa labi"
+          },
+          {
+            "time": 6,
+            "text": "Grieziens pa kreisi"
+          },
+          {
+            "time": 9,
+            "text": "Noslēgums"
+          }
+        ]
+      },
+      "keywords": [
+        "kvadrātu",
+        "kvadrāts",
+        "kvadra"
+      ]
+    },
     "padespaņs": {
       "name": "Padespaņs",
       "fragments": {
@@ -725,39 +827,383 @@
         "pilnā": [
           {
             "time": 0,
-            "text": "Kučera ievads"
+            "text": "Ievads"
           },
           {
-            "time": 12,
-            "text": "Pāri sāk kustēties"
+            "time": 3,
+            "text": "Pirmais gājiens!"
           },
           {
-            "time": 25,
-            "text": "Pirmā maiņa"
+            "time": 4,
+            "text": "Pirmais-pirmais pāris sāk griezties"
           },
           {
-            "time": 45,
-            "text": "Ķēdes veidošana"
+            "time": 8,
+            "text": "Pirmais-otrais pāris sāk griezties"
           },
           {
-            "time": 70,
-            "text": "Rotācija"
+            "time": 11,
+            "text": "Pirmais-pirmais pāri apstājas"
           },
           {
-            "time": 95,
-            "text": "Otrā maiņa"
+            "time": 14,
+            "text": "pirmais-otrais pāri apstājas"
           },
           {
-            "time": 120,
-            "text": "Grieziens"
+            "time": 15,
+            "text": "Pirmie pāri iet uz pretējām vietām"
+          },
+          {
+            "time": 19,
+            "text": "Ar giezieniem meitas nogādā savās vietās"
+          },
+          {
+            "time": 23,
+            "text": "pirmie pāri griežas uz vietas"
+          },
+          {
+            "time": 26,
+            "text": "Otrais-pirmais pāris sāk griezties"
+          },
+          {
+            "time": 30,
+            "text": "Otrais-otrais pāris sāk griezties"
+          },
+          {
+            "time": 33,
+            "text": "Otrais-pirmais pāris apstājas"
+          },
+          {
+            "time": 36,
+            "text": "Otrais-otrais pāris apstājas"
+          },
+          {
+            "time": 37,
+            "text": "Otrie pāri iet uz pretējām vietām"
+          },
+          {
+            "time": 41,
+            "text": "Ar giezieniem meitas nogādā savās vietās"
+          },
+          {
+            "time": 44,
+            "text": "Otrie pāri griežas uz vietas"
+          },
+          {
+            "time": 47,
+            "text": "Otrais gājiens!"
+          },
+          {
+            "time": 48,
+            "text": "Pirmie pāri griežas uz vietas"
+          },
+          {
+            "time": 50,
+            "text": "Pirmie puiši iegriež meitu 3x uz pretējām vietām"
+          },
+          {
+            "time": 52,
+            "text": "Dodas pie citas meitas"
+          },
+          {
+            "time": 54,
+            "text": "Griežas ar citām meitām "
+          },
+          {
+            "time": 60,
+            "text": "Iegriež meitas 3x uz pretējām vietām"
+          },
+          {
+            "time": 62,
+            "text": "Dodas pie savām meitām"
+          },
+          {
+            "time": 63,
+            "text": "Griežas uz vietas ar savām meitām"
+          },
+          {
+            "time": 69,
+            "text": "Otrie pāri griežas uz vietas"
+          },
+          {
+            "time": 71,
+            "text": "Otrie puiši iegriež meitu 3x uz pretējām vietām"
+          },
+          {
+            "time": 73,
+            "text": "puiši dodas pie citas meitas"
+          },
+          {
+            "time": 74,
+            "text": "Griežas ar citām meitām "
+          },
+          {
+            "time": 81,
+            "text": "Iegriež meitas 3x uz pretējām vietām"
+          },
+          {
+            "time": 84,
+            "text": "Puiši dodas pie savām meitām"
+          },
+          {
+            "time": 86,
+            "text": "Griežas uz vietas ar savām meitām"
+          },
+          {
+            "time": 89,
+            "text": "Trešais gājiens"
+          },
+          {
+            "time": 90,
+            "text": "Griežas uz vietas ar savām meitām"
+          },
+          {
+            "time": 92,
+            "text": "Pirmie puiši griežas 3x uz pretējām vietām"
+          },
+          {
+            "time": 94,
+            "text": "Meitas dodas pie cita puiša"
+          },
+          {
+            "time": 96,
+            "text": "Griežas uz vietas ar svešiem puišiem"
+          },
+          {
+            "time": 97,
+            "text": "Griežas uz vietas ar svešiem puišiem"
+          },
+          {
+            "time": 102,
+            "text": "Pirmie puiši griežas 3x uz pretējām vietām"
+          },
+          {
+            "time": 104,
+            "text": "Meitas dodas pie saviem puišiem"
+          },
+          {
+            "time": 106,
+            "text": "Griežas uz vietas ar saviem puišiem"
+          },
+          {
+            "time": 110,
+            "text": "Otrie pāri griežas uz vietas "
+          },
+          {
+            "time": 112,
+            "text": "Otrie puiši griežas 3x uz pretējām vietām"
+          },
+          {
+            "time": 116,
+            "text": "Meitas dodas pie cita puiša"
+          },
+          {
+            "time": 117,
+            "text": "Griežas uz vietas ar svešiem puišiem"
+          },
+          {
+            "time": 123,
+            "text": "Otrie puiši griežas 3x uz pretējām vietām"
+          },
+          {
+            "time": 126,
+            "text": "Meitas dodas pie saviem puišiem"
+          },
+          {
+            "time": 127,
+            "text": "Griežas uz vietas ar saviem puišiem"
+          },
+          {
+            "time": 130,
+            "text": "Ceturtais gājiens"
+          },
+          {
+            "time": 131,
+            "text": "Pirmie pāri iet uz pretējām vietām"
+          },
+          {
+            "time": 133,
+            "text": "Apgriež meitu 2x"
+          },
+          {
+            "time": 134,
+            "text": "Puisis aiz meitas iet uz savām vietām"
+          },
+          {
+            "time": 139,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 142,
+            "text": "Otrie pāri iet uz pretējām vietām"
+          },
+          {
+            "time": 144,
+            "text": "Apgriež meitu 2x"
+          },
+          {
+            "time": 147,
+            "text": "Puisis aiz meitas iet uz savām vietām"
           },
           {
             "time": 150,
-            "text": "Finālā daļa"
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 152,
+            "text": "Piektais gājiens"
+          },
+          {
+            "time": 153,
+            "text": "Pirmie pāri apiet pilnu apli"
+          },
+          {
+            "time": 159,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 163,
+            "text": "Pirmais pirmais pāris iet pie pretējā pāra"
           },
           {
             "time": 170,
-            "text": "Noslēgums"
+            "text": "Griežas uz vietas un iegriež meitu prom"
+          },
+          {
+            "time": 171,
+            "text": "Puisis iet uz savu vietu svešā meita seko"
+          },
+          {
+            "time": 174,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 177,
+            "text": " Iegriež svešo meitu prom "
+          },
+          {
+            "time": 181,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 184,
+            "text": "Pirmie pāri apiet pilnu apli"
+          },
+          {
+            "time": 191,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 196,
+            "text": "Pirmais otrais pāris iet pie pretējā pāra"
+          },
+          {
+            "time": 198,
+            "text": "Griežas uz vietas un iegriež meitu prom"
+          },
+          {
+            "time": 202,
+            "text": "Puisis iet uz savu vietu svešā meita seko"
+          },
+          {
+            "time": 206,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 210,
+            "text": " Iegriež svešo meitu prom "
+          },
+          {
+            "time": 213,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 217,
+            "text": "Otrie pāri apiet pilnu apli"
+          },
+          {
+            "time": 224,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 228,
+            "text": "Otrais pirmais pāris iet pie pretējā pāra"
+          },
+          {
+            "time": 230,
+            "text": "Griežas uz vietas un iegriež meitu prom"
+          },
+          {
+            "time": 234,
+            "text": "Puisis iet uz savu vietu svešā meita seko"
+          },
+          {
+            "time": 238,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 242,
+            "text": " Iegriež svešo meitu prom "
+          },
+          {
+            "time": 246,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 249,
+            "text": "Otrie pāri apiet pilnu apli"
+          },
+          {
+            "time": 257,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 260,
+            "text": "Otrais otrais pāris iet pie pretējā pāra"
+          },
+          {
+            "time": 262,
+            "text": "Griežas uz vietas un iegriež meitu prom"
+          },
+          {
+            "time": 266,
+            "text": "Puisis iet uz savu vietu svešā meita seko"
+          },
+          {
+            "time": 271,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 275,
+            "text": " Iegriež svešo meitu prom "
+          },
+          {
+            "time": 278,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 282,
+            "text": "Pēdējis gājiens"
+          },
+          {
+            "time": 283,
+            "text": "Pāri apiet pilnu apli"
+          },
+          {
+            "time": 289,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 285,
+            "text": "Pāri apiet pilnu apli"
+          },
+          {
+            "time": 300,
+            "text": "Griežas uz vietas"
+          },
+          {
+            "time": 304,
+            "text": "Beigas"
           }
         ]
       },
