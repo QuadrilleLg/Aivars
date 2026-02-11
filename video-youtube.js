@@ -201,17 +201,20 @@ function openVideoModal() {
         mainAudio.pause();
     }
     
-    loadYouTubeAPI()
-        .then(function() {
-            return createYouTubePlayer(currentKadril.data.video.youtube_id);
-        })
-        .then(function() {
-            loadVideoFragments();
-        })
-        .catch(function(error) {
-            alert('Kļūda: ' + error.message);
-            closeVideoModal();
-        });
+
+    // ✅ Pagaidām kamēr modal ir pilnībā redzams mobilajā
+    setTimeout(function() {
+        loadYouTubeAPI()
+            .then(function() {
+                return createYouTubePlayer(currentKadril.data.video.youtube_id);
+            })
+            .then(function() {
+                loadVideoFragments();
+            })
+            .catch(function(error) {
+                console.error('Video kļūda:', error.message);
+            });
+    }, 150);
 }
 
 // ✅ JAUNA FUNKCIJA: Nomaina video bez modāla aizvēršanas
