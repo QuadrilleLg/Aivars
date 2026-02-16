@@ -79,11 +79,8 @@ class AudioManager {
         
         command = command.toLowerCase().trim();
 
-        // Pārbaudam wake words un atskaņojam atbildes
-        if (Object.keys(this.wakeWords).includes(command)) {
-            this.playFragment(this.wakeWords[command]);
-            return null;
-        }
+        // ❌ NOŅEMTS: Wake words apstrādā utils.js + speechManager!
+        // Wake words vairs NEAPSTRĀDĀJAM šeit
         
         // Pārbaudam vadības komandas
         if (this.controlCommands.stop?.some(cmd => command.includes(cmd))) {

@@ -12,13 +12,13 @@ class SpeechManager {
     getRandomWakeWordResponse(wakeWord) {
         console.log(`🎲 getRandomWakeWordResponse: ${wakeWord}`);
         
-        // ✅ LABOT: kadrilsData nevis audioManager
-        if (!window.kadrilsData || !window.kadrilsData.wakeWords) {
-            console.error('❌ kadrilsData.wakeWords not found!');
+        // ✅ PAREIZI: audioManager
+        if (!window.audioManager || !window.audioManager.wakeWords) {
+            console.error('❌ audioManager.wakeWords not found!');
             return null;
         }
         
-        const wakeWordData = window.kadrilsData.wakeWords[wakeWord];
+        const wakeWordData = window.audioManager.wakeWords[wakeWord];
         
         if (!wakeWordData) {
             console.warn(`⚠️ Wake word "${wakeWord}" not found in data`);

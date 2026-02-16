@@ -18,12 +18,25 @@ class ResponseManager {
         return result;
     }
 
-    // Šī funkcija vairs netiek izmantota wake words
-    // Wake words tagad apstrādā tieši recognition.js + audio.js
+    // ✅ LABOT: Saucam speechManager priekš wake words
     findResponse(text) {
         console.log('🔍 ResponseManager.findResponse() called with:', text);
         
-        // Pārsūta uz audioManager
+        // Ja ir wake word - izmantojam speechManager
+        if (this.isWakeWord(text)) {
+            console.log('🎙️ Wake word detected, calling speechManager');
+            
+            if (window.speechManager) {
+                const wakeWord = text.toLowerCase().trim();
+                const response = window.speechManager.getRandomWakeWordResponse(wakeWord);
+                console.log('📥 Response from speechManager:', response);
+                return response;
+            } else {
+                console.warn('⚠️ speechManager not found!');
+            }
+        }
+        
+        // Citām komandām - pārsūtām uz audioManager
         if (window.audioManager) {
             console.log('📣 Forwarding to audioManager.handleCommand()');
             const response = window.audioManager.handleCommand(text);
