@@ -1,49 +1,36 @@
-// utils.js
+// utils.js - UPDATED VERSION
+// Wake words tagad tiek apstrādāti tieši recognition.js
+
 class ResponseManager {
     constructor() {
+        console.log('🎯 ResponseManager initialized');
+        
+        // Wake words tagad nāk no kadrils-data.json un tiek apstrādāti recognition.js
+        // Šis saraksts ir tikai referenence
         this.wakeWords = ['aivar', 'ada', 'dj', 'adi'];
-        this.greetings = [
-            'Esmu šeit!',
-            'Klausos!',
-            'Jā?',
-            'Ko varu palīdzēt?',
-            'Esmu gatavs!',
-            'Klausos!'
-        ];
     }
 
     isWakeWord(text) {
-        return this.wakeWords.some(word => 
+        const result = this.wakeWords.some(word => 
             text.toLowerCase().includes(word.toLowerCase())
         );
+        console.log(`🔍 isWakeWord("${text}"):`, result);
+        return result;
     }
 
-    getRandomGreeting() {
-        return this.greetings[Math.floor(Math.random() * this.greetings.length)];
-    }
-
+    // Šī funkcija vairs netiek izmantota wake words
+    // Wake words tagad apstrādā tieši recognition.js + audio.js
     findResponse(text) {
-        console.log('Meklēju atbildi uz: ' + text);
+        console.log('🔍 ResponseManager.findResponse() called with:', text);
         
-        // Ja tas ir wake word
-        if (text === 'wake_word') {
-            // Izmantojam jaunos response pārus
-            if (this.responses && this.responses.wake_word && this.responses.wake_word.pairs) {
-                const pairs = this.responses.wake_word.pairs;
-                const randomIndex = Math.floor(Math.random() * pairs.length);
-                const selectedPair = pairs[randomIndex];
-                
-                // Noņemts audio atskaņošanas izsaukums, lai novērstu dubultu atskaņošanu
-                // Audio tiks atskaņots no ui.js
-                
-                return selectedPair.text;
-            }
-            return this.getRandomGreeting();
-        }
-
-        // Meklējam atbilstošo komandu audio menedžerī
+        // Pārsūta uz audioManager
         if (window.audioManager) {
-            return window.audioManager.handleCommand(text);
+            console.log('📣 Forwarding to audioManager.handleCommand()');
+            const response = window.audioManager.handleCommand(text);
+            console.log('📥 Response from audioManager:', response);
+            return response;
+        } else {
+            console.warn('⚠️ window.audioManager not found!');
         }
         
         return null;
@@ -52,11 +39,21 @@ class ResponseManager {
 
 class VideoManager {
     constructor() {
+        console.log('🎬 VideoManager initialized');
         this.mainVideo = document.getElementById('mainVideo');
+        
+        if (!this.mainVideo) {
+            console.warn('⚠️ mainVideo element not found in DOM');
+        } else {
+            console.log('✅ mainVideo element found');
+        }
     }
 
     playVideo(path) {
+        console.log('▶️ VideoManager.playVideo() called with path:', path);
+        
         if (!this.mainVideo) {
+            console.error('❌ Video element nav atrasts');
             if (window.uiManager) {
                 window.uiManager.updateSystemLog('Video elements nav atrasts');
             }
@@ -64,44 +61,41 @@ class VideoManager {
         }
 
         try {
-            // SVARĪGI: Vienmēr lietojam vienu un to pašu klasi, lai saglabātu proporcijas
             this.mainVideo.className = 'default-video video-fit-contain';
             
             this.mainVideo.src = path;
             this.mainVideo.load();
             this.mainVideo.play()
                 .then(() => {
-                    console.log('Video atskaņošana sākta', path);
+                    console.log('✅ Video atskaņošana sākta:', path);
                     if (window.uiManager) {
                         window.uiManager.updateSystemLog('Video atskaņošana sākta');
                     }
                     
-                    // Pārliecināmies, ka video ir redzams
                     this.mainVideo.style.display = 'block';
                     this.mainVideo.style.opacity = '1';
                     this.mainVideo.style.visibility = 'visible';
                 })
                 .catch(error => {
-                    console.error('Kļūda atskaņojot video:', error);
+                    console.error('❌ Kļūda atskaņojot video:', error);
                     if (window.uiManager) {
                         window.uiManager.updateSystemLog(`Kļūda: ${error.message}`);
                     }
                     
-                    // Mēģinām atskaņot pēc lietotāja interakcijas
                     const playVideoOnClick = () => {
                         this.mainVideo.play()
                             .then(() => {
-                                console.log('Video atskaņošana sākta pēc interakcijas');
+                                console.log('✅ Video atskaņošana sākta pēc interakcijas');
                                 this.mainVideo.style.display = 'block';
                             })
-                            .catch(e => console.error('Atkārtota kļūda ar video:', e));
+                            .catch(e => console.error('❌ Atkārtota kļūda ar video:', e));
                         document.removeEventListener('click', playVideoOnClick);
                     };
                     
                     document.addEventListener('click', playVideoOnClick);
                 });
         } catch (error) {
-            console.error('Kļūda atskaņojot video:', error);
+            console.error('❌ Kļūda atskaņojot video:', error);
             if (window.uiManager) {
                 window.uiManager.updateSystemLog(`Kļūda: ${error.message}`);
             }
@@ -109,16 +103,17 @@ class VideoManager {
     }
 
     stopVideo() {
+        console.log('⏹️ VideoManager.stopVideo() called');
+        
         if (this.mainVideo) {
             try {
                 this.mainVideo.pause();
                 this.mainVideo.currentTime = 0;
-                console.log('Video apturēts');
+                console.log('✅ Video apturēts');
                 if (window.uiManager) {
                     window.uiManager.updateSystemLog('Video apturēts');
                 }
                 
-                // Paslēpjam video un rādam fona video
                 if (window.audioManager) {
                     window.audioManager.handleVideoVisibility(false);
                 } else {
@@ -127,7 +122,7 @@ class VideoManager {
                     if (backgroundVideo) backgroundVideo.style.display = 'block';
                 }
             } catch (error) {
-                console.error('Kļūda apturot video:', error);
+                console.error('❌ Kļūda apturot video:', error);
                 if (window.uiManager) {
                     window.uiManager.updateSystemLog(`Kļūda apturot video: ${error.message}`);
                 }
@@ -136,5 +131,9 @@ class VideoManager {
     }
 }
 
+console.log('✅ utils.js loaded');
+
 export const responseManager = new ResponseManager();
 export const videoManager = new VideoManager();
+
+console.log('✅ Managers exported');

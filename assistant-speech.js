@@ -1,4 +1,4 @@
-// assistant-speech.js - Random atbilžu un ziņojumu formatēšana
+// assistant-speech.js - Random atbildžu un ziņojumu formatēšana
 
 class SpeechManager {
     constructor() {
@@ -12,12 +12,13 @@ class SpeechManager {
     getRandomWakeWordResponse(wakeWord) {
         console.log(`🎲 getRandomWakeWordResponse: ${wakeWord}`);
         
-        if (!window.audioManager || !window.audioManager.wakeWords) {
-            console.error('❌ audioManager.wakeWords not found!');
+        // ✅ LABOT: kadrilsData nevis audioManager
+        if (!window.kadrilsData || !window.kadrilsData.wakeWords) {
+            console.error('❌ kadrilsData.wakeWords not found!');
             return null;
         }
         
-        const wakeWordData = window.audioManager.wakeWords[wakeWord];
+        const wakeWordData = window.kadrilsData.wakeWords[wakeWord];
         
         if (!wakeWordData) {
             console.warn(`⚠️ Wake word "${wakeWord}" not found in data`);
@@ -66,6 +67,55 @@ class SpeechManager {
     }
 
     // ========================================
+    // ✅ SPEAK FUNCTION (JAUNS!)
+    // ========================================
+
+    speak(response) {
+        console.log('🔊 speak() called:', response);
+        
+        if (!response) {
+            console.warn('⚠️ No response to speak');
+            return;
+        }
+        
+        // Ja response ir objekts ar audio un text
+        if (typeof response === 'object' && response.audio) {
+            this.playAudio(response.audio);
+            return;
+        }
+        
+        // Ja response ir tikai string (text)
+        if (typeof response === 'string') {
+            console.log('📝 Text-only response (no audio):', response);
+            return;
+        }
+        
+        console.warn('⚠️ Unknown response format');
+    }
+
+    playAudio(audioPath) {
+        console.log(`🎵 Playing audio: ${audioPath}`);
+        
+        try {
+            const audio = new Audio(audioPath);
+            audio.volume = 0.7; // 70% skaļums
+            
+            audio.play().then(() => {
+                console.log('✅ Audio started playing');
+            }).catch(error => {
+                console.error('❌ Audio playback error:', error);
+            });
+            
+            audio.addEventListener('ended', () => {
+                console.log('✅ Audio finished');
+            });
+            
+        } catch (error) {
+            console.error('❌ Error creating audio:', error);
+        }
+    }
+
+    // ========================================
     // MESSAGE FORMATTING
     // ========================================
 
@@ -77,7 +127,7 @@ class SpeechManager {
         if (fragmentName && fragmentName !== 'pilnā') {
             // Formatējam fragmenta nosaukumu
             const formattedFragment = this._formatFragmentName(fragmentName);
-            message += `\n📍 Fragments: ${formattedFragment}`;
+            message += `\n🔖 Fragments: ${formattedFragment}`;
         }
         
         return message;

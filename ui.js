@@ -7,7 +7,8 @@ class UIManager {
         this.setupEventListeners();
         this.startClock();
         this.setupAudioPlayer();
-        this.setupDanceDescriptionPanel();
+        // ❌ NOŅEMTS: this.setupDanceDescriptionPanel(); 
+        // ⬅️ HTML jau ir panelis, nevajag izveidot jaunu!
         this.currentDanceInterval = null;
         
         // Songs will be loaded from main.js after audioManager is ready
@@ -429,32 +430,12 @@ class UIManager {
         // Pārbaudām, vai panelis jau eksistē HTML
         const existingPanel = document.getElementById('danceDescriptionPanel');
         if (existingPanel) {
-            console.log('✅ danceDescriptionPanel already exists in HTML, skipping creation');
-            return;
+            console.log('✅ danceDescriptionPanel already exists in HTML, using existing');
+            return; // ⬅️ SVARĪGI: NEIZVEIDO JAUNU!
         }
         
-        const fragmentsContainer = document.querySelector('.fragments-container');
-        if (!fragmentsContainer) {
-            console.warn('⚠️ fragments-container not found');
-            return;
-        }
-        console.log('✅ fragments-container found:', fragmentsContainer);
-
-        // Izveidojam dejas norises paneli
-        const dancePanel = document.createElement('div');
-        dancePanel.id = 'danceDescriptionPanel';
-        dancePanel.className = 'dance-description-panel';
-        dancePanel.innerHTML = `
-            <h4>Dejas norise</h4>
-            <div id="danceStepsList" class="dance-steps-list">
-                <p class="no-dance-text">Izvēlieties fragmentu, lai redzētu dejas norisi</p>
-            </div>
-        `;
-
-        // Pievienojam pēc fragmentu saraksta
-        fragmentsContainer.appendChild(dancePanel);
-        
-        console.log('✅ Dance description panel created and appended');
+        console.log('⚠️ danceDescriptionPanel NOT found in HTML - this should not happen!');
+        console.log('⚠️ HTML should have: <div id="danceDescriptionPanel">');
     }
 
     // Ielādē un parāda dejas soļus
@@ -521,10 +502,7 @@ class UIManager {
         if (this.currentDanceInterval) {
             clearInterval(this.currentDanceInterval);
             this.currentDanceInterval = null;
-            console.log('⏸️ Stopped dance step tracking (scroll pozīcija saglabāta)');
-            
-            // ⬅️ SVARĪGI: NENOTĪRA active klasi!
-            // Lai scroll paliek pie pašreizējā soļa
+            console.log('⏸️ Stopped dance step tracking');
         }
     }
 
@@ -546,7 +524,6 @@ class UIManager {
     // Atjaunina aktīvo soli vizualizācijā
     updateActiveStep(index) {
         const steps = document.querySelectorAll('.dance-step');
-        const mainAudio = document.getElementById('mainAudio');
         
         steps.forEach((step, i) => {
             // Noņemam visas klases
@@ -556,14 +533,12 @@ class UIManager {
                 // AKTĪVAIS solis
                 step.classList.add('active');
                 
-                // ✅ SCROLL uz centru TIKAI ja audio atskaņojas (nevis pause)
-                if (mainAudio && !mainAudio.paused) {
-                    step.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center',      // ← PA VIDU!
-                        inline: 'nearest' 
-                    });
-                }
+                // ✅ UZLABOJUMS: Scroll uz CENTRU (nevis 'nearest')
+                step.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center',      // ← PA VIDU!
+                    inline: 'nearest' 
+                });
             } else if (i < index) {
                 // Pabeigti soļi
                 step.classList.add('completed');
