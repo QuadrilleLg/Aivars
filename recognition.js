@@ -147,18 +147,21 @@ class RecognitionManager {
                     
                     // ✅ Parādīt assistant atbildi
                     if (window.responseManager) {
-                        const response = window.responseManager.findResponse('wake_word');
+                        const response = window.responseManager.findResponse(text);
                         if (response) {
-                            // ✅ AUDIO ATBILDE
+                            // ✅ AUDIO ATBILDE (viss objekts)
                             if (window.speechManager) {
                                 window.speechManager.speak(response);
                             }
                             
+                            // ✅ TEXT ATBILDE (tikai .text)
+                            const textToShow = typeof response === 'object' ? response.text : response;
+                            
                             if (window.assistantUI) {
-                                window.assistantUI.showMessage(response, 'greeting');
+                                window.assistantUI.showMessage(textToShow, 'greeting');
                             }
                             if (window.uiManager) {
-                                window.uiManager.handleResponse(response);
+                                window.uiManager.handleResponse(textToShow);
                             }
                         }
                     }
