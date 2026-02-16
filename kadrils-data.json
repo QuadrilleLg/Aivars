@@ -3,12 +3,24 @@
     "aivar": {
       "pairs": [
         {
-          "audio": "MUSIC/voice_responses/greetings/sei.mp3",
-          "text": "Klausos!"
+          "audio": "MUSIC/voice_responses/esmupatiuzmaniba.mp3",
+          "text": "Esmu pati uzmanība!"
         },
         {
-          "audio": "MUSIC/voice_responses/greetings/sei.mp3",
-          "text": "Esmu šeit!"
+          "audio": "MUSIC/voice_responses/gatavsdarbam.mp3",
+          "text": "Gatavs darbam!"
+        },
+        {
+          "audio": "MUSIC/voice_responses/kavarupalidzet.mp3",
+          "text": "Kā varu palīdzēt?"
+        },
+        {
+          "audio": "MUSIC/voice_responses/patiuzmaniba.mp3",
+          "text": "Pati uzmanība!"
+        },
+        {
+          "audio": "MUSIC/voice_responses/uzmanigiklausos.mp3",
+          "text": "Uzmanīgi klausos!"
         },
         {
           "audio": "MUSIC/voice_responses/greetings/sei.mp3",
