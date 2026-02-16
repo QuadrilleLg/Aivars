@@ -174,6 +174,7 @@ body {
     cursor: pointer;
     transition: all 0.2s;
     font-size: 18px;
+    font-family: 'Great-Victorian', Georgia, serif;  /* ⬅️ FONTS! */
 }
 
 .song-list li:hover {
