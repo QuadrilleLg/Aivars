@@ -53,12 +53,21 @@ class AssistantUI {
         this.micIcon.className = 'mic-icon';
         this.micIcon.innerHTML = '🎤';
         
-        // Profila bilde (ja ir)
-        const avatarImg = document.createElement('div');
-        avatarImg.className = 'avatar-image';
-        avatarImg.innerHTML = '👤'; // Placeholder - nomainīsim ar PNG
+        // Profila bilde - AR IMG TAG
+        const avatarImgContainer = document.createElement('div');
+        avatarImgContainer.className = 'avatar-image';
         
-        this.avatar.appendChild(avatarImg);
+        const avatarImg = document.createElement('img');
+        avatarImg.src = 'avatar.png'; // ⬅️ AVATAR BILDE
+        avatarImg.alt = 'Assistant';
+        avatarImg.style.width = '100%';
+        avatarImg.style.height = '100%';
+        avatarImg.style.objectFit = 'cover';
+        avatarImg.style.borderRadius = '50%';
+        
+        avatarImgContainer.appendChild(avatarImg);
+        
+        this.avatar.appendChild(avatarImgContainer);
         this.avatar.appendChild(this.micIcon);
         this.avatar.appendChild(this.statusIndicator);
         
@@ -76,10 +85,14 @@ class AssistantUI {
         const bubbleContent = document.createElement('div');
         bubbleContent.className = 'bubble-content';
         
-        // Avatar mini ikona
+        // Avatar mini ikona - AR BILDI
         const miniAvatar = document.createElement('div');
         miniAvatar.className = 'bubble-avatar';
-        miniAvatar.innerHTML = '👤';
+        
+        const avatarImg = document.createElement('img');
+        avatarImg.src = 'avatar.png'; // ⬅️ Assistant avatar
+        avatarImg.alt = 'Assistant';
+        miniAvatar.appendChild(avatarImg);
         
         // Ziņojuma teksts
         const messageText = document.createElement('div');
@@ -244,6 +257,56 @@ class AssistantUI {
             avatarImg.innerHTML = ''; // Noņemam emoji
             console.log(`✅ Avatar image set: ${imagePath}`);
         }
+    }
+
+    // ========================================
+    // USER COMMAND BUBBLE
+    // ========================================
+
+    showUserCommand(text) {
+        console.log(`👤 showUserCommand: "${text}"`);
+        
+        // Izveidojam user bubble
+        const userBubble = document.createElement('div');
+        userBubble.className = 'user-bubble';
+        
+        // User bubble saturs
+        const userContent = document.createElement('div');
+        userContent.className = 'user-bubble-content';
+        
+        // User avatar - AR BILDI
+        const userAvatar = document.createElement('div');
+        userAvatar.className = 'user-bubble-avatar';
+        
+        const userImg = document.createElement('img');
+        userImg.src = 'user.png'; // ⬅️ User avatar
+        userImg.alt = 'User';
+        userAvatar.appendChild(userImg);
+        
+        // User komandas teksts
+        const userMessage = document.createElement('div');
+        userMessage.className = 'user-bubble-message';
+        userMessage.textContent = text;
+        
+        userContent.appendChild(userAvatar);
+        userContent.appendChild(userMessage);
+        userBubble.appendChild(userContent);
+        
+        // Pievienojam konteineram
+        this.container.insertBefore(userBubble, this.speechBubble);
+        
+        // Parādām ar animāciju
+        setTimeout(() => {
+            userBubble.classList.remove('hidden');
+        }, 50);
+        
+        // Auto-hide pēc 3 sekundēm
+        setTimeout(() => {
+            userBubble.classList.add('fade-out');
+            setTimeout(() => {
+                userBubble.remove();
+            }, 400);
+        }, 3000);
     }
 }
 

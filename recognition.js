@@ -1,16 +1,13 @@
-// recognition.js - UPDATED VERSION
-// Mikrofons sākas IZSLĒGTS
-// Toggle ar mic button
-// Wake word režīmā klausās TIKAI wake words + kontroles
-
+// recognition.js
 class RecognitionManager {
     constructor() {
         this.isListening = false;
         this.recognition = null;
-        this.isWakeWordActivated = false;  // Vai wake word ir teikts
+        this.isWakeWordActivated = false;
         this.currentDevice = null;
         this.devices = [];
-        this.isRestartPending = false;
+        this.isRestartPending = false; // Jauns flags, lai izsekotu restartus
+        this.lastActiveSong = null; // ⬅️ ATCERAS AKTĪVO DZIESMU!
         
         this.commands = {
             wakeWords: ['aivar', 'ada', 'dj', 'adi'],
@@ -61,16 +58,15 @@ class RecognitionManager {
 
         this.setupSpeechRecognition();
         this.initializeAudioDevices();
-        
-        console.log('🎤 RecognitionManager initialized (mic is OFF by default)');
     }
+
 
     setupSpeechRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
         
         if (!SpeechRecognition) {
-            console.error('❌ Pārlūks neatbalsta runas atpazīšanu');
+            console.error('Pārlūks neatbalsta runas atpazīšanu');
             if (window.uiManager) {
                 window.uiManager.updateSystemLog('Pārlūks neatbalsta runas atpazīšanu');
             }
@@ -88,22 +84,20 @@ class RecognitionManager {
 
         this.recognition.grammars = speechRecognitionList;
         this.recognition.lang = 'lv-LV';
-        this.recognition.continuous = false;
-        this.recognition.interimResults = true;
+        this.recognition.continuous = false;  // Mainām uz false ātrākai reakcijai
+        this.recognition.interimResults = true;  // Ieslēdzam interim rezultātus
         this.recognition.maxAlternatives = 3;
                 
         this.recognition.onresult = (event) => {
             const result = event.results[event.results.length - 1];
             
-            // ✅ INTERIM results - ātra reakcija uz kontroles komandām
+            // Apstrādājam interim rezultātus kontroles komandām
             if (!result.isFinal) {
                 const text = result[0].transcript.toLowerCase();
-                console.log('🎧 Interim:', text);
+                console.log('Interim rezultāts:', text);
                 
-                // Kontroles komandas vienmēr strādā (gan gaidīšanas, gan aktīvā režīmā)
+                // Ātrā kontroles komandu pārbaude
                 if (this.commands.controls.some(cmd => text.includes(cmd))) {
-                    console.log('⚡ Control command detected:', text);
-                    
                     if (window.uiManager) {
                         window.uiManager.updateChatLog(`Jūs: ${text}`);
                     }
@@ -112,100 +106,69 @@ class RecognitionManager {
                         const response = window.audioManager.handleCommand(text);
                         if (response && window.uiManager) {
                             window.uiManager.handleResponse(response);
+                            this.stopRecognition();
+                            this.restartRecognition(); // Restartējam klausīšanos
                         }
                     }
-                    
-                    this.stopRecognition();
-                    this.restartRecognition();
                     return;
                 }
                 return;
             }
 
-            // ✅ FINAL results
+            // Apstrādājam galīgos rezultātus
             const alternatives = Array.from(result).map(r => r.transcript.toLowerCase());
-            console.log('🎯 Final results:', alternatives);
+            console.log('Galīgie rezultāti:', alternatives);
             
+            // Meklējam labāko atbilstību
             const bestMatch = this.findBestMatch(alternatives);
             if (!bestMatch) {
-                console.log('⚠️ Nav atrasta atbilstoša komanda');
-                this.stopRecognition();
-                this.restartRecognition();
+                console.log('Nav atrasta atbilstoša komanda');
                 return;
             }
 
             const text = bestMatch;
-            console.log('✅ Best match:', text);
+            console.log('Izmantotā komanda:', text);
 
-            // ========================================
-            // GAIDĪŠANAS REŽĪMS (nav wake word)
-            // ========================================
+            // Pārbaudam wake word
             if (!this.isWakeWordActivated) {
-                console.log('🔍 Checking for wake word in text:', text);
-                
                 const isWakeWord = this.commands.wakeWords.some(word => text.includes(word));
-                
                 if (isWakeWord) {
-                    console.log('🎉 WAKE WORD DETECTED!');
                     this.isWakeWordActivated = true;
                     
-                    // ✅ UI UPDATE
+                    // ✅ Parādīt user komandu
                     if (window.assistantUI) {
-                        window.assistantUI.setState('active');
+                        window.assistantUI.showUserCommand(text);
                     }
                     
                     if (window.uiManager) {
-                        window.uiManager.updateStatusText('✅ Aktivizēts - klausos komandas...');
+                        window.uiManager.updateStatusText('Aktivizēts - klausos...');
                         window.uiManager.updateChatLog(`Jūs: ${text}`);
                     }
                     
-                    // ✅ RANDOM WAKE WORD RESPONSE
-                    let wakeWordKey = null;
-                    for (const word of this.commands.wakeWords) {
-                        if (text.includes(word)) {
-                            wakeWordKey = word;
-                            break;
-                        }
-                    }
-                    
-                    if (wakeWordKey && window.speechManager) {
-                        const response = window.speechManager.getRandomWakeWordResponse(wakeWordKey);
-                        
+                    // ✅ Parādīt assistant atbildi
+                    if (window.responseManager) {
+                        const response = window.responseManager.findResponse('wake_word');
                         if (response) {
-                            console.log('🎲 Random response:', response);
-                            
-                            // Atskaņo audio
-                            if (response.audio && window.audioManager) {
-                                window.audioManager.playFragment(response.audio);
+                            // ✅ AUDIO ATBILDE
+                            if (window.speechManager) {
+                                window.speechManager.speak(response);
                             }
                             
-                            // Parāda text speech bubble
-                            if (response.text && window.assistantUI) {
-                                window.assistantUI.showMessage(response.text, 'greeting');
+                            if (window.assistantUI) {
+                                window.assistantUI.showMessage(response, 'greeting');
                             }
-                            
                             if (window.uiManager) {
-                                window.uiManager.updateChatLog(`Asistents: ${response.text}`);
+                                window.uiManager.handleResponse(response);
                             }
                         }
-                    }
-                } else {
-                    console.log('⚠️ Gaidīšanas režīmā - tikai wake words pieņemami');
-                    if (window.uiManager) {
-                        window.uiManager.updateSystemLog('Sakiet aktivizācijas vārdu (piemēram, "Aivar")');
                     }
                 }
-                
                 this.stopRecognition();
                 this.restartRecognition();
                 return;
             }
 
-            // ========================================
-            // AKTĪVAIS REŽĪMS (pēc wake word)
-            // ========================================
-            console.log('🎵 Active mode - processing command:', text);
-            
+            // Apstrādājam pārējās komandas
             // ✅ Parādīt user komandu
             if (window.assistantUI) {
                 window.assistantUI.showUserCommand(text);
@@ -216,19 +179,35 @@ class RecognitionManager {
             }
             
             if (window.audioManager) {
-                // ✅ PĀRBAUDA VAI IR FRAGMENTA KOMANDA
+                // ✅ Pārbaudam vai ir fragmenta komanda
                 const isFragmentCommand = this.commands.parts.some(part => text.includes(part));
-                
-                let response;
                 
                 if (isFragmentCommand && this.lastActiveSong) {
                     // ✅ Ja fragments + atceras dziesmu → pievieno dziesmu
                     const fullCommand = `${this.lastActiveSong} ${text}`;
                     console.log(`🎵 Fragmenta komanda ar atmiņu: "${fullCommand}"`);
-                    response = window.audioManager.handleCommand(fullCommand);
+                    const response = window.audioManager.handleCommand(fullCommand);
+                    
+                    if (response) {
+                        this.isWakeWordActivated = false;
+                        
+                        // ✅ AUDIO ATBILDE
+                        if (window.speechManager) {
+                            window.speechManager.speak(response);
+                        }
+                        
+                        // ✅ Parādīt assistant atbildi
+                        if (window.assistantUI) {
+                            window.assistantUI.showMessage(response, 'song');
+                        }
+                        if (window.uiManager) {
+                            window.uiManager.updateStatusText('Gaidu aktivizāciju...');
+                            window.uiManager.handleResponse(response);
+                        }
+                    }
                 } else {
                     // ✅ Parasta komanda
-                    response = window.audioManager.handleCommand(text);
+                    const response = window.audioManager.handleCommand(text);
                     
                     // ✅ Ja bija dziesmas komanda, atceras to
                     const isDanceCommand = this.commands.dances.some(dance => text.includes(dance));
@@ -236,36 +215,24 @@ class RecognitionManager {
                         this.lastActiveSong = text;
                         console.log(`💾 Atceros dziesmu: "${this.lastActiveSong}"`);
                     }
-                }
-                
-                if (response) {
-                    console.log('📝 Response from audioManager:', response);
                     
-                    // Pēc komandas apstrādes atgriežamies gaidīšanas režīmā
-                    this.isWakeWordActivated = false;
-                    
-                    // ✅ UI UPDATE
-                    if (window.assistantUI) {
-                        window.assistantUI.setState('listening');
+                    if (response) {
+                        this.isWakeWordActivated = false;
                         
-                        // Formatējam ziņojumu
-                        let messageType = 'info';
-                        if (response.includes('Atskaņoju')) {
-                            messageType = 'song';
-                        } else if (response.includes('apturēt') || response.includes('nopauzēt') || response.includes('turpin')) {
-                            messageType = 'control';
+                        // ✅ AUDIO ATBILDE
+                        if (window.speechManager) {
+                            window.speechManager.speak(response);
                         }
                         
-                        window.assistantUI.showMessage(response, messageType);
-                        window.assistantUI.pulse();
+                        // ✅ Parādīt assistant atbildi
+                        if (window.assistantUI) {
+                            window.assistantUI.showMessage(response, 'song');
+                        }
+                        if (window.uiManager) {
+                            window.uiManager.updateStatusText('Gaidu aktivizāciju...');
+                            window.uiManager.handleResponse(response);
+                        }
                     }
-                    
-                    if (window.uiManager) {
-                        window.uiManager.updateStatusText('⏸️ Gaidu aktivizāciju...');
-                        window.uiManager.handleResponse(response);
-                    }
-                } else {
-                    console.log('⚠️ Nav atbildes no audioManager');
                 }
             }
             
@@ -274,46 +241,28 @@ class RecognitionManager {
         };
 
         this.recognition.onerror = (event) => {
-            console.error('❌ Runas atpazīšanas kļūda:', event.error);
-            
-            if (event.error === 'not-allowed') {
-                console.error('🚫 Mikrofona piekļuve liegta!');
-                if (window.uiManager) {
-                    window.uiManager.updateSystemLog('⚠️ Mikrofona piekļuve liegta! Atļaujiet piekļuvi pārlūka iestatījumos.');
-                    window.uiManager.updateStatusText('❌ Nav mikrofona piekļuves');
-                }
-                this.isListening = false;
-                const micBtn = document.querySelector('.mic-btn');
-                if (micBtn) micBtn.classList.remove('active');
-                return;
-            }
-            
-            if (event.error === 'no-speech') {
-                console.log('🤫 Nav dzirdēts runātājs');
-            }
-            
+            console.error('Runas atpazīšanas kļūda:', event.error);
             if (window.uiManager) {
-                window.uiManager.updateSystemLog(`Kļūda: ${event.error}`);
+                window.uiManager.updateSystemLog(`Runas atpazīšanas kļūda: ${event.error}`);
+                if (event.error === 'not-allowed') {
+                    window.uiManager.updateSystemLog('Pārlūkam nav piekļuves mikrofonam. Lūdzu, atļaujiet piekļuvi.');
+                }
             }
             
-            // Restartējam pēc kļūdas
+            // Ja klausīšanās beidzas ar kļūdu, mēģinām restartēt
             this.stopRecognition();
-            if (this.isListening) {
-                this.restartRecognition();
-            }
+            this.restartRecognition();
         };
 
         this.recognition.onend = () => {
-            console.log('🔚 Recognition ended');
             // Ja klausīšanās beidzas, bet vēl joprojām ir aktīva, restartējam
             if (this.isListening && !this.isRestartPending) {
                 this.restartRecognition();
             }
         };
-        
-        console.log('✅ Speech recognition setup complete');
     }
 
+    // Jauna metode klausīšanās apturēšanai
     stopRecognition() {
         if (this.recognition) {
             try {
@@ -324,7 +273,9 @@ class RecognitionManager {
         }
     }
 
+    // Jauna metode klausīšanās restartēšanai
     restartRecognition() {
+        // Ja jau ir ieplānots restarts, neveicam neko
         if (this.isRestartPending) {
             return;
         }
@@ -336,36 +287,42 @@ class RecognitionManager {
                 this.isRestartPending = false;
                 
                 try {
-                    if (!this.recognition) {
-                        this.setupSpeechRecognition();
-                    }
-                    
-                    if (this.isListening && this.recognition) {
+                    // Pārliecināmies, ka iepriekšējā sesija ir beigusies
+                    if (this.recognition) {
                         try {
-                            this.recognition.start();
-                            console.log('🔄 Recognition restarted');
-                        } catch (startError) {
-                            if (startError.message.includes('already started')) {
-                                console.log('⚠️ Recognition jau darbojas');
-                            } else {
-                                console.error('Kļūda restartējot:', startError);
-                                
-                                // Mēģinām vēlreiz pēc 200ms
-                                setTimeout(() => {
-                                    if (this.isListening) {
-                                        try {
-                                            this.setupSpeechRecognition();
-                                            this.recognition.start();
-                                        } catch (secondError) {
-                                            console.error('Neizdevās restartēt:', secondError);
-                                            if (window.uiManager) {
-                                                window.uiManager.updateSystemLog(`Neizdevās restartēt atpazīšanu: ${secondError.message}`);
-                                            }
-                                        }
-                                    }
-                                }, 200);
-                            }
+                            this.recognition.abort();
+                        } catch (e) {
+                            // Ignorējam kļūdas, kas var rasties, ja sesija jau beigusies
                         }
+                        
+                        // Īsa pauze pirms restartēšanas
+                        setTimeout(() => {
+                            try {
+                                this.recognition.start();
+                                console.log("Runas atpazīšana restartēta");
+                                if (window.uiManager) {
+                                    window.uiManager.updateSystemLog("Runas atpazīšana restartēta");
+                                }
+                            } catch (error) {
+                                console.error('Kļūda sākot atpazīšanu:', error);
+                                if (window.uiManager) {
+                                    window.uiManager.updateSystemLog(`Kļūda sākot atpazīšanu: ${error.message}`);
+                                }
+                                
+                                // Mēģinām atkārtoti izveidot atpazīšanas objektu
+                                this.setupSpeechRecognition();
+                                
+                                // Mēģinām atkārtoti sākt
+                                try {
+                                    this.recognition.start();
+                                } catch (secondError) {
+                                    console.error('Atkārtota kļūda sākot atpazīšanu:', secondError);
+                                    if (window.uiManager) {
+                                        window.uiManager.updateSystemLog(`Neizdevās restartēt atpazīšanu: ${secondError.message}`);
+                                    }
+                                }
+                            }
+                        }, 200);
                     }
                 } catch (error) {
                     console.error('Kļūda restartējot atpazīšanu:', error);
@@ -378,24 +335,7 @@ class RecognitionManager {
     }
 
     findBestMatch(alternatives) {
-        // Ja gaidīšanas režīmā, meklējam TIKAI wake words + kontroles
-        if (!this.isWakeWordActivated) {
-            const allowedCommands = [
-                ...this.commands.wakeWords,
-                ...this.commands.controls
-            ];
-            
-            for (const alternative of alternatives) {
-                for (const command of allowedCommands) {
-                    if (alternative.includes(command)) {
-                        return alternative;
-                    }
-                }
-            }
-            return null;
-        }
-        
-        // Ja aktīvais režīms, meklējam VISAS komandas
+        // Visas iespējamās komandas
         const allCommands = [
             ...this.commands.wakeWords,
             ...this.commands.dances,
@@ -403,6 +343,7 @@ class RecognitionManager {
             ...this.commands.controls
         ];
 
+        // Meklējam precīzu atbilstību
         for (const alternative of alternatives) {
             for (const command of allCommands) {
                 if (alternative.includes(command)) {
@@ -419,9 +360,10 @@ class RecognitionManager {
             const devices = await navigator.mediaDevices.enumerateDevices();
             this.devices = devices.filter(device => device.kind === 'audioinput');
             
-            console.log('🎙️ Pieejamās audio ierīces:', this.devices.length);
+            console.log('Pieejamās audio ierīces:', this.devices);
             if (window.uiManager) {
-                window.uiManager.updateSystemLog('Atrastās audio ierīces: ' + this.devices.length);
+                window.uiManager.updateSystemLog('Atrastās audio ierīces: ' + 
+                    this.devices.map(d => d.label || 'Ierīce ' + d.deviceId).join(', '));
             }
 
             this.createDeviceSelector();
@@ -436,7 +378,7 @@ class RecognitionManager {
             });
 
         } catch (error) {
-            console.error('❌ Kļūda iegūstot audio ierīces:', error);
+            console.error('Kļūda iegūstot audio ierīces:', error);
             if (window.uiManager) {
                 window.uiManager.updateSystemLog('Kļūda iegūstot audio ierīces: ' + error.message);
             }
@@ -491,7 +433,7 @@ class RecognitionManager {
             }
 
         } catch (error) {
-            console.error('❌ Kļūda mainot audio ierīci:', error);
+            console.error('Kļūda mainot audio ierīci:', error);
             if (window.uiManager) {
                 window.uiManager.updateSystemLog('Kļūda mainot audio ierīci: ' + error.message);
             }
@@ -499,10 +441,7 @@ class RecognitionManager {
     }
 
     async startListening() {
-        console.log('🎤 startListening() called');
-        
         try {
-            // Prasām mikrofona atļaujas
             if (this.currentDevice) {
                 await navigator.mediaDevices.getUserMedia({
                     audio: {
@@ -517,99 +456,77 @@ class RecognitionManager {
                 this.setupSpeechRecognition();
             }
             
-            // Apturamšu veco, ja darbojas
+            // Ja atpazīšana jau ir aktīva, vispirms to apturamb
             this.stopRecognition();
             
             this.isListening = true;
-            this.isWakeWordActivated = false;  // ⬅️ SVARĪGI! Sākam gaidīšanas režīmā
-            
-            // ✅ UI UPDATE
-            if (window.assistantUI) {
-                window.assistantUI.setState('listening');
-            }
-            
             const micBtn = document.querySelector('.mic-btn');
             if (micBtn) {
                 micBtn.classList.add('active');
             }
             
+            // ✅ ĪSĀ INSTRUKCIJA!
             if (window.uiManager) {
-                window.uiManager.updateStatusText('🎧 Klausos wake word...');
-                window.uiManager.updateSystemLog('🎤 Mikrofons aktivizēts - sakiet "Aivar"');
+                window.uiManager.updateStatusText('🎤 Klausos wake word...');
+            }
+            
+            // ✅ Parādīt instrukciju assistantUI
+            if (window.assistantUI) {
+                window.assistantUI.setState('listening');
+                window.assistantUI.showMessage('Sakiet "Aivar"!\nNosauciet dziesmu', 'info');
             }
             
             try {
                 this.recognition.start();
-                console.log('✅ Runas atpazīšana sākta');
+                console.log("Runas atpazīšana sākta");
+                if (window.uiManager) {
+                    window.uiManager.updateSystemLog("Runas atpazīšana sākta");
+                }
             } catch (error) {
-                console.error('❌ Kļūda sākot atpazīšanu:', error);
+                console.error('Kļūda sākot atpazīšanu:', error);
+                if (window.uiManager) {
+                    window.uiManager.updateSystemLog(`Kļūda sākot atpazīšanu: ${error.message}`);
+                }
                 
-                if (error.message.includes('already started')) {
-                    console.log('⚠️ Recognition jau darbojas');
-                } else {
-                    // Mēģinām atkārtoti
-                    this.setupSpeechRecognition();
-                    
-                    try {
-                        this.recognition.start();
-                    } catch (secondError) {
-                        console.error('❌ Atkārtota kļūda:', secondError);
-                        if (window.uiManager) {
-                            window.uiManager.updateSystemLog(`Neizdevās sākt atpazīšanu: ${secondError.message}`);
-                        }
+                // Mēģinām atkārtoti izveidot atpazīšanas objektu
+                this.setupSpeechRecognition();
+                
+                // Mēģinām atkārtoti sākt
+                try {
+                    this.recognition.start();
+                } catch (secondError) {
+                    console.error('Atkārtota kļūda sākot atpazīšanu:', secondError);
+                    if (window.uiManager) {
+                        window.uiManager.updateSystemLog(`Neizdevās sākt atpazīšanu: ${secondError.message}`);
                     }
                 }
             }
 
         } catch (error) {
-            console.error('❌ Mikrofonam nav piekļuves:', error);
+            console.error('Mikrofonam nav piekļuves:', error);
             if (window.uiManager) {
-                window.uiManager.updateSystemLog(`⚠️ Mikrofonam nav piekļuves! Atļaujiet pārlūkā.`);
-                window.uiManager.updateStatusText('❌ Nav mikrofona piekļuves');
-            }
-            
-            this.isListening = false;
-            const micBtn = document.querySelector('.mic-btn');
-            if (micBtn) micBtn.classList.remove('active');
-            
-            // ✅ UI UPDATE
-            if (window.assistantUI) {
-                window.assistantUI.setState('off');
+                window.uiManager.updateSystemLog(`Mikrofonam nav piekļuves: ${error.message}`);
             }
         }
     }
 
     stopListening() {
-        console.log('🛑 stopListening() called');
-        
         if (!this.recognition) return;
         
         this.isListening = false;
-        this.isWakeWordActivated = false;  // Reset wake word stāvoklis
-        
-        // ✅ UI UPDATE
-        if (window.assistantUI) {
-            window.assistantUI.setState('off');
-            window.assistantUI.hideMessage();
-        }
-        
         const micBtn = document.querySelector('.mic-btn');
         if (micBtn) {
             micBtn.classList.remove('active');
         }
         
         if (window.uiManager) {
-            window.uiManager.updateStatusText('⏸️ Mikrofons izslēgts');
-            window.uiManager.updateSystemLog('🛑 Mikrofons deaktivizēts');
+            window.uiManager.updateStatusText('Gaidīšanas režīmā');
         }
         
         this.stopRecognition();
     }
 
-    // ✅ TOGGLE funkcija - izsauc no UI
     toggleListening() {
-        console.log('🔄 toggleListening() - current state:', this.isListening);
-        
         if (this.isListening) {
             this.stopListening();
         } else {
@@ -620,12 +537,6 @@ class RecognitionManager {
     getIsListening() {
         return this.isListening;
     }
-    
-    getIsWakeWordActivated() {
-        return this.isWakeWordActivated;
-    }
 }
 
 export const recognitionManager = new RecognitionManager();
-
-console.log('✅ recognition.js loaded - mikrofons sākas IZSLĒGTS');
