@@ -155,8 +155,9 @@ body {
     text-shadow: 0 0 5px #e6ff00;
     position: relative;
     z-index: 1;
-    font-size: 35px;
+    font-size: 40px;
     font-weight: 300;
+    font-family: 'Great-Victorian', Georgia, serif;
 }
 
 .song-list {
@@ -173,8 +174,8 @@ body {
     border-radius: 3px;
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 18px;
-    font-family: 'Great-Victorian', Georgia, serif;  /* ⬅️ FONTS! */
+    font-size: 30px;
+    font-family: 'Great-Victorian', Georgia, serif;
 }
 
 .song-list li:hover {
@@ -242,6 +243,7 @@ body {
     z-index: 1;
     font-size: 22px;
     font-weight: 700;
+    font-family: 'Great-Victorian', Georgia, serif;
 }
 
 .player-controls {
@@ -469,7 +471,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform-origin: 50% 100%;  /* Rotē ap apakšējo galu */
+    transform-origin: 50% 100%;
     background: #e6ff00;
     border-radius: 2px 2px 0 0;
 }
@@ -734,6 +736,9 @@ body {
     box-shadow: 0 0 15px rgba(230, 255, 0, 0.5);
 }
 
+/* ============================================
+   VIDEO MODAL - FIKSĒTA VERSIJA
+   ============================================ */
 .video-modal {
     display: none;
     position: fixed;
@@ -749,19 +754,22 @@ body {
 .video-modal.active {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 20px;
 }
 
 .video-modal-content {
     background: rgba(18, 26, 24, 0.98);
     border: 4px solid #e6ff00;
     border-radius: 15px;
-    padding: 30px;
-    width: 95%;
-    max-width: 1400px;
-    max-height: 95vh;
+    padding: 20px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 92vh;
     overflow-y: auto;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .video-header {
@@ -769,28 +777,30 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
-    background: rgba(18, 26, 24, 0.9);
     padding: 8px 12px;
-    border-radius: 5px;
-    border: 1px solid #e6ff00;
+    border-bottom: 2px solid rgba(230, 255, 0, 0.3);
+    position: sticky;
+    top: 0;
+    background: rgba(18, 26, 24, 0.98);
+    z-index: 100;
+    flex-shrink: 0;
 }
 
 .video-header h2 {
     color: #e6ff00;
     margin: 0;
+    font-size: 30px;
     text-shadow: 0 0 10px #e6ff00;
-    font-size: 24px;
+    font-family: 'Great-Victorian', Georgia, serif;
 }
 
 .close-video {
     color: #e6ff00;
-    font-size: 42px;
+    font-size: 30px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s;
     line-height: 1;
+    transition: all 0.3s;
 }
 
 .close-video:hover {
@@ -800,22 +810,37 @@ body {
 }
 
 .video-container {
+    position: relative;
     width: 100%;
     max-width: 700px;
-    margin: 0 auto 10px auto;
+    aspect-ratio: 16 / 9;
+    margin: 10px auto;
     background: #000;
     border: 3px solid #e6ff00;
     border-radius: 10px;
-    position: relative;
     overflow: hidden;
-    min-height: 280px;
 }
 
-.video-container video {
+/* Fallback ja neatbalsta aspect-ratio */
+@supports not (aspect-ratio: 16 / 9) {
+    .video-container {
+        padding-bottom: 56.25%;
+        height: 0;
+    }
+}
+
+#youtubePlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    min-height: 280px;
-    display: block;
+    height: 100%;
+}
+
+#youtubePlayer iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
 
 .video-info {
@@ -823,22 +848,24 @@ body {
     border: 2px solid #e6ff00;
     padding: 10px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin: 8px 0;
     text-align: center;
 }
 
 .video-info h3 {
     color: #e6ff00;
-    margin: 0 0 8px 0;
+    margin: 5px 0;
     text-shadow: 0 0 8px #e6ff00;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
+    font-family: 'Great-Victorian', Georgia, serif;
 }
 
 .video-timer {
-    color: #fff;
-    font-size: 20px;
+    color: rgba(230, 255, 0, 0.7);
+    font-size: 25px;
     font-weight: bold;
+    font-family: monospace;
 }
 
 .video-fragments {
@@ -846,44 +873,77 @@ body {
     border: 2px solid #e6ff00;
     padding: 10px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-top: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Scrollbar stili video fragmentiem */
+.video-fragments::-webkit-scrollbar {
+    width: 8px;
+}
+
+.video-fragments::-webkit-scrollbar-track {
+    background: rgba(18, 26, 24, 0.9);
+    border-radius: 4px;
+}
+
+.video-fragments::-webkit-scrollbar-thumb {
+    background: linear-gradient(360deg, #b8d600 0%, #8aa600 100%);
+    border-radius: 4px;
+}
+
+.video-fragments::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #e6ff00 0%, #b8d600 100%);
+}
+
+/* Firefox scrollbar */
+.video-fragments {
+    scrollbar-width: thin;
+    scrollbar-color: #b8d600 rgba(18, 26, 24, 0.9);
 }
 
 .video-fragments h3 {
     color: #e6ff00;
     text-align: center;
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
     text-shadow: 0 0 8px #e6ff00;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
+    font-family: 'Great-Victorian', Georgia, serif;
 }
 
 .video-fragments-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     justify-content: center;
 }
 
 .video-fragment-btn {
-    background: rgba(230, 255, 0, 0.15);
-    border: 2px solid #e6ff00;
+    background: rgba(230, 255, 0, 0.1);
+    border: 2px solid rgba(230, 255, 0, 0.3);
     color: #e6ff00;
-    padding: 6px 10px;
-    border-radius: 8px;
+    padding: 6px 12px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
+    font-family: monospace, cursive;
 }
 
 .video-fragment-btn:hover {
-    background: rgba(230, 255, 0, 0.35);
-    transform: translateY(-3px);
+    background: rgba(230, 255, 0, 0.2);
+    border-color: #00ff80;
+    transform: translateY(-1px);
 }
 
 .video-fragment-btn.active {
-    background: rgba(230, 255, 0, 0.5);
+    background: rgba(230, 255, 0, 0.3);
+    border-color: #e6ff00;
+    box-shadow: 0 0 10px rgba(230, 255, 0, 0.4);
     transform: scale(1.05);
 }
 
@@ -895,8 +955,34 @@ body {
     border-radius: 8px;
     margin-top: 15px;
     max-height: 600px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
+}
+
+/* Scrollbar stili dance-description-panel */
+.dance-description-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dance-description-panel::-webkit-scrollbar-track {
+    background: rgba(18, 26, 24, 0.9);
+    border-radius: 4px;
+}
+
+.dance-description-panel::-webkit-scrollbar-thumb {
+    background: linear-gradient(360deg, #b8d600 0%, #8aa600 100%);
+    border-radius: 4px;
+}
+
+.dance-description-panel::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #e6ff00 0%, #b8d600 100%);
+}
+
+/* Firefox scrollbar */
+.dance-description-panel {
+    scrollbar-width: thin;
+    scrollbar-color: #b8d600 rgba(18, 26, 24, 0.9);
 }
 
 /* SVG līnija augšā dance-description-panel */
@@ -924,6 +1010,33 @@ body {
     text-shadow: 0 0 5px #e6ff00;
     font-size: 24px;
     font-weight: 700;
+    font-family: 'Great-Victorian', Georgia, serif;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: sticky !important;
+    top: 0 !important;
+    background: rgba(18, 26, 24, 0.95) !important;
+    z-index: 10 !important;
+    padding: 10px 0 20px 0 !important;
+}
+
+/* SVG līnija zem "Dejas norise" virsraksta */
+.dance-description-panel h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 25px;
+    background-image: url('linija_02_videja.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 5;
 }
 
 .no-dance-text {
@@ -937,6 +1050,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    margin-top: 15px;
 }
 
 .dance-step {
@@ -955,9 +1069,20 @@ body {
     border-color: #e6ff00;
     border-width: 2px;
     box-shadow: 0 0 15px rgba(230, 255, 0, 0.4);
+    animation: pulse-active 1s ease-in-out infinite;
 }
 
-/* ✅ PABEIGTI SOĻI - pelēki, necaurspīdīgi */
+@keyframes pulse-active {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(230, 255, 0, 0.6);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(230, 255, 0, 1);
+        transform: scale(1.02);
+    }
+}
+
 .dance-step.completed {
     background: rgba(230, 255, 0, 0.02);
     border-color: rgba(230, 255, 0, 0.15);
@@ -972,12 +1097,10 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* ✅ NĀKAMAIS SOLIS - oranžs highlight */
 .dance-step.next-up {
-    background: rgba(255, 165, 0, 0.15);
-    border-color: rgba(255, 165, 0, 0.6);
+    background: rgba(255, 165, 0, 0.1);
+    border-color: rgba(255, 165, 0, 0.5);
     border-width: 2px;
-    animation: pulse-next 1.5s ease-in-out infinite;
 }
 
 .dance-step.next-up .step-time {
@@ -986,10 +1109,9 @@ body {
 
 .dance-step.next-up .step-text {
     color: #fff;
-    font-weight: 500;
+    font-weight: 400;
 }
 
-/* ✅ TUVĀKIE SOĻI - viegli highlight */
 .dance-step.upcoming {
     background: rgba(230, 255, 0, 0.08);
     border-color: rgba(230, 255, 0, 0.4);
@@ -997,16 +1119,6 @@ body {
 
 .dance-step.upcoming .step-time {
     color: rgba(230, 255, 0, 0.7);
-}
-
-/* Pulse animācija nākamajam solim */
-@keyframes pulse-next {
-    0%, 100% {
-        box-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
-    }
 }
 
 .step-time {
@@ -1061,7 +1173,6 @@ body {
         pointer-events: none !important;
     }
     
-    /* HAMBURGER MENU BUTTON */
     .menu-toggle {
         display: flex !important;
         position: fixed;
@@ -1102,7 +1213,6 @@ body {
         transform: rotate(-45deg) translate(8px, -8px);
     }
     
-    /* OVERLAY - TIKAI VIZUĀLS */
     .menu-overlay {
         display: block !important;
         position: fixed;
@@ -1122,7 +1232,6 @@ body {
         pointer-events: none;
     }
     
-    /* DZIESMU SARAKSTS SLIDE */
     .song-list-container {
         position: fixed !important;
         left: -280px;
@@ -1134,6 +1243,8 @@ body {
         z-index: 100003;
         transition: left 0.3s ease;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+        overflow-y: auto !important;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
         background: rgba(18, 26, 24, 1) !important;
@@ -1145,18 +1256,18 @@ body {
         pointer-events: auto !important;
     }
     
-    /* DZIESMU SARAKSTA ELEMENTI */
     .song-list-container .song-list {
         position: relative;
         z-index: 10;
         pointer-events: auto !important;
+        padding-bottom: 80px;
     }
     
     .song-list-container .song-list li {
         padding: 12px 10px;
         margin-bottom: 4px;
-        font-size: 15px;  /* ← Samazināts no 18px */
-        min-height: 40px;  /* ← Samazināts no 44px */
+        font-size: 30px;
+        min-height: 40px;
         display: flex;
         align-items: center;
         -webkit-tap-highlight-color: rgba(230, 255, 0, 0.3);
@@ -1171,7 +1282,6 @@ body {
         background: rgba(230, 255, 0, 0.25);
     }
     
-    /* AUDIO PLAYER */
     .audio-player-container {
         flex: 1;
         width: 100%;
@@ -1180,170 +1290,10 @@ body {
         min-width: auto;
     }
     
-    /* CONTROL PANEL HIDDEN */
     .control-panel {
         display: none !important;
     }
     
-    /* VIDEO MODAL */
-    .video-modal-content {
-        width: 100%;
-        height: 100vh;
-        max-height: 100vh;
-        padding: 10px;
-        border-radius: 0;
-    }
-    
-    .video-container {
-        max-height: 40vh;
-    }
-}
-/* ========================================
-   KOMPAKTA VERSIJA - BEZ SCROLL
-   Viss salien ekrānā vertikāli
-   ======================================== */
-
-/* Video modal saturs - KOMPAKTS */
-.video-modal-content {
-    background-color: #1a2724;
-    margin: auto;
-    padding: 20px;
-    border: 2px solid #e6ff00;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 900px;
-    max-height: 92vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Video header - SAMAZINĀTS */
-.video-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid rgba(230, 255, 0, 0.3);
-}
-
-.video-header h2 {
-    color: #e6ff00;
-    margin: 0;
-    font-size: 30px;
-}
-
-.close-video {
-    color: #e6ff00;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 1;
-}
-
-/* Video konteiners - 16:9 bet MAZĀKS */
-.video-container {
-    position: relative;
-    width: 100%;
-    max-width: 700px;
-    aspect-ratio: 16 / 9;
-    margin: 10px auto;
-    background: black;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-/* Fallback ja neatbalsta aspect-ratio */
-@supports not (aspect-ratio: 16 / 9) {
-    .video-container {
-        padding-bottom: 56.25%;
-        height: 0;
-    }
-}
-
-/* YouTube player */
-#youtubePlayer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* YouTube iframe */
-#youtubePlayer iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-/* Video info - KOMPAKTS */
-.video-info {
-    text-align: center;
-    margin: 8px 0;
-}
-
-.video-info h3 {
-    color: #e6ff00;
-    margin: 5px 0;
-    font-size: 40px;
-    font-family: monospace;
-}
-
-.video-timer {
-    color: rgba(230, 255, 0, 0.7);
-    font-size: 25px;
-    font-family: monospace;
-}
-
-/* Video fragmenti - KOMPAKTI */
-.video-fragments {
-    margin-top: 8px;
-}
-
-.video-fragments h3 {
-    color: #e6ff00;
-    text-align: center;
-    margin-bottom: 8px;
-    font-size: 40px;
-    font-family: monospace;
-}
-
-.video-fragments-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-}
-
-/* Fragmentu pogas - MAZĀKAS */
-.video-fragment-btn {
-    background: rgba(230, 255, 0, 0.1);
-    color: #e6ff00;
-    border: 2px solid rgba(230, 255, 0, 0.3);
-    border-radius: 5px;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    font-family: monospace, cursive;
-}
-
-.video-fragment-btn:hover {
-    background: rgba(230, 255, 0, 0.2);
-    border-color: #00ff80;
-    transform: translateY(-1px);
-}
-
-.video-fragment-btn.active {
-    background: rgba(230, 255, 0, 0.3);
-    border-color: #e6ff00;
-    box-shadow: 0 0 10px rgba(230, 255, 0, 0.4);
-}
-
-/* Mobile */
-@media (max-width: 768px) {
     .video-modal-content {
         width: 95%;
         padding: 12px;
@@ -1351,11 +1301,20 @@ body {
     }
     
     .video-header h2 {
-        font-size: 16px;
+        font-size: 24px;
     }
     
     .video-container {
         max-width: 100%;
+        max-height: 35vh;
+    }
+    
+    .video-info h3 {
+        font-size: 24px;
+    }
+    
+    .video-fragments h3 {
+        font-size: 24px;
     }
     
     .video-fragment-btn {
@@ -1385,7 +1344,7 @@ body {
     }
     
     .video-fragments h3 {
-        font-size: 12px;  /* ← Samazināts no 14px */
+        font-size: 12px;
         margin-bottom: 6px;
     }
 }
