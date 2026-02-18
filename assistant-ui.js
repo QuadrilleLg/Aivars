@@ -19,6 +19,14 @@ class AssistantUI {
     }
 
     init() {
+        // Pārbauda vai voice asistents ir atļauts šajā pārlūkā
+        // kadriluBrowser tiek uzstādīts ui-enhancements.js (kas ielādējas pirmais)
+        const browser = window.kadriluBrowser;
+        if (browser && browser.blockVoice) {
+            console.log('ℹ️ AssistantUI: voice nav atļauts šajā pārlūkā — avatar netiek veidots');
+            return;
+        }
+
         // Izveidojam galveno konteineri
         this.createContainer();
         this.createAvatar();

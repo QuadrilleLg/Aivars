@@ -16,14 +16,14 @@
     //    Voice asistents pieejams TIKAI Chrome desktop
     // ─────────────────────────────────────────────
     function initBrowserCheck() {
-        const ua = navigator.userAgent;
+        var ua = navigator.userAgent;
 
-        const isChrome = !!(window.chrome && (window.chrome.webstore || window.chrome.runtime))
+        var isChrome = !!(window.chrome && (window.chrome.webstore || window.chrome.runtime))
             && ua.indexOf('Edg/') === -1
             && ua.indexOf('OPR/') === -1
             && ua.indexOf('YaBrowser') === -1;
 
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+        var isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
 
         window.kadriluBrowser = { isChrome: isChrome, isMobile: isMobile };
 
@@ -43,7 +43,6 @@
                 window.webkitSpeechRecognition = undefined;
             }
 
-            // Paslēpj voice UI elementus pēc DOM ielādes
             document.addEventListener('DOMContentLoaded', function () {
                 disableVoiceUI(isMobile);
             });
@@ -71,89 +70,65 @@
     }
 
     // ─────────────────────────────────────────────
-    // 2. DZIESMU MEKLĒŠANA AR REĀLLAIKA FILTRU
+    // 2. DZIESMU MEKLĒŠANAS LAUKS — vienkāršs filtrs
     // ─────────────────────────────────────────────
     function initSongSearch() {
         var songListContainer = document.querySelector('.song-list-container');
         var songList          = document.getElementById('songList');
         if (!songListContainer || !songList) return;
 
-        var searchWrapper       = document.createElement('div');
-        searchWrapper.className = 'song-search-wrapper';
+        var wrapper         = document.createElement('div');
+        wrapper.className   = 'song-search-wrapper';
 
-        var searchIcon          = document.createElement('span');
-        searchIcon.className    = 'song-search-icon';
-        searchIcon.innerHTML    = '&#9835;';
+        var icon            = document.createElement('span');
+        icon.className      = 'song-search-icon';
+        icon.innerHTML      = '&#9835;';
 
-        var searchInput             = document.createElement('input');
-        searchInput.type            = 'search';
-        searchInput.id              = 'songSearchInput';
-        searchInput.className       = 'song-search-input';
-        searchInput.placeholder     = 'Meklēt…';
-        searchInput.autocomplete    = 'off';
-        searchInput.spellcheck      = false;
+        var input           = document.createElement('input');
+        input.type          = 'search';
+        input.id            = 'songSearchInput';
+        input.className     = 'song-search-input';
+        input.placeholder   = 'Meklēt dziesmu…';
+        input.autocomplete  = 'off';
 
-        var clearBtn            = document.createElement('span');
-        clearBtn.className      = 'song-search-clear';
-        clearBtn.innerHTML      = '&times;';
-        clearBtn.title          = 'Notīrīt';
-        clearBtn.style.display  = 'none';
+        var clearBtn        = document.createElement('span');
+        clearBtn.className  = 'song-search-clear';
+        clearBtn.innerHTML  = '&times;';
+        clearBtn.style.display = 'none';
 
-        searchWrapper.appendChild(searchIcon);
-        searchWrapper.appendChild(searchInput);
-        searchWrapper.appendChild(clearBtn);
+        wrapper.appendChild(icon);
+        wrapper.appendChild(input);
+        wrapper.appendChild(clearBtn);
 
-        var heading = songListContainer.querySelector('h3');
-        if (heading) {
-            heading.after(searchWrapper);
-        } else {
-            songListContainer.prepend(searchWrapper);
-        }
+        songList.parentNode.insertBefore(wrapper, songList);
 
         function filterSongs(query) {
-            var q     = query.trim().toLowerCase();
-            var items = songList.querySelectorAll('li:not(.song-search-no-result)');
-            var visible = 0;
+            var q = query.trim().toLowerCase();
 
-            items.forEach(function (li) {
-                var match = q === '' || li.textContent.toLowerCase().includes(q);
-                li.style.display = match ? '' : 'none';
-                if (match) visible++;
+            songList.querySelectorAll('li').forEach(function (li) {
+                // Filtrē pēc kadrilKey (dziesmas nosaukums bez pogām un ikonām)
+                var key  = (li.dataset.kadrilKey || '').toLowerCase();
+                var show = q === '' || key.includes(q);
+                li.style.display = show ? '' : 'none';
             });
 
             clearBtn.style.display = q !== '' ? 'inline' : 'none';
-
-            var noResult = songList.querySelector('.song-search-no-result');
-            if (visible === 0 && q !== '') {
-                if (!noResult) {
-                    noResult             = document.createElement('li');
-                    noResult.className   = 'song-search-no-result';
-                    noResult.textContent = 'Nav atrasts';
-                    songList.appendChild(noResult);
-                }
-                noResult.style.display = '';
-            } else if (noResult) {
-                noResult.style.display = 'none';
-            }
         }
 
-        searchInput.addEventListener('input', function () {
+        input.addEventListener('input', function () {
             filterSongs(this.value);
         });
 
         clearBtn.addEventListener('click', function () {
-            searchInput.value = '';
+            input.value = '';
             filterSongs('');
-            searchInput.focus();
+            input.focus();
         });
 
-        // Novēro jaunus <li> — dziesmas ielādējas async caur uiManager
-        var observer = new MutationObserver(function () {
-            filterSongs(searchInput.value);
-        });
-        observer.observe(songList, { childList: true });
-
-        window.kadriluSearch = { filter: filterSongs, input: searchInput };
+        // Piemēro filtru kad loadSongList() pievieno jaunas dziesmas
+        new MutationObserver(function () {
+            filterSongs(input.value);
+        }).observe(songList, { childList: true });
     }
 
     // ─────────────────────────────────────────────
@@ -172,6 +147,7 @@
             '       min="0" max="100" value="80" step="1" aria-label="Audio skaļums">' +
             '<span class="vol-value" id="audioVolumeValue">80%</span>';
 
+        // Ievieto aiz taimera vai pašās beigās
         var timerEl = activeSongPanel.querySelector('.song-timer');
         if (timerEl) {
             timerEl.after(volDiv);
@@ -187,21 +163,27 @@
             valDisplay.textContent = v + '%';
             slider.style.setProperty('--val', v + '%');
             if (audioEl) audioEl.volume = v / 100;
-            localStorage.setItem('kadriluAudioVol', v);
+            try { localStorage.setItem('kadriluAudioVol', v); } catch(e) {}
         }
 
         slider.addEventListener('input', function () {
             setVolume(this.value);
         });
 
-        var saved = localStorage.getItem('kadriluAudioVol');
-        if (saved !== null) {
-            slider.value = saved;
-            setVolume(saved);
-        } else {
+        // Atjaunot saglabāto vērtību
+        try {
+            var saved = localStorage.getItem('kadriluAudioVol');
+            if (saved !== null) {
+                slider.value = saved;
+                setVolume(saved);
+            } else {
+                setVolume(slider.value);
+            }
+        } catch(e) {
             setVolume(slider.value);
         }
 
+        // Sinhronizēt ja audio volume mainās ārēji
         if (audioEl) {
             audioEl.addEventListener('volumechange', function () {
                 if (!slider.matches(':active')) {
@@ -237,7 +219,6 @@
             if (inField) return;
             if (e.ctrlKey || e.altKey || e.metaKey) return;
             if (e.key === 'Escape' || e.key === 'Tab') return;
-
             if (e.key.length === 1) {
                 textInput.focus();
             }

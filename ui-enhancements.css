@@ -9,7 +9,6 @@
    ───────────────────────────────────────────── */
 
 .song-search-wrapper {
-    position: relative;
     display: flex;
     align-items: center;
     margin: 4px 0 10px 0;
@@ -127,7 +126,6 @@
     flex-shrink: 0;
 }
 
-/* ── Range slider ── */
 .vol-slider {
     -webkit-appearance: none;
     appearance: none;
@@ -195,14 +193,13 @@
 
 
 /* ─────────────────────────────────────────────
-   VIDEO POGA — .video-btn  (player controls)
-   Atšķiras no ▶️ / ⏹️ — izskatās kā poga
+   VIDEO POGA — .video-btn (player controls)
    ───────────────────────────────────────────── */
 
 .video-btn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     background: rgba(230, 255, 0, 0.08);
     border: 1px solid rgba(230, 255, 0, 0.55);
     border-radius: 4px;
@@ -210,7 +207,7 @@
     font-family: 'Great-Victorian', Georgia, serif;
     font-size: 15px !important;
     letter-spacing: 0.5px;
-    padding: 3px 10px 3px 8px;
+    padding: 4px 12px 4px 8px;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
     user-select: none;
@@ -230,73 +227,31 @@
     box-shadow: none;
 }
 
-
-/* ─────────────────────────────────────────────
-   VIDEO POGA DZIESMU SARAKSTĀ — .song-video-btn
-   ───────────────────────────────────────────── */
-
-.song-video-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 6px;
-    padding: 2px 7px;
-    background: rgba(230, 255, 0, 0.07);
-    border: 1px solid rgba(230, 255, 0, 0.4);
-    border-radius: 3px;
-    color: #e6ff00;
-    font-size: 13px;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
-    vertical-align: middle;
-    flex-shrink: 0;
-    user-select: none;
-    line-height: 1.3;
+.video-btn-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    pointer-events: none;
+    filter: drop-shadow(0 0 2px rgba(230, 255, 0, 0.3));
+    transition: filter 0.2s;
 }
 
-/* Rādīt uz hover dziesmai */
-.song-list li:hover .song-video-btn,
-.song-list li.active .song-video-btn {
-    opacity: 1;
+.video-btn:hover .video-btn-icon {
+    filter: drop-shadow(0 0 6px rgba(230, 255, 0, 0.8));
 }
 
-.song-video-btn:hover {
-    background: rgba(230, 255, 0, 0.22);
-    border-color: #e6ff00;
-    box-shadow: 0 0 8px rgba(230, 255, 0, 0.4);
-}
-
-.song-video-btn:active {
-    transform: scale(0.93);
-}
-
-/* Dziesmu <li> — flexbox lai poga atrodas labajā pusē */
-.song-list li {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.song-list li .song-name-text {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
 
 
 /* ─────────────────────────────────────────────
    FRAGMENT POGAS — skaidrāks aktīvais stāvoklis
+   Pārraksta music-style.css vērtības
    ───────────────────────────────────────────── */
 
-/* Pārraksta music-style.css .fragment-btn stilus */
 .fragment-btn {
     background: rgba(230, 255, 0, 0.07) !important;
     border: 1px solid rgba(230, 255, 0, 0.35) !important;
     color: #e6ff00 !important;
-    padding: 4px 9px !important;
+    padding: 4px 10px !important;
     border-radius: 4px !important;
     cursor: pointer !important;
     font-family: 'Great-Victorian', Georgia, serif !important;
@@ -304,7 +259,6 @@
     font-weight: 400 !important;
     letter-spacing: 0.3px !important;
     transition: all 0.2s ease !important;
-    position: relative !important;
 }
 
 .fragment-btn:hover {
@@ -313,24 +267,17 @@
     transform: translateY(-1px) !important;
 }
 
-/* Aktīvais fragments — skaidri atšķiras */
+/* Aktīvais — skaidri atšķiras no hover */
 .fragment-btn.active {
-    background: rgba(230, 255, 0, 0.28) !important;
+    background: rgba(230, 255, 0, 0.25) !important;
     border: 2px solid #e6ff00 !important;
-    box-shadow: 0 0 12px rgba(230, 255, 0, 0.5),
-                inset 0 0 6px rgba(230, 255, 0, 0.1) !important;
-    color: #ffffff !important;
+    border-left: 4px solid #e6ff00 !important;
+    box-shadow: 0 0 14px rgba(230, 255, 0, 0.45),
+                inset 0 0 6px rgba(230, 255, 0, 0.08) !important;
+    color: #fff !important;
     font-weight: 700 !important;
     transform: none !important;
-}
-
-/* Mazs indikators aktīvajam fragmentam */
-.fragment-btn.active::before {
-    content: '▶';
-    font-size: 9px;
-    margin-right: 4px;
-    color: #e6ff00;
-    vertical-align: middle;
+    padding-left: 8px !important;
 }
 
 
@@ -353,15 +300,25 @@
         height: 20px;
     }
 
-    /* Mobilajā — video poga sarakstā vienmēr redzama */
+    /* Mobilajā video poga pie dziesmas vienmēr redzama */
     .song-video-btn {
-        opacity: 1;
-        padding: 3px 8px;
-        font-size: 14px;
+        opacity: 1 !important;
+        width: 32px;
+        height: 32px;
+        padding: 4px;
+    }
+    .song-video-icon {
+        width: 22px;
+        height: 22px;
     }
 
     .video-btn {
         font-size: 14px !important;
         padding: 4px 10px 4px 8px;
     }
+}
+
+/* Song video icon hover efekts */
+.song-video-btn:hover .song-video-icon {
+    filter: drop-shadow(0 0 5px rgba(230, 255, 0, 0.8));
 }
