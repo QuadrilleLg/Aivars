@@ -322,3 +322,11 @@
 .song-video-btn:hover .song-video-icon {
     filter: drop-shadow(0 0 5px rgba(230, 255, 0, 0.8));
 }
+
+
+/* ─────────────────────────────────────────────
+   AVATAR — redzams tikai Chrome
+   ───────────────────────────────────────────── */
+body.no-voice .assistant-container {
+    display: none !important;
+}

@@ -18,32 +18,28 @@
     function initBrowserCheck() {
         var ua = navigator.userAgent;
 
-        var isChrome = !!(window.chrome && (window.chrome.webstore || window.chrome.runtime))
-            && ua.indexOf('Edg/') === -1
-            && ua.indexOf('OPR/') === -1
-            && ua.indexOf('YaBrowser') === -1;
+        // Noteikt Firefox un Opera pēc UA — Chrome nekad nesatur šos
+        var isFirefox = ua.indexOf('Firefox/') !== -1;
+        var isOpera   = ua.indexOf('OPR/') !== -1 || ua.indexOf('Opera') !== -1;
+        var isEdge    = ua.indexOf('Edg/') !== -1;
+        var isMobile  = /Android|iPhone|iPad|iPod/i.test(ua);
 
-        var isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+        // Bloķēt voice tikai Firefox, Opera un mobilajās ierīcēs
+        // Chrome un Edge — atļaut (webkitSpeechRecognition darbojas abos)
+        var blockVoice = isFirefox || isOpera || isMobile;
 
-        window.kadriluBrowser = { isChrome: isChrome, isMobile: isMobile };
+        window.kadriluBrowser = {
+            isFirefox: isFirefox,
+            isOpera:   isOpera,
+            isEdge:    isEdge,
+            isMobile:  isMobile,
+            blockVoice: blockVoice
+        };
 
-        if (!isChrome || isMobile) {
-            // Bloķē Web Speech API pirms main.js to izmanto
-            try {
-                Object.defineProperty(window, 'SpeechRecognition', {
-                    get: function () { return undefined; },
-                    configurable: true
-                });
-                Object.defineProperty(window, 'webkitSpeechRecognition', {
-                    get: function () { return undefined; },
-                    configurable: true
-                });
-            } catch (e) {
-                window.SpeechRecognition = undefined;
-                window.webkitSpeechRecognition = undefined;
-            }
-
+        if (blockVoice) {
+            // Pievieno klasi body — CSS paslēpj avatar
             document.addEventListener('DOMContentLoaded', function () {
+                document.body.classList.add('no-voice');
                 disableVoiceUI(isMobile);
             });
         }
@@ -104,12 +100,13 @@
 
         function filterSongs(query) {
             var q = query.trim().toLowerCase();
+            var visible = 0;
 
             songList.querySelectorAll('li').forEach(function (li) {
-                // Filtrē pēc kadrilKey (dziesmas nosaukums bez pogām un ikonām)
-                var key  = (li.dataset.kadrilKey || '').toLowerCase();
-                var show = q === '' || key.includes(q);
+                var text = li.textContent.toLowerCase();
+                var show = q === '' || text.includes(q);
                 li.style.display = show ? '' : 'none';
+                if (show) visible++;
             });
 
             clearBtn.style.display = q !== '' ? 'inline' : 'none';
